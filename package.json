@@ -1,0 +1,43 @@
+{
+  "name": "flexpect",
+  "version": "1.0.0",
+  "description": "Automated layout validation tool using Playwright. Ensures responsive design accuracy across multiple viewports by inspecting element positions and visual alignment.",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyrilschumacher/flexpect.git"
+  },
+  "keywords": [
+    "playwright",
+    "layout",
+    "responsive",
+    "viewport",
+    "css",
+    "testing",
+    "automation",
+    "visual-regression",
+    "ui-testing",
+    "pixel-perfect",
+    "design-validation",
+    "headless-browser",
+    "web-testing",
+    "frontend",
+    "tooling"
+  ],
+  "author": "Cyril Schumacher",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cyrilschumacher/flexpect/issues"
+  },
+  "homepage": "https://github.com/cyrilschumacher/flexpect#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "@types/node": "^24.2.1",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
