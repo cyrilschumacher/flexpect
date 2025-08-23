@@ -1,4 +1,4 @@
-import { Locator, MatcherReturnType } from '@playwright/test';
+import { Locator } from '@playwright/test';
 
 type HorizontalAlignment = 'left' | 'center' | 'right';
 type VerticalAlignment = 'top' | 'center' | 'bottom';

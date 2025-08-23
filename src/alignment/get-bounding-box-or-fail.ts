@@ -9,12 +9,12 @@ class BoundingBoxError extends Error {
   }
 }
 
-export type BoundingBox = {
+export interface BoundingBox {
   x: number;
   y: number;
   width: number;
   height: number;
-};
+}
 
 export async function getBoundingBoxOrFail(
   element: Locator,

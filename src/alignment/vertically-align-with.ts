@@ -45,7 +45,7 @@ export async function toBeVerticallyAlignedWith(
   received: Locator,
   container: Locator,
   alignment: VerticalAlignment = 'center',
-  tolerancePercent: number = 5,
+  tolerancePercent = 5,
 ): Promise<MatcherReturnType> {
   const receivedBoundingBox = await getBoundingBoxOrFail(received);
   const containerBoundingBox = await getBoundingBoxOrFail(container);
