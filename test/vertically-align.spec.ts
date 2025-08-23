@@ -6,7 +6,10 @@ import '@flexpect';
 
 test.describe('vertical alignment detection', () => {
   test('should detect top alignment with zero tolerance', async ({ page }) => {
-    const htmlPath = path.resolve(__dirname, 'assets/vertically-align/top.html');
+    const htmlPath = path.resolve(
+      __dirname,
+      'assets/vertically-align/top.html',
+    );
     await page.goto(`file://${htmlPath}`);
 
     const container = page.locator('#container');
@@ -14,8 +17,13 @@ test.describe('vertical alignment detection', () => {
     await expect(element).toBeVerticallyAlignedWith(container, 'top', 0);
   });
 
-  test('should detect bottom alignment with zero tolerance', async ({ page }) => {
-    const htmlPath = path.resolve(__dirname, 'assets/vertically-align/bottom.html');
+  test('should detect bottom alignment with zero tolerance', async ({
+    page,
+  }) => {
+    const htmlPath = path.resolve(
+      __dirname,
+      'assets/vertically-align/bottom.html',
+    );
     await page.goto(`file://${htmlPath}`);
 
     const container = page.locator('#container');
@@ -23,8 +31,13 @@ test.describe('vertical alignment detection', () => {
     await expect(element).toBeVerticallyAlignedWith(container, 'bottom', 0);
   });
 
-  test('should detect center alignment with zero tolerance', async ({ page }) => {
-    const htmlPath = path.resolve(__dirname, 'assets/vertically-align/center.html');
+  test('should detect center alignment with zero tolerance', async ({
+    page,
+  }) => {
+    const htmlPath = path.resolve(
+      __dirname,
+      'assets/vertically-align/center.html',
+    );
     await page.goto(`file://${htmlPath}`);
 
     const container = page.locator('#container');
@@ -32,8 +45,13 @@ test.describe('vertical alignment detection', () => {
     await expect(element).toBeVerticallyAlignedWith(container, 'center', 0);
   });
 
-  test('should fail top alignment on bottom aligned element', async ({ page }) => {
-    const htmlPath = path.resolve(__dirname, 'assets/vertically-align/bottom.html');
+  test('should fail top alignment on bottom aligned element', async ({
+    page,
+  }) => {
+    const htmlPath = path.resolve(
+      __dirname,
+      'assets/vertically-align/bottom.html',
+    );
     await page.goto(`file://${htmlPath}`);
 
     const container = page.locator('#container');
@@ -41,8 +59,13 @@ test.describe('vertical alignment detection', () => {
     await expect(element).not.toBeVerticallyAlignedWith(container, 'top', 0);
   });
 
-  test('should fail bottom alignment on top aligned element', async ({ page }) => {
-    const htmlPath = path.resolve(__dirname, 'assets/vertically-align/top.html');
+  test('should fail bottom alignment on top aligned element', async ({
+    page,
+  }) => {
+    const htmlPath = path.resolve(
+      __dirname,
+      'assets/vertically-align/top.html',
+    );
     await page.goto(`file://${htmlPath}`);
 
     const container = page.locator('#container');
@@ -50,8 +73,13 @@ test.describe('vertical alignment detection', () => {
     await expect(element).not.toBeVerticallyAlignedWith(container, 'bottom', 0);
   });
 
-  test('should fail center alignment on top aligned element', async ({ page }) => {
-    const htmlPath = path.resolve(__dirname, 'assets/vertically-align/top.html');
+  test('should fail center alignment on top aligned element', async ({
+    page,
+  }) => {
+    const htmlPath = path.resolve(
+      __dirname,
+      'assets/vertically-align/top.html',
+    );
     await page.goto(`file://${htmlPath}`);
 
     const container = page.locator('#container');
@@ -60,7 +88,10 @@ test.describe('vertical alignment detection', () => {
   });
 
   test('should detect top alignment within tolerance', async ({ page }) => {
-    const htmlPath = path.resolve(__dirname, 'assets/vertically-align/top-offset.html');
+    const htmlPath = path.resolve(
+      __dirname,
+      'assets/vertically-align/top-offset.html',
+    );
     await page.goto(`file://${htmlPath}`);
 
     const container = page.locator('#container');
