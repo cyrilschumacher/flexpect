@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: ['**']
   pull_request:
-    branches: [main]
+    branches: ['**']
 
 jobs:
   format:
@@ -59,6 +59,7 @@ jobs:
           name: dist
           path: dist/
   test:
+    name: Run Playwright Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
