@@ -1,5 +1,5 @@
 import { Locator } from '@playwright/test';
-import { BoundingBox, getBoundingBoxOrFail } from './get-bounding-box-or-fail';
+import { BoundingBox, getBoundingBoxOrFail } from '../helpers/get-bounding-box-or-fail';
 
 function getCenter(boundingBox: BoundingBox) {
   return {

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Offset Element Inside Container</title>
+    <style>
+      #container {
+        position: relative;
+        width: 400px;
+        height: 200px;
+        background: red;
+      }
+
+      #element {
+        position: absolute;
+        right: -5%;
+        bottom: -5%;
+        width: 50px;
+        height: 50px;
+        background: blue;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="element"></div>
+    </div>
+  </body>
+</html>

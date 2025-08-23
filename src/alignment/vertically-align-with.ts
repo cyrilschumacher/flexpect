@@ -1,5 +1,5 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
-import { BoundingBox, getBoundingBoxOrFail } from './get-bounding-box-or-fail';
+import { BoundingBox, getBoundingBoxOrFail } from '../helpers/get-bounding-box-or-fail';
 
 type VerticalAlignment = 'top' | 'center' | 'bottom';
 
@@ -17,7 +17,6 @@ function computeVerticalDelta(
       return Math.abs(actualBottom - containerBottom);
     }
     default: {
-      // center
       const containerCenter = containerBoundingBox.y + containerBoundingBox.height / 2;
       const elementCenter = receivedBoundingBox.y + receivedBoundingBox.height / 2;
       return Math.abs(elementCenter - containerCenter);

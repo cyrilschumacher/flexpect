@@ -35,6 +35,22 @@ declare global {
       ): Promise<R>;
 
       /**
+       * Asserts that the target element is fully contained within the specified container element,
+       * allowing for an optional margin of tolerance.
+       *
+       * The check ensures that all sides of the target element (top, bottom, left, right)
+       * are strictly within the bounds of the container, with an optional offset based on a
+       * percentage of the container's dimensions.
+       *
+       * @param container - The container {@link Locator} within which the element is expected to be fully contained.
+       * @param tolerancePercent - Optional. A percentage of the container’s width and height to allow as a margin
+       *                           of tolerance. Defaults to 5%.
+       *
+       * @returns A {@link Promise} that resolves with the matcher result.
+       */
+      toBeInside(container: Locator, tolerancePercent?: number): Promise<R>;
+
+      /**
        * Asserts that the target element is vertically aligned with the specified container
        * according to the given alignment type.
        *
