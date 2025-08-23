@@ -1,0 +1,14 @@
+.vscode/
+node_modules/
+playwright-report/
+src/
+test/
+.prettierrc*
+*.log
+*.md~
+*.swp
+*.swo
+*.ts
+*.zip
+*.tgz
+tsconfig*.json
