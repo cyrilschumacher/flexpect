@@ -1,3 +1,5 @@
+/// <reference path="flexpect.d.ts">
+
 import { expect } from '@playwright/test';
 
 import { toBeFullyCentered } from './alignment/fully-centered';
