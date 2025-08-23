@@ -3,6 +3,7 @@ node_modules/
 playwright-report/
 src/
 test/
+test-results/
 .prettierrc*
 *.log
 *.md~
