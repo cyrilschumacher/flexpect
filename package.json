@@ -4,7 +4,9 @@
   "description": "Automated layout validation tool using Playwright. Ensures responsive design accuracy across multiple viewports by inspecting element positions and visual alignment.",
   "main": "dist/index.mjs",
   "types": "dist/index.d.mts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -15,6 +17,7 @@
     "build": "tsup",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "lint": "eslint src/",
     "test": "playwright test"
   },
   "repository": {
@@ -45,11 +48,14 @@
   },
   "homepage": "https://github.com/cyrilschumacher/flexpect#readme",
   "devDependencies": {
+    "@eslint/js": "^9.34.0",
     "@playwright/test": "^1.55.0",
     "@types/node": "^24.2.1",
+    "eslint": "^9.34.0",
     "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
     "tsup": "^8.5.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.40.0"
   }
 }
