@@ -13,15 +13,12 @@ function computeHorizontalDelta(
       return Math.abs(receivedBoundingBox.x - containerBoundingBox.x);
     case 'right': {
       const actualRight = receivedBoundingBox.x + receivedBoundingBox.width;
-      const containerRight =
-        containerBoundingBox.x + containerBoundingBox.width;
+      const containerRight = containerBoundingBox.x + containerBoundingBox.width;
       return Math.abs(actualRight - containerRight);
     }
     default: {
-      const containerCenter =
-        containerBoundingBox.x + containerBoundingBox.width / 2;
-      const elementCenter =
-        receivedBoundingBox.x + receivedBoundingBox.width / 2;
+      const containerCenter = containerBoundingBox.x + containerBoundingBox.width / 2;
+      const elementCenter = receivedBoundingBox.x + receivedBoundingBox.width / 2;
       return Math.abs(elementCenter - containerCenter);
     }
   }
@@ -50,23 +47,12 @@ export async function toBeHorizontallyAlignedWith(
   const receivedBoundingBox = await getBoundingBoxOrFail(received);
   const containerBoundingBox = await getBoundingBoxOrFail(container);
 
-  const delta = computeHorizontalDelta(
-    alignment,
-    receivedBoundingBox,
-    containerBoundingBox,
-  );
+  const delta = computeHorizontalDelta(alignment, receivedBoundingBox, containerBoundingBox);
   const tolerance = (containerBoundingBox.width * tolerancePercent) / 100;
 
   const pass = delta <= tolerance;
   return {
     pass,
-    message: () =>
-      formatAlignmentMessage(
-        pass,
-        alignment,
-        tolerancePercent,
-        delta,
-        tolerance,
-      ),
+    message: () => formatAlignmentMessage(pass, alignment, tolerancePercent, delta, tolerance),
   };
 }

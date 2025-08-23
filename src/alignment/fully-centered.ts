@@ -8,19 +8,11 @@ function getCenter(boundingBox: BoundingBox) {
   };
 }
 
-function isWithinTolerance(
-  valueA: number,
-  valueB: number,
-  tolerance: number,
-): boolean {
+function isWithinTolerance(valueA: number, valueB: number, tolerance: number): boolean {
   return Math.abs(valueA - valueB) <= tolerance;
 }
 
-function getCenterMessage(
-  container: BoundingBox,
-  element: BoundingBox,
-  tolerancePercent: number,
-): string {
+function getCenterMessage(container: BoundingBox, element: BoundingBox, tolerancePercent: number): string {
   const containerCenter = getCenter(container);
   const elementCenter = getCenter(element);
 
@@ -32,31 +24,17 @@ function getCenterMessage(
 - Vertical offset: ${verticalOffset.toFixed(2)}px`;
 }
 
-export async function toBeFullyCentered(
-  received: Locator,
-  container: Locator,
-  tolerancePercent = 5,
-) {
+export async function toBeFullyCentered(received: Locator, container: Locator, tolerancePercent = 5) {
   const receivedBoundingBox = await getBoundingBoxOrFail(received);
   const containerBoundingBox = await getBoundingBoxOrFail(container);
 
-  const horizontalTolerance =
-    (containerBoundingBox.width * tolerancePercent) / 100;
-  const verticalTolerance =
-    (containerBoundingBox.height * tolerancePercent) / 100;
+  const horizontalTolerance = (containerBoundingBox.width * tolerancePercent) / 100;
+  const verticalTolerance = (containerBoundingBox.height * tolerancePercent) / 100;
   const receivedCenter = getCenter(receivedBoundingBox);
   const containerCenter = getCenter(containerBoundingBox);
 
-  const horizontallyCentered = isWithinTolerance(
-    containerCenter.x,
-    receivedCenter.x,
-    horizontalTolerance,
-  );
-  const verticallyCentered = isWithinTolerance(
-    containerCenter.y,
-    receivedCenter.y,
-    verticalTolerance,
-  );
+  const horizontallyCentered = isWithinTolerance(containerCenter.x, receivedCenter.x, horizontalTolerance);
+  const verticallyCentered = isWithinTolerance(containerCenter.y, receivedCenter.y, verticalTolerance);
 
   const pass = horizontallyCentered && verticallyCentered;
   return {
@@ -64,10 +42,6 @@ export async function toBeFullyCentered(
     message: () =>
       pass
         ? 'Element is fully centered within container.'
-        : getCenterMessage(
-            containerBoundingBox,
-            receivedBoundingBox,
-            tolerancePercent,
-          ),
+        : getCenterMessage(containerBoundingBox, receivedBoundingBox, tolerancePercent),
   };
 }

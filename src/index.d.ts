@@ -15,10 +15,7 @@ declare global {
        *                           Defaults to 5 if not provided.
        * @returns A {@link Promise} that resolves with the matcher result.
        */
-      toBeFullyCentered(
-        container: Locator,
-        tolerancePercent?: number,
-      ): Promise<R>;
+      toBeFullyCentered(container: Locator, tolerancePercent?: number): Promise<R>;
 
       /**
        * Asserts that the target element is horizontally aligned with the specified container

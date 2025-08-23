@@ -16,9 +16,7 @@ export interface BoundingBox {
   height: number;
 }
 
-export async function getBoundingBoxOrFail(
-  element: Locator,
-): Promise<BoundingBox> {
+export async function getBoundingBoxOrFail(element: Locator): Promise<BoundingBox> {
   const boundingBox = await element.boundingBox();
   if (boundingBox) {
     return boundingBox;
