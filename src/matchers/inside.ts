@@ -1,5 +1,5 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
-import { BoundingBox, getBoundingBoxOrFail } from '../helpers/get-bounding-box-or-fail';
+import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
 
 function calculateDeltaX(elementBox: BoundingBox, containerBox: BoundingBox, tolerance: number): number {
   const overflowLeft = Math.max(0, containerBox.x - elementBox.x - tolerance);

@@ -1,5 +1,5 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
-import { BoundingBox, getBoundingBoxOrFail } from '../helpers/get-bounding-box-or-fail';
+import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
 
 type Alignment = 'left' | 'center' | 'right';
 
