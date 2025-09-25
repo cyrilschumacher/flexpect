@@ -18,7 +18,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint src/",
-    "test": "playwright test"
+    "test:ui": "playwright test"
   },
   "repository": {
     "type": "git",
