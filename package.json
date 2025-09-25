@@ -18,6 +18,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint src/",
+    "test": "jest",
     "test:ui": "playwright test"
   },
   "repository": {
