@@ -1,4 +1,4 @@
-import { Locator } from '@playwright/test';
+import { Locator, MatcherReturnType } from '@playwright/test';
 import { BoundingBox, getBoundingBoxOrFail } from '../helpers/get-bounding-box-or-fail';
 
 function getCenter(boundingBox: BoundingBox) {
@@ -12,36 +12,32 @@ function isWithinTolerance(valueA: number, valueB: number, tolerance: number): b
   return Math.abs(valueA - valueB) <= tolerance;
 }
 
-function getCenterMessage(container: BoundingBox, element: BoundingBox, tolerancePercent: number): string {
-  const containerCenter = getCenter(container);
-  const elementCenter = getCenter(element);
+export async function toBeFullyCentered(
+  element: Locator,
+  container: Locator,
+  tolerancePercent = 5,
+): Promise<MatcherReturnType> {
+  const elementBox = await getBoundingBoxOrFail(element);
+  const containerBox = await getBoundingBoxOrFail(container);
 
-  const horizontalOffset = Math.abs(containerCenter.x - elementCenter.x);
-  const verticalOffset = Math.abs(containerCenter.y - elementCenter.y);
+  const horizontalTolerance = (containerBox.width * tolerancePercent) / 100;
+  const verticalTolerance = (containerBox.height * tolerancePercent) / 100;
+  const elementCenter = getCenter(elementBox);
+  const containerCenter = getCenter(containerBox);
 
-  return `Expected element to be centered within container (±${tolerancePercent}%), but:
-- Horizontal offset: ${horizontalOffset.toFixed(2)}px
-- Vertical offset: ${verticalOffset.toFixed(2)}px`;
-}
+  const horizontallyCentered = isWithinTolerance(containerCenter.x, elementCenter.x, horizontalTolerance);
+  const verticallyCentered = isWithinTolerance(containerCenter.y, elementCenter.y, verticalTolerance);
+  if (horizontallyCentered && verticallyCentered) {
+    return { pass: true, message: () => 'Element is fully centered within container.' };
+  }
 
-export async function toBeFullyCentered(received: Locator, container: Locator, tolerancePercent = 5) {
-  const receivedBoundingBox = await getBoundingBoxOrFail(received);
-  const containerBoundingBox = await getBoundingBoxOrFail(container);
-
-  const horizontalTolerance = (containerBoundingBox.width * tolerancePercent) / 100;
-  const verticalTolerance = (containerBoundingBox.height * tolerancePercent) / 100;
-  const receivedCenter = getCenter(receivedBoundingBox);
-  const containerCenter = getCenter(containerBoundingBox);
-
-  const horizontallyCentered = isWithinTolerance(containerCenter.x, receivedCenter.x, horizontalTolerance);
-  const verticallyCentered = isWithinTolerance(containerCenter.y, receivedCenter.y, verticalTolerance);
-
-  const pass = horizontallyCentered && verticallyCentered;
-  return {
-    pass,
-    message: () =>
-      pass
-        ? 'Element is fully centered within container.'
-        : getCenterMessage(containerBoundingBox, receivedBoundingBox, tolerancePercent),
+  const message = () => {
+    const horizontalOffset = Math.abs(containerCenter.x - elementCenter.x);
+    const verticalOffset = Math.abs(containerCenter.y - elementCenter.y);
+    return `Expected element to be centered within container (±${tolerancePercent}%), but:
+- Horizontal offset: ${horizontalOffset.toFixed(2)}px (tolerance: ±${horizontalTolerance.toFixed(2)}px)
+- Vertical offset: ${verticalOffset.toFixed(2)}px (tolerance: ±${verticalTolerance.toFixed(2)}px)`;
   };
+
+  return { pass: false, message };
 }

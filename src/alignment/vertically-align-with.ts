@@ -5,53 +5,43 @@ type VerticalAlignment = 'top' | 'center' | 'bottom';
 
 function computeVerticalDelta(
   alignment: VerticalAlignment,
-  receivedBoundingBox: BoundingBox,
-  containerBoundingBox: BoundingBox,
+  elementBox: BoundingBox,
+  containerBox: BoundingBox,
 ): number {
   switch (alignment) {
     case 'top':
-      return Math.abs(receivedBoundingBox.y - containerBoundingBox.y);
+      return Math.abs(elementBox.y - containerBox.y);
     case 'bottom': {
-      const actualBottom = receivedBoundingBox.y + receivedBoundingBox.height;
-      const containerBottom = containerBoundingBox.y + containerBoundingBox.height;
+      const actualBottom = elementBox.y + elementBox.height;
+      const containerBottom = containerBox.y + containerBox.height;
       return Math.abs(actualBottom - containerBottom);
     }
-    default: {
-      const containerCenter = containerBoundingBox.y + containerBoundingBox.height / 2;
-      const elementCenter = receivedBoundingBox.y + receivedBoundingBox.height / 2;
+    case 'center': {
+      const containerCenter = containerBox.y + containerBox.height / 2;
+      const elementCenter = elementBox.y + elementBox.height / 2;
       return Math.abs(elementCenter - containerCenter);
     }
+    default:
+      throw new Error(`Unknown vertical alignment: ${alignment}`);
   }
-}
-
-function formatVerticalAlignmentMessage(
-  pass: boolean,
-  alignment: VerticalAlignment,
-  tolerancePercent: number,
-  delta: number,
-  tolerance: number,
-): string {
-  if (pass) {
-    return `Expected element NOT to be ${alignment}-aligned within ${tolerancePercent}% tolerance, but it was.`;
-  }
-  return `Expected element to be ${alignment}-aligned within ${tolerancePercent}% tolerance (${tolerance.toFixed(2)}px). Received delta: ${delta.toFixed(2)}px.`;
 }
 
 export async function toBeVerticallyAlignedWith(
-  received: Locator,
+  element: Locator,
   container: Locator,
   alignment: VerticalAlignment = 'center',
-  tolerancePercent = 5,
+  tolerancePercent = 0,
 ): Promise<MatcherReturnType> {
-  const receivedBoundingBox = await getBoundingBoxOrFail(received);
-  const containerBoundingBox = await getBoundingBoxOrFail(container);
+  const elementBox = await getBoundingBoxOrFail(element);
+  const containerBox = await getBoundingBoxOrFail(container);
 
-  const delta = computeVerticalDelta(alignment, receivedBoundingBox, containerBoundingBox);
-  const tolerance = (containerBoundingBox.height * tolerancePercent) / 100;
+  const delta = computeVerticalDelta(alignment, elementBox, containerBox);
+  const tolerance = (containerBox.height * tolerancePercent) / 100;
+  if (delta <= tolerance) {
+    return { pass: true, message: () => 'Element is properly aligned.' };
+  }
 
-  const pass = delta <= tolerance;
-  return {
-    pass,
-    message: () => formatVerticalAlignmentMessage(pass, alignment, tolerancePercent, delta, tolerance),
-  };
+  const message = () =>
+    `Expected element to be ${alignment}-aligned within ${tolerancePercent}% tolerance (±${tolerance.toFixed(2)}px), but received a delta of ${delta.toFixed(2)}px.`;
+  return { pass: false, message };
 }

@@ -3,56 +3,41 @@ import { BoundingBox, getBoundingBoxOrFail } from '../helpers/get-bounding-box-o
 
 type Alignment = 'left' | 'center' | 'right';
 
-function computeHorizontalDelta(
-  alignment: Alignment,
-  receivedBoundingBox: BoundingBox,
-  containerBoundingBox: BoundingBox,
-): number {
+function computeHorizontalDelta(alignment: Alignment, elementBox: BoundingBox, containerBox: BoundingBox): number {
   switch (alignment) {
     case 'left':
-      return Math.abs(receivedBoundingBox.x - containerBoundingBox.x);
+      return Math.abs(elementBox.x - containerBox.x);
     case 'right': {
-      const actualRight = receivedBoundingBox.x + receivedBoundingBox.width;
-      const containerRight = containerBoundingBox.x + containerBoundingBox.width;
+      const actualRight = elementBox.x + elementBox.width;
+      const containerRight = containerBox.x + containerBox.width;
       return Math.abs(actualRight - containerRight);
     }
-    default: {
-      const containerCenter = containerBoundingBox.x + containerBoundingBox.width / 2;
-      const elementCenter = receivedBoundingBox.x + receivedBoundingBox.width / 2;
+    case 'center': {
+      const containerCenter = containerBox.x + containerBox.width / 2;
+      const elementCenter = elementBox.x + elementBox.width / 2;
       return Math.abs(elementCenter - containerCenter);
     }
+    default:
+      throw new Error(`Unknown horizontal alignment: ${alignment}`);
   }
-}
-
-function formatAlignmentMessage(
-  pass: boolean,
-  alignment: Alignment,
-  tolerancePercent: number,
-  delta: number,
-  tolerance: number,
-): string {
-  if (pass) {
-    return `Expected element NOT to be ${alignment}-aligned within ${tolerancePercent}% tolerance, but it was.`;
-  }
-
-  return `Expected element to be ${alignment}-aligned within ${tolerancePercent}% tolerance (${tolerance.toFixed(2)}px). Received delta: ${delta.toFixed(2)}px.`;
 }
 
 export async function toBeHorizontallyAlignedWith(
-  received: Locator,
+  element: Locator,
   container: Locator,
   alignment: Alignment = 'center',
-  tolerancePercent = 5,
+  tolerancePercent = 0,
 ): Promise<MatcherReturnType> {
-  const receivedBoundingBox = await getBoundingBoxOrFail(received);
-  const containerBoundingBox = await getBoundingBoxOrFail(container);
+  const elementBox = await getBoundingBoxOrFail(element);
+  const containerBox = await getBoundingBoxOrFail(container);
 
-  const delta = computeHorizontalDelta(alignment, receivedBoundingBox, containerBoundingBox);
-  const tolerance = (containerBoundingBox.width * tolerancePercent) / 100;
+  const delta = computeHorizontalDelta(alignment, elementBox, containerBox);
+  const tolerance = (containerBox.width * tolerancePercent) / 100;
+  if (delta <= tolerance) {
+    return { pass: true, message: () => 'Element is properly aligned.' };
+  }
 
-  const pass = delta <= tolerance;
-  return {
-    pass,
-    message: () => formatAlignmentMessage(pass, alignment, tolerancePercent, delta, tolerance),
-  };
+  const message = () =>
+    `Expected element to be ${alignment}-aligned within ${tolerancePercent}% tolerance (±${tolerance.toFixed(2)}px), but received a delta of ${delta.toFixed(2)}px.`;
+  return { pass: false, message };
 }

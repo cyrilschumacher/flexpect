@@ -1,5 +1,12 @@
 import { Locator } from '@playwright/test';
 
+export interface BoundingBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 class BoundingBoxError extends Error {
   constructor(element: Locator) {
     super(
@@ -8,18 +15,11 @@ class BoundingBoxError extends Error {
     this.name = 'BoundingBoxError';
   }
 }
-
-export interface BoundingBox {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
 export async function getBoundingBoxOrFail(element: Locator): Promise<BoundingBox> {
   const boundingBox = await element.boundingBox();
   if (boundingBox) {
     return boundingBox;
   }
+
   throw new BoundingBoxError(element);
 }
