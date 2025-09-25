@@ -11,34 +11,30 @@ module.exports = {
         releaseRules: [
           {
             type: 'fix',
-            release: 'patch'
+            release: 'patch',
           },
-          { type:
-            'feat',
-            release: 'minor'
-          },
+          { type: 'feat', release: 'minor' },
           {
             breaking: true,
-            release: 'major'
+            release: 'major',
           },
           {
-            release: false
-          }
+            release: false,
+          },
         ],
       },
     ],
     [
       '@semantic-release/npm',
       {
-        npmPublish: false
-      }
+        npmPublish: false,
+      },
     ],
     [
       '@semantic-release/git',
       {
         assets: ['CHANGELOG.md', 'package.json'],
-        message:
-          'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
+        message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
       },
     ],
   ],
