@@ -1,11 +1,12 @@
 {
-  "include": ["src"],
+  "include": ["src", "test"],
   "compilerOptions": {
     // File Layout
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@flexpect": ["src/index.ts"]
+      "@flexpect": ["src/index.ts"],
+      "@flexpect/*": ["src/*"]
     },
 
     // Environment Settings
