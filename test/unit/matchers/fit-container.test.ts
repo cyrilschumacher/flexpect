@@ -18,9 +18,10 @@ describe('toFitContainer', () => {
     const container = {} as Locator;
     const box = { x: 10, y: 20, width: 100, height: 200 } as BoundingBox;
 
+    // @ts-expect-error https://github.com/timkindberg/jest-when/issues/109
     when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(box);
+    // @ts-expect-error https://github.com/timkindberg/jest-when/issues/109
     when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(box);
-
     const result = await toFitContainer(element, container);
 
     expect(result.pass).toBe(true);
@@ -33,7 +34,9 @@ describe('toFitContainer', () => {
     const container = {} as Locator;
     const containerBox = { x: 10, y: 20, width: 100, height: 200 };
 
+    // @ts-expect-error https://github.com/timkindberg/jest-when/issues/109
     when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+    // @ts-expect-error https://github.com/timkindberg/jest-when/issues/109
     when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
     const result = await toFitContainer(element, container);
@@ -49,7 +52,9 @@ describe('toFitContainer', () => {
     const container = {} as Locator;
     const containerBox = { x: 10, y: 20, width: 100, height: 200 };
 
+    // @ts-expect-error https://github.com/timkindberg/jest-when/issues/109
     when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+    // @ts-expect-error https://github.com/timkindberg/jest-when/issues/109
     when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
     const result = await toFitContainer(element, container);
@@ -65,7 +70,9 @@ describe('toFitContainer', () => {
     const container = {} as Locator;
     const containerBox = { x: 10, y: 20, width: 100, height: 200 };
 
+    // @ts-expect-error https://github.com/timkindberg/jest-when/issues/109
     when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+    // @ts-expect-error https://github.com/timkindberg/jest-when/issues/109
     when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
     const result = await toFitContainer(element, container);
