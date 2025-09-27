@@ -66,6 +66,16 @@ declare global {
         alignment?: VerticalAlignment,
         tolerancePercent?: number,
       ): Promise<R>;
+
+      /**
+       * Asserts that the target element fits entirely within the bounds of the specified container element.
+       * The check ensures that all sides of the target element (top, bottom, left, right)
+       * are strictly within the bounds of the container, with no partial overlap allowed.
+       *
+       * @param container - The container element as a {@link Locator} within which the element is expected to fit.
+       * @returns A {@link Promise} that resolves with the matcher result.
+       */
+      toFitContainer(container: Locator): Promise<R>;
     }
   }
 }
