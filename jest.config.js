@@ -1,10 +1,11 @@
 module.exports = {
+  clearMocks: true,
   preset: 'ts-jest',
   testEnvironment: 'node',
-  roots: ['test/unit'],
+  roots: ['<rootDir>/test/unit'],
   coverageDirectory: 'coverage',
   coverageReporters: ['lcov', 'text'],
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  moduleFileExtensions: ['ts', 'js', 'json', 'node'],
   moduleNameMapper: {
     '^@flexpect/(.*)$': '<rootDir>/src/$1',
   },
