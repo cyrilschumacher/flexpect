@@ -2,21 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Bottom aligned</title>
+    <title>Element is too small for container</title>
     <style>
       #container {
-        position: relative;
-        width: 400px;
+        width: 200px;
         height: 200px;
-        background: red;
+        background-color: red;
+        position: relative;
       }
 
       #element {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
         position: absolute;
-        bottom: 0;
-        width: 50px;
-        height: 50px;
-        background: blue;
+        top: 0;
+        left: 0;
       }
     </style>
   </head>
