@@ -10,9 +10,9 @@ declare global {
        * Asserts that the target element is fully centered both horizontally and vertically
        * within the specified container element.
        *
-       * @param container - The container Locator relative to which centering is checked.
-       * @param tolerancePercent - Optional tolerance allowed as a percentage of the container's size.
-       *                           Defaults to 5 if not provided.
+       * @param container - The container element as a {@link Locator} relative to which centering is checked.
+       * @param tolerancePercent - Optional tolerance allowed as a percentage of the container's width and height.
+       *                           Defaults to 5% if not provided. The tolerance applies to both dimensions.
        * @returns A {@link Promise} that resolves with the matcher result.
        */
       toBeFullyCentered(container: Locator, tolerancePercent?: number): Promise<R>;
@@ -21,11 +21,18 @@ declare global {
        * Asserts that the target element is horizontally aligned with the specified container
        * according to the given alignment type.
        *
-       * @param container - The container Locator relative to which horizontal alignment is checked.
-       * @param alignment - Optional alignment type (e.g., 'left', 'center', 'right').
+       * Alignment types:
+       * - 'left': The left edges of the target and container are equal within the tolerance.
+       * - 'center': The horizontal centers of the target and container are equal within the tolerance.
+       * - 'right': The right edges of the target and container are equal within the tolerance.
+       *
+       * If the `alignment` parameter is omitted, it defaults to `'center'`.
+       *
+       * @param container - The container element as a {@link Locator} relative to which horizontal alignment is checked.
+       * @param alignment - Optional alignment type ('left', 'center', 'right').
        *                    Defaults to 'center' if not provided.
        * @param tolerancePercent - Optional tolerance allowed as a percentage of the container's width.
-       *                           Defaults to 5 if not provided.
+       *                           Defaults to 5% if not provided.
        * @returns A {@link Promise} that resolves with the matcher result.
        */
       toBeHorizontallyAlignedWith(
@@ -42,9 +49,9 @@ declare global {
        * are strictly within the bounds of the container, with an optional offset based on a
        * percentage of the container's dimensions.
        *
-       * @param container - The container {@link Locator} within which the element is expected to be fully contained.
-       * @param tolerancePercent - Optional. A percentage of the container’s width and height to allow as a margin
-       *                           of tolerance. Defaults to 5%.
+       * @param container - The container element as a {@link Locator} within which the element is expected to be fully contained.
+       * @param tolerancePercent - Optional. A percentage of the container's width and height to allow as a margin
+       *                           of tolerance. Defaults to 5% if not provided.
        *
        * @returns A {@link Promise} that resolves with the matcher result.
        */
@@ -54,11 +61,18 @@ declare global {
        * Asserts that the target element is vertically aligned with the specified container
        * according to the given alignment type.
        *
-       * @param container - The container Locator relative to which vertical alignment is checked.
-       * @param alignment - Optional alignment type (e.g., 'top', 'center', 'bottom').
-       *                    Defaults to 'center' if not provided.
+       * Alignment types:
+       * - 'top': The top edges of the target and container are equal within the tolerance.
+       * - 'center': The vertical centers of the target and container are equal within the tolerance.
+       * - 'bottom': The bottom edges of the target and container are equal within the tolerance.
+       *
+       * If the `alignment` parameter is omitted, it defaults to `'center'`.
+       * If the container is not present, the assertion will fail and return an error indicating the container could not be found.
+       *
+       * @param container - The container element as a {@link Locator} relative to which vertical alignment is checked.
+       * @param alignment - Optional alignment type ('top', 'center', 'bottom'). Defaults to 'center' if not provided.
        * @param tolerancePercent - Optional tolerance allowed as a percentage of the container's height.
-       *                           Defaults to 5 if not provided.
+       *                           Defaults to 5% if not provided.
        * @returns A {@link Promise} that resolves with the matcher result.
        */
       toBeVerticallyAlignedWith(
