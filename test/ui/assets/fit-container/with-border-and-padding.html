@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Element with border and padding exceeds container</title>
+    <style>
+      #container {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        position: relative;
+      }
+
+      #element {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        border: 5px solid black;
+        background-color: blue;
+        position: absolute;
+        top: 0;
+        left: 0;
+        box-sizing: content-box;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="element"></div>
+    </div>
+  </body>
+</html>
