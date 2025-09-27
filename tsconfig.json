@@ -1,5 +1,6 @@
 {
   "include": ["src", "test"],
+  "files": ["src/index.ts", "src/index.d.ts"],
   "compilerOptions": {
     // File Layout
     "outDir": "./dist",
