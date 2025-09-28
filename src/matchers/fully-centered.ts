@@ -12,11 +12,17 @@ function isWithinTolerance(valueA: number, valueB: number, tolerance: number): b
   return Math.abs(valueA - valueB) <= tolerance;
 }
 
+export interface ToBeFullyCenteredOptions {
+  tolerancePercent?: number;
+}
+
 export async function toBeFullyCentered(
   element: Locator,
   container: Locator,
-  tolerancePercent = 5,
+  options: ToBeFullyCenteredOptions = {},
 ): Promise<MatcherReturnType> {
+  const { tolerancePercent = 0 } = options;
+
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);
 

@@ -11,7 +11,8 @@ test.describe('fully centered detection', () => {
 
     const container = page.locator('#container');
     const element = page.locator('#element');
-    await expect(element).toBeFullyCentered(container, 0);
+    const options = { tolerancePercent: 0 };
+    await expect(element).toBeFullyCentered(container, options);
   });
 
   test('should detect vertical and horizontal center alignment within tolerance', async ({ page }) => {
@@ -20,7 +21,8 @@ test.describe('fully centered detection', () => {
 
     const container = page.locator('#container');
     const element = page.locator('#element');
-    await expect(element).toBeFullyCentered(container, 10);
+    const options = { tolerancePercent: 10 };
+    await expect(element).toBeFullyCentered(container, options);
   });
 
   test('should reject for left aligned element with zero tolerance', async ({ page }) => {

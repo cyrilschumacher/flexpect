@@ -1,18 +1,20 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
 
-type Alignment = 'left' | 'center' | 'right';
-
-function computeHorizontalDelta(alignment: Alignment, elementBox: BoundingBox, containerBox: BoundingBox): number {
+function computeHorizontalDelta(
+  alignment: HorizontalAlignment,
+  elementBox: BoundingBox,
+  containerBox: BoundingBox,
+): number {
   switch (alignment) {
-    case 'left':
+    case HorizontalAlignment.Left:
       return Math.abs(elementBox.x - containerBox.x);
-    case 'right': {
+    case HorizontalAlignment.Right: {
       const actualRight = elementBox.x + elementBox.width;
       const containerRight = containerBox.x + containerBox.width;
       return Math.abs(actualRight - containerRight);
     }
-    case 'center': {
+    case HorizontalAlignment.Center: {
       const containerCenter = containerBox.x + containerBox.width / 2;
       const elementCenter = elementBox.x + elementBox.width / 2;
       return Math.abs(elementCenter - containerCenter);
@@ -22,12 +24,24 @@ function computeHorizontalDelta(alignment: Alignment, elementBox: BoundingBox, c
   }
 }
 
+export enum HorizontalAlignment {
+  Left = 'left',
+  Center = 'center',
+  Right = 'right',
+}
+
+export interface ToBeHorizontallyAlignedWithOptions {
+  alignment?: HorizontalAlignment;
+  tolerancePercent?: number;
+}
+
 export async function toBeHorizontallyAlignedWith(
   element: Locator,
   container: Locator,
-  alignment: Alignment = 'center',
-  tolerancePercent = 0,
+  options: ToBeHorizontallyAlignedWithOptions = {},
 ): Promise<MatcherReturnType> {
+  const { alignment = HorizontalAlignment.Center, tolerancePercent = 0 } = options;
+
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);
 

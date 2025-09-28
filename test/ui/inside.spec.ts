@@ -11,7 +11,8 @@ test.describe('inside detection', () => {
 
     const container = page.locator('#container');
     const element = page.locator('#element');
-    await expect(element).toBeInside(container, 0);
+    const options = { tolerancePercent: 0 };
+    await expect(element).toBeInside(container, options);
   });
 
   test('should detect when element is fully inside container within tolerance', async ({ page }) => {
@@ -20,7 +21,8 @@ test.describe('inside detection', () => {
 
     const container = page.locator('#container');
     const element = page.locator('#element');
-    await expect(element).toBeInside(container, 5);
+    const options = { tolerancePercent: 5 };
+    await expect(element).toBeInside(container, options);
   });
 
   test('should reject when element is partially outside container with zero tolerance', async ({ page }) => {
@@ -29,6 +31,7 @@ test.describe('inside detection', () => {
 
     const container = page.locator('#container');
     const element = page.locator('#element');
-    await expect(element).not.toBeInside(container);
+    const options = { tolerancePercent: 0 };
+    await expect(element).not.toBeInside(container, options);
   });
 });
