@@ -162,5 +162,9 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode
 
+# Ignore Playwright test results
 playwright-report/
 test-results/
+
+# Ignore TypeDoc output
+docs/

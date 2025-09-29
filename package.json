@@ -15,6 +15,7 @@
   },
   "scripts": {
     "build": "tsup --tsconfig tsconfig.build.json",
+    "docs": "typedoc",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint src/",
@@ -68,6 +69,7 @@
     "ts-jest": "^29.4.4",
     "ts-node": "^10.9.2",
     "tsup": "^8.5.0",
+    "typedoc": "^0.28.13",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.40.0"
   }
