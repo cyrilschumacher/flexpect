@@ -1,4 +1,5 @@
 import { Locator } from '@playwright/test';
+import { ToBeAlignedWithOptions } from './matchers/aligned-with';
 import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
 import { ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
 import { ToBeVerticallyAlignedWithOptions } from './matchers/vertically-align-with';
@@ -7,6 +8,25 @@ import { ToBeInsideOptions } from './matchers/inside';
 declare global {
   namespace PlaywrightTest {
     interface Matchers<R> {
+      /**
+       * Asserts that the target element is aligned with the specified container element
+       * according to the provided alignment options.
+       *
+       * @param container - The container element as a {@link Locator} relative to which alignment is checked.
+       * @param options - Optional centering options. See {@link ToBeAlignedWithOptions} for available properties,
+       *                  such as `tolerancePercent` (defaults to 0% if not provided).
+       * @returns A {@link Promise} that resolves with the matcher result.
+       *
+       * @example
+       * // Checks that the button is horizontally centered with its parent within 2% tolerance
+       * await expect(buttonLocator).toBeAlignedWith(parentLocator, {
+       *   axis: Alignment.Horizontal,
+       *   mode: AlignmentMode.Center,
+       *   tolerancePercent: 2
+       * });
+       */
+      toBeAlignedWith(container: Locator, options?: ToBeAlignedWithOptions): Promise<R>;
+
       /**
        * Asserts that the target element is fully centered both horizontally and vertically
        * within the specified container element.
