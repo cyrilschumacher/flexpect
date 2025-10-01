@@ -10,16 +10,16 @@ module.exports = {
         preset: 'conventionalcommits',
         releaseRules: [
           {
-            type: 'fix',
-            release: 'patch',
-          },
-          { type: 'feat', release: 'minor' },
-          {
             breaking: true,
             release: 'major',
           },
           {
-            release: false,
+            type: 'fix',
+            release: 'patch',
+          },
+          {
+            type: 'feat',
+            release: 'minor',
           },
         ],
       },

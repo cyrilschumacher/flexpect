@@ -1,9 +1,17 @@
 {
-  "entryPoints": ["src/index.d.ts"],
+  "entryPoints": ["src/index.d.ts", "src/**/*.ts"],
   "out": "docs",
   "tsconfig": "tsconfig.json",
   "includeVersion": true,
   "excludePrivate": true,
   "excludeInternal": true,
-  "theme": "default"
+  "theme": "default",
+  "externalSymbolLinkMappings": {
+    "typescript": {
+      "Promise": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"
+    },
+    "playwright-core": {
+      "Locator": "https://playwright.dev/docs/api/class-locator"
+    }
+  }
 }
