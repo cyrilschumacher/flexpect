@@ -32,12 +32,11 @@ function getPosition(box: BoundingBox, axis: Axis, mode: Alignment): number {
 }
 
 /**
- * Specifies possible alignment options for layout or positioning.
+ * Defines possible alignment positions along an axis.
  *
- * @enum {string}
- * @property {Alignment.Start} Start - Aligns to the start (e.g., left or top).
- * @property {Alignment.Center} Center - Aligns to the center.
- * @property {Alignment.End} End - Aligns to the end (e.g., right or bottom).
+ * @remarks
+ * This enum is typically used in layout systems or UI components
+ * to specify how content should be aligned within a container.
  */
 export enum Alignment {
   Start = 'start',
@@ -51,10 +50,6 @@ export enum Alignment {
  * @remarks
  * This enum is used to specify whether an alignment should be performed
  * horizontally or vertically.
- *
- * @enum {string}
- * @property {string} Horizontal - Represents the horizontal axis.
- * @property {string} Vertical - Represents the vertical axis.
  */
 export enum Axis {
   Horizontal = 'horizontal',
