@@ -1,22 +1,20 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
 
-type VerticalAlignment = 'top' | 'center' | 'bottom';
-
 function computeVerticalDelta(
   alignment: VerticalAlignment,
   elementBox: BoundingBox,
   containerBox: BoundingBox,
 ): number {
   switch (alignment) {
-    case 'top':
+    case VerticalAlignment.Top:
       return Math.abs(elementBox.y - containerBox.y);
-    case 'bottom': {
+    case VerticalAlignment.Bottom: {
       const actualBottom = elementBox.y + elementBox.height;
       const containerBottom = containerBox.y + containerBox.height;
       return Math.abs(actualBottom - containerBottom);
     }
-    case 'center': {
+    case VerticalAlignment.Center: {
       const containerCenter = containerBox.y + containerBox.height / 2;
       const elementCenter = elementBox.y + elementBox.height / 2;
       return Math.abs(elementCenter - containerCenter);
@@ -26,12 +24,24 @@ function computeVerticalDelta(
   }
 }
 
+export enum VerticalAlignment {
+  Top = 'top',
+  Center = 'center',
+  Bottom = 'bottom',
+}
+
+export interface ToBeVerticallyAlignedWithOptions {
+  alignment?: VerticalAlignment;
+  tolerancePercent?: number;
+}
+
 export async function toBeVerticallyAlignedWith(
   element: Locator,
   container: Locator,
-  alignment: VerticalAlignment = 'center',
-  tolerancePercent = 0,
+  options: ToBeVerticallyAlignedWithOptions = {},
 ): Promise<MatcherReturnType> {
+  const { alignment = VerticalAlignment.Center, tolerancePercent = 0 } = options;
+
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);
 

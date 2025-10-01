@@ -1,7 +1,9 @@
 import { Locator } from '@playwright/test';
-
-type HorizontalAlignment = 'left' | 'center' | 'right';
-type VerticalAlignment = 'top' | 'center' | 'bottom';
+import { ToBeAlignedWithOptions } from './matchers/aligned-with';
+import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
+import { ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
+import { ToBeVerticallyAlignedWithOptions } from './matchers/vertically-align-with';
+import { ToBeInsideOptions } from './matchers/inside';
 
 declare global {
   namespace PlaywrightTest {
@@ -21,15 +23,34 @@ declare global {
      */
     interface Matchers<R> {
       /**
+       * Asserts that the target element is aligned with the specified container element
+       * according to the provided alignment options.
+       *
+       * @param container - The container element as a {@link Locator} relative to which alignment is checked.
+       * @param options - Optional centering options. See {@link ToBeAlignedWithOptions} for available properties,
+       *                  such as `tolerancePercent` (defaults to 0% if not provided).
+       * @returns A {@link Promise} that resolves with the matcher result.
+       *
+       * @example
+       * // Checks that the button is horizontally centered with its parent within 2% tolerance
+       * await expect(buttonLocator).toBeAlignedWith(parentLocator, {
+       *   axis: Alignment.Horizontal,
+       *   mode: AlignmentMode.Center,
+       *   tolerancePercent: 2
+       * });
+       */
+      toBeAlignedWith(container: Locator, options?: ToBeAlignedWithOptions): Promise<R>;
+
+      /**
        * Asserts that the target element is fully centered both horizontally and vertically
        * within the specified container element.
        *
        * @param container - The container element as a {@link Locator} relative to which centering is checked.
-       * @param tolerancePercent - Optional tolerance allowed as a percentage of the container's width and height.
-       *                           Defaults to 5% if not provided. The tolerance applies to both dimensions.
+       * @param options - Optional centering options. See {@link ToBeFullyCenteredOptions} for available properties,
+       *                  such as `tolerancePercent` (defaults to 0% if not provided).
        * @returns A {@link Promise} that resolves with the matcher result.
        */
-      toBeFullyCentered(container: Locator, tolerancePercent?: number): Promise<R>;
+      toBeFullyCentered(container: Locator, options?: ToBeFullyCenteredOptions): Promise<R>;
 
       /**
        * Asserts that the target element is horizontally aligned with the specified container
@@ -40,20 +61,15 @@ declare global {
        * - 'center': The horizontal centers of the target and container are equal within the tolerance.
        * - 'right': The right edges of the target and container are equal within the tolerance.
        *
-       * If the `alignment` parameter is omitted, it defaults to `'center'`.
+       * The `options` object may include:
+       * - `alignment`: Optional alignment type ('left', 'center', 'right'). Defaults to 'center' if not provided.
+       * - `tolerancePercent`: Optional tolerance allowed as a percentage of the container's width. Defaults to 5% if not provided.
        *
        * @param container - The container element as a {@link Locator} relative to which horizontal alignment is checked.
-       * @param alignment - Optional alignment type ('left', 'center', 'right').
-       *                    Defaults to 'center' if not provided.
-       * @param tolerancePercent - Optional tolerance allowed as a percentage of the container's width.
-       *                           Defaults to 5% if not provided.
+       * @param options - Optional object containing alignment and tolerance properties.
        * @returns A {@link Promise} that resolves with the matcher result.
        */
-      toBeHorizontallyAlignedWith(
-        container: Locator,
-        alignment?: HorizontalAlignment,
-        tolerancePercent?: number,
-      ): Promise<R>;
+      toBeHorizontallyAlignedWith(container: Locator, options?: ToBeHorizontallyAlignedWithOptions): Promise<R>;
 
       /**
        * Asserts that the target element is fully contained within the specified container element,
@@ -63,13 +79,14 @@ declare global {
        * are strictly within the bounds of the container, with an optional offset based on a
        * percentage of the container's dimensions.
        *
-       * @param container - The container element as a {@link Locator} within which the element is expected to be fully contained.
-       * @param tolerancePercent - Optional. A percentage of the container's width and height to allow as a margin
-       *                           of tolerance. Defaults to 5% if not provided.
+       * The `options` object may include:
+       * - `tolerancePercent`: Optional tolerance allowed as a percentage of the container's width and height. Defaults to 0% if not provided.
        *
+       * @param container - The container element as a {@link Locator} within which the element is expected to be fully contained.
+       * @param options - Optional object containing tolerance properties.
        * @returns A {@link Promise} that resolves with the matcher result.
        */
-      toBeInside(container: Locator, tolerancePercent?: number): Promise<R>;
+      toBeInside(container: Locator, options?: ToBeInsideOptions): Promise<R>;
 
       /**
        * Asserts that the target element is vertically aligned with the specified container
@@ -84,16 +101,12 @@ declare global {
        * If the container is not present, the assertion will fail and return an error indicating the container could not be found.
        *
        * @param container - The container element as a {@link Locator} relative to which vertical alignment is checked.
-       * @param alignment - Optional alignment type ('top', 'center', 'bottom'). Defaults to 'center' if not provided.
-       * @param tolerancePercent - Optional tolerance allowed as a percentage of the container's height.
-       *                           Defaults to 5% if not provided.
+       * @param options - Optional object containing alignment and tolerance properties:
+       *                  - `alignment`: Optional alignment type ('top', 'center', 'bottom'). Defaults to 'center' if not provided.
+       *                  - `tolerancePercent`: Optional tolerance allowed as a percentage of the container's height. Defaults to 0% if not provided.
        * @returns A {@link Promise} that resolves with the matcher result.
        */
-      toBeVerticallyAlignedWith(
-        container: Locator,
-        alignment?: VerticalAlignment,
-        tolerancePercent?: number,
-      ): Promise<R>;
+      toBeVerticallyAlignedWith(container: Locator, options?: ToBeVerticallyAlignedWithOptions): Promise<R>;
 
       /**
        * Asserts that the target element fits entirely within the bounds of the specified container element.

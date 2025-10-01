@@ -19,11 +19,17 @@ function calculateDeltaY(elementBox: BoundingBox, containerBox: BoundingBox, tol
   return overflowTop + overflowBottom;
 }
 
+export interface ToBeInsideOptions {
+  tolerancePercent?: number;
+}
+
 export async function toBeInside(
   element: Locator,
   container: Locator,
-  tolerancePercent = 0,
+  options: ToBeInsideOptions = {},
 ): Promise<MatcherReturnType> {
+  const { tolerancePercent = 0 } = options;
+
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);
 

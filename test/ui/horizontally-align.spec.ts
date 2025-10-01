@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { HorizontalAlignment } from '@flexpect/index';
 
 import path from 'path';
 
@@ -12,7 +13,8 @@ test.describe('horizontal alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      await expect(element).toBeHorizontallyAlignedWith(container, 'center', 0);
+      const options = { alignment: HorizontalAlignment.Center, tolerancePercent: 0 };
+      await expect(element).toBeHorizontallyAlignedWith(container, options);
     });
 
     test('should detect within tolerance using offset file', async ({ page }) => {
@@ -21,7 +23,8 @@ test.describe('horizontal alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      await expect(element).toBeHorizontallyAlignedWith(container, 'center', 3);
+      const options = { alignment: HorizontalAlignment.Center, tolerancePercent: 3 };
+      await expect(element).toBeHorizontallyAlignedWith(container, options);
     });
 
     test('should reject for left aligned element with zero tolerance', async ({ page }) => {
@@ -30,7 +33,8 @@ test.describe('horizontal alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      await expect(element).not.toBeHorizontallyAlignedWith(container, 'center', 0);
+      const options = { alignment: HorizontalAlignment.Center, tolerancePercent: 0 };
+      await expect(element).not.toBeHorizontallyAlignedWith(container, options);
     });
   });
 
@@ -41,7 +45,8 @@ test.describe('horizontal alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      await expect(element).toBeHorizontallyAlignedWith(container, 'left', 0);
+      const options = { alignment: HorizontalAlignment.Left, tolerancePercent: 0 };
+      await expect(element).toBeHorizontallyAlignedWith(container, options);
     });
 
     test('should detect within tolerance using right offset file', async ({ page }) => {
@@ -50,7 +55,8 @@ test.describe('horizontal alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      await expect(element).toBeHorizontallyAlignedWith(container, 'left', 5);
+      const options = { alignment: HorizontalAlignment.Left, tolerancePercent: 5 };
+      await expect(element).toBeHorizontallyAlignedWith(container, options);
     });
 
     test('should reject for right aligned element with zero tolerance', async ({ page }) => {
@@ -59,7 +65,8 @@ test.describe('horizontal alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      await expect(element).not.toBeHorizontallyAlignedWith(container, 'left', 0);
+      const options = { alignment: HorizontalAlignment.Left, tolerancePercent: 0 };
+      await expect(element).not.toBeHorizontallyAlignedWith(container, options);
     });
   });
 
@@ -70,7 +77,8 @@ test.describe('horizontal alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      await expect(element).toBeHorizontallyAlignedWith(container, 'right', 0);
+      const options = { alignment: HorizontalAlignment.Right, tolerancePercent: 0 };
+      await expect(element).toBeHorizontallyAlignedWith(container, options);
     });
 
     test('should detect within tolerance using left offset file', async ({ page }) => {
@@ -79,7 +87,8 @@ test.describe('horizontal alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      await expect(element).toBeHorizontallyAlignedWith(container, 'right', 5);
+      const options = { alignment: HorizontalAlignment.Right, tolerancePercent: 5 };
+      await expect(element).toBeHorizontallyAlignedWith(container, options);
     });
 
     test('should reject for left aligned element with zero tolerance', async ({ page }) => {
@@ -88,7 +97,8 @@ test.describe('horizontal alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      await expect(element).not.toBeHorizontallyAlignedWith(container, 'right', 0);
+      const options = { alignment: HorizontalAlignment.Right, tolerancePercent: 0 };
+      await expect(element).not.toBeHorizontallyAlignedWith(container, options);
     });
   });
 });
