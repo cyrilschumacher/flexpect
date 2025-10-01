@@ -21,6 +21,10 @@ module.exports = {
             type: 'feat',
             release: 'minor',
           },
+          {
+            type: 'chore',
+            release: false,
+          },
         ],
       },
     ],
