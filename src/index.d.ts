@@ -5,6 +5,8 @@ import { ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-alig
 import { ToBeVerticallyAlignedWithOptions } from './matchers/vertically-align-with';
 import { ToBeInsideOptions } from './matchers/inside';
 
+export {};
+
 declare global {
   namespace PlaywrightTest {
     /**
