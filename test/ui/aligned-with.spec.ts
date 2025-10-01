@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { Alignment, Axis } from '@flexpect/matchers/aligned-with';
 
 import path from 'path';
 
@@ -12,7 +13,7 @@ test.describe('alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { axis: 'horizontal', mode: 'start', tolerancePercent: 1 };
+      const options = { axis: Axis.Horizontal, mode: Alignment.Start, tolerancePercent: 1 };
       await expect(element).toBeAlignedWith(container, options);
     });
 
@@ -22,7 +23,7 @@ test.describe('alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { axis: 'horizontal', mode: 'start', tolerancePercent: 1 };
+      const options = { axis: Axis.Horizontal, mode: Alignment.Start, tolerancePercent: 1 };
       await expect(element).not.toBeAlignedWith(container, options);
     });
   });
@@ -34,7 +35,7 @@ test.describe('alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { axis: 'vertical', mode: 'end', tolerancePercent: 1 };
+      const options = { axis: Axis.Vertical, mode: Alignment.End, tolerancePercent: 1 };
       await expect(element).toBeAlignedWith(container, options);
     });
 
@@ -44,7 +45,7 @@ test.describe('alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { axis: 'vertical', mode: 'end', tolerancePercent: 1 };
+      const options = { axis: Axis.Vertical, mode: Alignment.End, tolerancePercent: 1 };
       await expect(element).not.toBeAlignedWith(container, options);
     });
   });
@@ -56,7 +57,7 @@ test.describe('alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { axis: 'horizontal', mode: 'center', tolerancePercent: 1 };
+      const options = { axis: Axis.Horizontal, mode: Alignment.Center, tolerancePercent: 1 };
       await expect(element).toBeAlignedWith(container, options);
     });
 
@@ -66,7 +67,7 @@ test.describe('alignment detection', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { axis: 'vertical', mode: 'center', tolerancePercent: 1 };
+      const options = { axis: Axis.Vertical, mode: Alignment.Center, tolerancePercent: 1 };
       await expect(element).toBeAlignedWith(container, options);
     });
   });
