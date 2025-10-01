@@ -11,7 +11,7 @@
       "Promise": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"
     },
     "playwright-core": {
-      "Locator": "https://playwright.dev/docs/api/class-locator",
+      "Locator": "https://playwright.dev/docs/api/class-locator"
     }
   }
 }
