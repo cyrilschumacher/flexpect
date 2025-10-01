@@ -21,9 +21,6 @@ module.exports = {
             type: 'feat',
             release: 'minor',
           },
-          {
-            release: false,
-          },
         ],
       },
     ],
