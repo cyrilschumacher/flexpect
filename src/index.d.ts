@@ -4,6 +4,7 @@ import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
 import { ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
 import { ToBeVerticallyAlignedWithOptions } from './matchers/vertically-align-with';
 import { ToBeInsideOptions } from './matchers/inside';
+import { ToHaveSameSizeAsOptions } from './matchers/same-size-as';
 
 export {};
 
@@ -109,6 +110,18 @@ declare global {
        * @returns A {@link Promise} that resolves with the matcher result.
        */
       toBeVerticallyAlignedWith(container: Locator, options?: ToBeVerticallyAlignedWithOptions): Promise<R>;
+
+      /**
+       * Asserts that the target element has the same width and height as the specified container element.
+       *
+       * @param container - A `Locator` representing the element to compare size with.
+       * @param options - Optional configuration to customize the comparison behavior.
+       * @returns A `Promise<R>` that resolves when the assertion is complete.
+       *
+       * @example
+       * await expect(locator).toHaveSameSizeAs(parentLocator);
+       */
+      toHaveSameSizeAs(container: Locator, options?: ToHaveSameSizeAsOptions): Promise<R>;
 
       /**
        * Asserts that the target element fits entirely within the bounds of the specified container element.
