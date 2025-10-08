@@ -1,8 +1,9 @@
-import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
-import { toBeVerticallyAlignedWith, VerticalAlignment } from '@flexpect/matchers/vertically-align-with';
 import { describe, it, jest } from '@jest/globals';
 import { expect, Locator } from '@playwright/test';
 import { when } from 'jest-when';
+
+import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
+import { toBeVerticallyAlignedWith, VerticalAlignment } from '@flexpect/matchers/vertically-align-with';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 
