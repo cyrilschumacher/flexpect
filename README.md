@@ -4,6 +4,7 @@
 [![CI][ci-image]][ci-url]
 [![Release][release-image]][release-url]
 [![semantic-release: angular][semantic-release-image]][semantic-release-url]
+[![Documentation][Documentation-image]][Documentation-url]
 
 > Automated layout validation tool using Playwright. Ensures responsive design accuracy across multiple viewports by inspecting element positions and visual alignment.
 
@@ -57,6 +58,8 @@ await expect(cardA).toHaveSameWidthAs(cardB, { tolerancePercent: 1 });
 
 See the `test` folder for full test files and fixtures.
 
+For detailed documentation on all available matchers and their usage, please visit the [documentation](https://cyrilschumacher.github.io/flexpect/).
+
 ## Contributing
 
 Contributions welcome. Workflow:
@@ -80,3 +83,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [release-url]: https://github.com/cyrilschumacher/flexpect/actions/workflows/release.yml
 [semantic-release-image]: https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release
 [semantic-release-url]: https://github.com/semantic-release/semantic-release
+[documentation-image]: https://img.shields.io/badge/documentation-available-blue
+[documentation-url]: https://cyrilschumacher.github.io/flexpect/
