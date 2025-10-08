@@ -30,8 +30,7 @@ declare global {
        * according to the provided alignment options.
        *
        * @param container - The container element as a {@link Locator} relative to which alignment is checked.
-       * @param options - Optional centering options. See {@link ToBeAlignedWithOptions} for available properties,
-       *                  such as `tolerancePercent` (defaults to 0% if not provided).
+       * @param options - Optional alignment options.
        * @returns A {@link Promise} that resolves with the matcher result.
        *
        * @example
@@ -41,6 +40,10 @@ declare global {
        *   mode: AlignmentMode.Center,
        *   tolerancePercent: 2
        * });
+       *
+       * @example
+       * // Checks that the button is aligned with its parent using default alignment options
+       * await expect(buttonLocator).toBeAlignedWith(parentLocator);
        */
       toBeAlignedWith(container: Locator, options?: ToBeAlignedWithOptions): Promise<R>;
 
@@ -49,9 +52,15 @@ declare global {
        * within the specified container element.
        *
        * @param container - The container element as a {@link Locator} relative to which centering is checked.
-       * @param options - Optional centering options. See {@link ToBeFullyCenteredOptions} for available properties,
-       *                  such as `tolerancePercent` (defaults to 0% if not provided).
+       * @param options - Optional centering options.
        * @returns A {@link Promise} that resolves with the matcher result.
+       *
+       * @example
+       * // Check that a modal is perfectly centered within the viewport, allowing a 2% margin
+       * const parentLocator = page.locator('#parent');
+       * await expect(modalLocator).toBeFullyCentered(parentLocator, {
+       *   tolerancePercent: 2
+       * });
        */
       toBeFullyCentered(container: Locator, options?: ToBeFullyCenteredOptions): Promise<R>;
 
@@ -59,18 +68,20 @@ declare global {
        * Asserts that the target element is horizontally aligned with the specified container
        * according to the given alignment type.
        *
-       * Alignment types:
-       * - 'left': The left edges of the target and container are equal within the tolerance.
-       * - 'center': The horizontal centers of the target and container are equal within the tolerance.
-       * - 'right': The right edges of the target and container are equal within the tolerance.
-       *
-       * The `options` object may include:
-       * - `alignment`: Optional alignment type ('left', 'center', 'right'). Defaults to 'center' if not provided.
-       * - `tolerancePercent`: Optional tolerance allowed as a percentage of the container's width. Defaults to 5% if not provided.
-       *
        * @param container - The container element as a {@link Locator} relative to which horizontal alignment is checked.
-       * @param options - Optional object containing alignment and tolerance properties.
+       * @param options - Optional alignment options.
        * @returns A {@link Promise} that resolves with the matcher result.
+       *
+       * @example
+       * // Assert that a button is left-aligned with its card container, allowing 3% horizontal tolerance
+       * await expect(buttonLocator).toBeHorizontallyAlignedWith(parentLocator, {
+       *   alignment: Alignment.Left,
+       *   tolerancePercent: 3
+       * });
+       *
+       * @example
+       * // Assert that a button is horizontally centered with its card container (default options)
+       * await expect(buttonLocator).toBeHorizontallyAlignedWith(parentLocator);
        */
       toBeHorizontallyAlignedWith(container: Locator, options?: ToBeHorizontallyAlignedWithOptions): Promise<R>;
 
@@ -82,12 +93,19 @@ declare global {
        * are strictly within the bounds of the container, with an optional offset based on a
        * percentage of the container's dimensions.
        *
-       * The `options` object may include:
-       * - `tolerancePercent`: Optional tolerance allowed as a percentage of the container's width and height. Defaults to 0% if not provided.
-       *
        * @param container - The container element as a {@link Locator} within which the element is expected to be fully contained.
-       * @param options - Optional object containing tolerance properties.
+       * @param options - Optional containment options.
        * @returns A {@link Promise} that resolves with the matcher result.
+       *
+       * @example
+       * // Verify that the modal content is fully inside its container with a 2% tolerance
+       * await expect(modalContentLocator).toBeInside(parentLocator, {
+       *   tolerancePercent: 2
+       * });
+       *
+       * @example
+       * // Verify that the modal content is strictly inside its container without any tolerance
+       * await expect(modalContentLocator).toBeInside(parentLocator);
        */
       toBeInside(container: Locator, options?: ToBeInsideOptions): Promise<R>;
 
@@ -95,19 +113,20 @@ declare global {
        * Asserts that the target element is vertically aligned with the specified container
        * according to the given alignment type.
        *
-       * Alignment types:
-       * - 'top': The top edges of the target and container are equal within the tolerance.
-       * - 'center': The vertical centers of the target and container are equal within the tolerance.
-       * - 'bottom': The bottom edges of the target and container are equal within the tolerance.
-       *
-       * If the `alignment` parameter is omitted, it defaults to `'center'`.
-       * If the container is not present, the assertion will fail and return an error indicating the container could not be found.
-       *
        * @param container - The container element as a {@link Locator} relative to which vertical alignment is checked.
-       * @param options - Optional object containing alignment and tolerance properties:
-       *                  - `alignment`: Optional alignment type ('top', 'center', 'bottom'). Defaults to 'center' if not provided.
-       *                  - `tolerancePercent`: Optional tolerance allowed as a percentage of the container's height. Defaults to 0% if not provided.
+       * @param options - Optional size comparison options.
        * @returns A {@link Promise} that resolves with the matcher result.
+       *
+       * @example
+       * // Check that a header is bottom-aligned with its section container, allowing a 2% vertical tolerance
+       * await expect(headerLocator).toBeVerticallyAlignedWith(parentLocator, {
+       *   alignment: 'bottom',
+       *   tolerancePercent: 2
+       * });
+       *
+       * @example
+       * // Check that a header is vertically centered within its section container (default options)
+       * await expect(headerLocator).toBeVerticallyAlignedWith(parentLocator);
        */
       toBeVerticallyAlignedWith(container: Locator, options?: ToBeVerticallyAlignedWithOptions): Promise<R>;
 
@@ -130,6 +149,9 @@ declare global {
        *
        * @param container - The container element as a {@link Locator} within which the element is expected to fit.
        * @returns A {@link Promise} that resolves with the matcher result.
+       *
+       * @example
+       * await expect(locator).toFitContainer(parentLocator);
        */
       toFitContainer(container: Locator): Promise<R>;
     }
