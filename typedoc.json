@@ -6,6 +6,19 @@
   "excludePrivate": true,
   "excludeInternal": true,
   "theme": "default",
+  "requiredToBeDocumented": [
+    "Enum",
+    "EnumMember",
+    "Variable",
+    "Function",
+    "Class",
+    "Interface",
+    "Property",
+    "Method",
+    "Accessor",
+    "TypeAlias"
+  ],
+  "treatValidationWarningsAsErrors": true,
   "externalSymbolLinkMappings": {
     "typescript": {
       "Promise": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"
