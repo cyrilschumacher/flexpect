@@ -1,10 +1,13 @@
+import { toFitContainer } from '@flexpect';
 import { expect, test } from '@playwright/test';
 
 import path from 'path';
 
-import '@flexpect';
-
 test.describe('fit container detection', () => {
+  test.beforeAll(() => {
+    expect.extend({ toFitContainer });
+  });
+
   test('should detect element that fits container', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/fit-container/fits-container.html');
     await page.goto(`file://${htmlPath}`);

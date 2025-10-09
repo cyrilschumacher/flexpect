@@ -1,10 +1,13 @@
+import { toBeFullyCentered } from '@flexpect';
 import { expect, test } from '@playwright/test';
 
 import path from 'path';
 
-import '@flexpect';
-
 test.describe('fully centered detection', () => {
+  test.beforeAll(() => {
+    expect.extend({ toBeFullyCentered });
+  });
+
   test('should detect vertical and horizontal center alignment with zero tolerance', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/fully-centered/center.html');
     await page.goto(`file://${htmlPath}`);

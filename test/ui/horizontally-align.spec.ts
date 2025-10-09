@@ -1,11 +1,15 @@
 import { expect, test } from '@playwright/test';
-import { HorizontalAlignment } from '@flexpect/index';
+
+import { toBeHorizontallyAlignedWith } from '@flexpect';
+import { HorizontalAlignment } from '@flexpect/matchers/horizontally-align-with';
 
 import path from 'path';
 
-import '@flexpect';
-
 test.describe('horizontal alignment detection', () => {
+  test.beforeAll(() => {
+    expect.extend({ toBeHorizontallyAlignedWith });
+  });
+
   test.describe('center alignment', () => {
     test('should detect with zero tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/center.html');
