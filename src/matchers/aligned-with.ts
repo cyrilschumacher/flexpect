@@ -90,6 +90,26 @@ export interface ToBeAlignedWithOptions {
   tolerancePercent?: number;
 }
 
+/**
+ * Asserts that the target element is aligned with the specified container element
+ * according to the provided alignment options.
+ *
+ * @param container - The container element as a {@link Locator} relative to which alignment is checked.
+ * @param options - Optional alignment options.
+ * @returns A {@link Promise} that resolves with the matcher result.
+ *
+ * @example
+ * // Checks that the button is horizontally centered with its parent within 2% tolerance
+ * await expect(buttonLocator).toBeAlignedWith(parentLocator, {
+ *   axis: Alignment.Horizontal,
+ *   mode: AlignmentMode.Center,
+ *   tolerancePercent: 2
+ * });
+ *
+ * @example
+ * // Checks that the button is aligned with its parent using default alignment options
+ * await expect(buttonLocator).toBeAlignedWith(parentLocator);
+ */
 export async function toBeAlignedWith(
   element: Locator,
   container: Locator,

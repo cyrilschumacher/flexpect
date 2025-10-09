@@ -79,6 +79,25 @@ export interface ToBeHorizontallyAlignedWithOptions {
   tolerancePercent?: number;
 }
 
+/**
+ * Asserts that the target element is horizontally aligned with the specified container
+ * according to the given alignment type.
+ *
+ * @param container - The container element as a {@link Locator} relative to which horizontal alignment is checked.
+ * @param options - Optional alignment options.
+ * @returns A {@link Promise} that resolves with the matcher result.
+ *
+ * @example
+ * // Assert that a button is left-aligned with its card container, allowing 3% horizontal tolerance
+ * await expect(buttonLocator).toBeHorizontallyAlignedWith(parentLocator, {
+ *   alignment: Alignment.Left,
+ *   tolerancePercent: 3
+ * });
+ *
+ * @example
+ * // Assert that a button is horizontally centered with its card container (default options)
+ * await expect(buttonLocator).toBeHorizontallyAlignedWith(parentLocator);
+ */
 export async function toBeHorizontallyAlignedWith(
   element: Locator,
   container: Locator,

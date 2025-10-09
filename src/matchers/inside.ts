@@ -37,6 +37,28 @@ export interface ToBeInsideOptions {
   tolerancePercent?: number;
 }
 
+/**
+ * Asserts that the target element is fully contained within the specified container element,
+ * allowing for an optional margin of tolerance.
+ *
+ * The check ensures that all sides of the target element (top, bottom, left, right)
+ * are strictly within the bounds of the container, with an optional offset based on a
+ * percentage of the container's dimensions.
+ *
+ * @param container - The container element as a {@link Locator} within which the element is expected to be fully contained.
+ * @param options - Optional containment options.
+ * @returns A {@link Promise} that resolves with the matcher result.
+ *
+ * @example
+ * // Verify that the modal content is fully inside its container with a 2% tolerance
+ * await expect(modalContentLocator).toBeInside(parentLocator, {
+ *   tolerancePercent: 2
+ * });
+ *
+ * @example
+ * // Verify that the modal content is strictly inside its container without any tolerance
+ * await expect(modalContentLocator).toBeInside(parentLocator);
+ */
 export async function toBeInside(
   element: Locator,
   container: Locator,
