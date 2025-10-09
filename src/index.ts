@@ -1,11 +1,10 @@
-import { expect, Locator } from '@playwright/test';
+import { Locator } from '@playwright/test';
 
-import { toBeAlignedWith, ToBeAlignedWithOptions } from './matchers/aligned-with';
-import { toFitContainer } from './matchers/fit-container';
-import { toBeFullyCentered, ToBeFullyCenteredOptions } from './matchers/fully-centered';
-import { toBeHorizontallyAlignedWith, ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
-import { toBeInside, ToBeInsideOptions } from './matchers/inside';
-import { toBeVerticallyAlignedWith, ToBeVerticallyAlignedWithOptions } from './matchers/vertically-align-with';
+import { ToBeAlignedWithOptions } from './matchers/aligned-with';
+import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
+import { ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
+import { ToBeInsideOptions } from './matchers/inside';
+import { ToBeVerticallyAlignedWithOptions } from './matchers/vertically-align-with';
 
 declare global {
   namespace PlaywrightTest {
@@ -34,12 +33,9 @@ declare global {
   }
 }
 
-
-expect.extend({
-  toBeAlignedWith,
-  toBeFullyCentered,
-  toBeHorizontallyAlignedWith,
-  toBeInside,
-  toBeVerticallyAlignedWith,
-  toFitContainer,
-});
+export { toBeAlignedWith } from './matchers/aligned-with';
+export { toFitContainer } from './matchers/fit-container';
+export { toBeFullyCentered } from './matchers/fully-centered';
+export { toBeHorizontallyAlignedWith } from './matchers/horizontally-align-with';
+export { toBeInside } from './matchers/inside';
+export { toBeVerticallyAlignedWith } from './matchers/vertically-align-with';
