@@ -7,6 +7,10 @@ import { ToBeInsideOptions } from './matchers/inside';
 import { ToBeVerticallyAlignedWithOptions } from './matchers/vertically-align-with';
 
 declare global {
+  // Disabling the no-namespace rule to allow global type augmentation for Playwright custom matchers,
+  // as module augmentation attempts resulted in persistent TypeScript errors (e.g., TS2339, TS2300).
+  // This approach ensures compatibility with the current Playwright type definitions while maintaining functionality.
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace PlaywrightTest {
     /**
      * Provides a set of assertion matchers for verifying the spatial relationship and alignment
