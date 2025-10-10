@@ -101,8 +101,8 @@ export interface ToBeAlignedWithOptions {
  * @example
  * // Checks that the button is horizontally centered with its parent within 2% tolerance
  * await expect(buttonLocator).toBeAlignedWith(parentLocator, {
- *   axis: Alignment.Horizontal,
- *   mode: AlignmentMode.Center,
+ *   axis: Axis.Horizontal,
+ *   mode: Alignment.Center,
  *   tolerancePercent: 2
  * });
  *

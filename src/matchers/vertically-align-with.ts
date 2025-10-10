@@ -90,7 +90,7 @@ export interface ToBeVerticallyAlignedWithOptions {
  * @example
  * // Check that a header is bottom-aligned with its section container, allowing a 2% vertical tolerance
  * await expect(headerLocator).toBeVerticallyAlignedWith(parentLocator, {
- *   alignment: 'bottom',
+ *   alignment: VerticalAlignment.Bottom,
  *   tolerancePercent: 2
  * });
  *

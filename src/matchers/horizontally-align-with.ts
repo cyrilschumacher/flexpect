@@ -90,7 +90,7 @@ export interface ToBeHorizontallyAlignedWithOptions {
  * @example
  * // Assert that a button is left-aligned with its card container, allowing 3% horizontal tolerance
  * await expect(buttonLocator).toBeHorizontallyAlignedWith(parentLocator, {
- *   alignment: Alignment.Left,
+ *   alignment: HorizontalAlignment.Left,
  *   tolerancePercent: 3
  * });
  *
