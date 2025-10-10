@@ -1,10 +1,13 @@
+import { toBeInside } from '@flexpect';
 import { expect, test } from '@playwright/test';
 
 import path from 'path';
 
-import '@flexpect';
-
 test.describe('inside detection', () => {
+  test.beforeAll(() => {
+    expect.extend({ toBeInside });
+  });
+
   test('should detect when element is fully inside container with zero tolerance', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/inside/inside.html');
     await page.goto(`file://${htmlPath}`);

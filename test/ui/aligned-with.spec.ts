@@ -1,11 +1,15 @@
-import { expect, test } from '@playwright/test';
 import { Alignment, Axis } from '@flexpect/matchers/aligned-with';
+import { expect, test } from '@playwright/test';
+
+import { toBeAlignedWith } from '@flexpect';
 
 import path from 'path';
 
-import '@flexpect';
-
 test.describe('alignment detection', () => {
+  test.beforeAll(() => {
+    expect.extend({ toBeAlignedWith });
+  });
+
   test.describe('Horizontal alignment detection', () => {
     test('should detect horizontal start alignment', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/aligned-with/horizontal-start.html');

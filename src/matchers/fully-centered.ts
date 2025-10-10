@@ -12,10 +12,36 @@ function isWithinTolerance(valueA: number, valueB: number, tolerance: number): b
   return Math.abs(valueA - valueB) <= tolerance;
 }
 
+/**
+ * Options for the `toBeFullyCentered` matcher.
+ */
 export interface ToBeFullyCenteredOptions {
+  /**
+   * Allowed tolerance for the centering difference expressed as a percentage (%).
+   *
+   * The matcher will pass if the element is centered within this percentage
+   * tolerance relative to the container or reference element.
+   *
+   * @default 0
+   */
   tolerancePercent?: number;
 }
 
+/**
+ * Asserts that the target element is fully centered both horizontally and vertically
+ * within the specified container element.
+ *
+ * @param container - The container element as a {@link Locator} relative to which centering is checked.
+ * @param options - Optional centering options.
+ * @returns A {@link Promise} that resolves with the matcher result.
+ *
+ * @example
+ * // Check that a modal is perfectly centered within the viewport, allowing a 2% margin
+ * const parentLocator = page.locator('#parent');
+ * await expect(modalLocator).toBeFullyCentered(parentLocator, {
+ *   tolerancePercent: 2
+ * });
+ */
 export async function toBeFullyCentered(
   element: Locator,
   container: Locator,
@@ -37,13 +63,14 @@ export async function toBeFullyCentered(
     return { pass: true, message: () => 'Element is fully centered within container.' };
   }
 
-  const message = () => {
-    const horizontalOffset = Math.abs(containerCenter.x - elementCenter.x);
-    const verticalOffset = Math.abs(containerCenter.y - elementCenter.y);
-    return `Expected element to be centered within container (±${tolerancePercent}%), but:
+  return {
+    pass: false,
+    message: () => {
+      const horizontalOffset = Math.abs(containerCenter.x - elementCenter.x);
+      const verticalOffset = Math.abs(containerCenter.y - elementCenter.y);
+      return `Expected element to be centered within container (±${tolerancePercent}%), but:
 - Horizontal offset: ${horizontalOffset.toFixed(2)}px (tolerance: ±${horizontalTolerance.toFixed(2)}px)
 - Vertical offset: ${verticalOffset.toFixed(2)}px (tolerance: ±${verticalTolerance.toFixed(2)}px)`;
+    },
   };
-
-  return { pass: false, message };
 }

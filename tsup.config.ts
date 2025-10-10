@@ -5,7 +5,7 @@ export default defineConfig({
   format: ['esm'],
   dts: true,
   clean: true,
-  sourcemap: true,
-  minify: false,
+  sourcemap: false,
+  minify: true,
   external: ['playwright-core'],
 });

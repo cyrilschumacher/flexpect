@@ -57,22 +57,59 @@ export enum Axis {
 }
 
 /**
- * Represents the possible axes for alignment operations.
- *
- * @remarks
- * This enum is used to specify whether an alignment should be performed
- * horizontally or vertically.
- *
- * @enum {string}
- * @property {string} Horizontal - Represents the horizontal axis.
- * @property {string} Vertical - Represents the vertical axis.
+ * Options for the `toBeAlignedWith` matcher.
  */
 export interface ToBeAlignedWithOptions {
+  /**
+   * The axis along which the alignment should be checked.
+   *
+   * - `'horizontal'` for horizontal alignment.
+   * - `'vertical'` for vertical alignment.
+   *
+   * @default Axis.Horizontal
+   */
   axis?: Axis;
+
+  /**
+   * The alignment mode to use.
+   *
+   * Determines which edge or point of the element should be aligned.
+   * Possible values are `'start'`, `'center'`, or `'end'`.
+   *
+   * @default Alignment.Center
+   */
   mode?: Alignment;
+
+  /**
+   * Allowed tolerance for the alignment expressed as a percentage (%).
+   *
+   * The matcher will pass if the alignment difference is within this percentage of the reference size.
+   *
+   * @default 0
+   */
   tolerancePercent?: number;
 }
 
+/**
+ * Asserts that the target element is aligned with the specified container element
+ * according to the provided alignment options.
+ *
+ * @param container - The container element as a {@link Locator} relative to which alignment is checked.
+ * @param options - Optional alignment options.
+ * @returns A {@link Promise} that resolves with the matcher result.
+ *
+ * @example
+ * // Checks that the button is horizontally centered with its parent within 2% tolerance
+ * await expect(buttonLocator).toBeAlignedWith(parentLocator, {
+ *   axis: Axis.Horizontal,
+ *   mode: Alignment.Center,
+ *   tolerancePercent: 2
+ * });
+ *
+ * @example
+ * // Checks that the button is aligned with its parent using default alignment options
+ * await expect(buttonLocator).toBeAlignedWith(parentLocator);
+ */
 export async function toBeAlignedWith(
   element: Locator,
   container: Locator,

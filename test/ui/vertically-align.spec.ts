@@ -1,11 +1,15 @@
 import { expect, test } from '@playwright/test';
 
+import { toBeVerticallyAlignedWith } from '@flexpect';
+import { VerticalAlignment } from '@flexpect/matchers/vertically-align-with';
+
 import path from 'path';
 
-import '@flexpect';
-import { VerticalAlignment } from '@flexpect';
-
 test.describe('vertical alignment detection', () => {
+  test.beforeAll(() => {
+    expect.extend({ toBeVerticallyAlignedWith });
+  });
+
   test('should detect top alignment with zero tolerance', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/vertically-align/top.html');
     await page.goto(`file://${htmlPath}`);

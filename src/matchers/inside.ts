@@ -19,10 +19,46 @@ function calculateDeltaY(elementBox: BoundingBox, containerBox: BoundingBox, tol
   return overflowTop + overflowBottom;
 }
 
+/**
+ * Options for the `toBeInside` matcher.
+ */
 export interface ToBeInsideOptions {
+  /**
+   * Allowed tolerance for the containment check, expressed as a percentage (%) of the container's width.
+   *
+   * This value defines the margin by which the target element can extend beyond the container's horizontal boundaries
+   * while still being considered "inside". For example, a tolerancePercent of 5 allows the element to exceed
+   * the container's width by up to 5% without failing the assertion.
+   *
+   * If omitted, the default is `0`, meaning strict containment with no allowed overflow.
+   *
+   * @default 0
+   */
   tolerancePercent?: number;
 }
 
+/**
+ * Asserts that the target element is fully contained within the specified container element,
+ * allowing for an optional margin of tolerance.
+ *
+ * The check ensures that all sides of the target element (top, bottom, left, right)
+ * are strictly within the bounds of the container, with an optional offset based on a
+ * percentage of the container's dimensions.
+ *
+ * @param container - The container element as a {@link Locator} within which the element is expected to be fully contained.
+ * @param options - Optional containment options.
+ * @returns A {@link Promise} that resolves with the matcher result.
+ *
+ * @example
+ * // Verify that the modal content is fully inside its container with a 2% tolerance
+ * await expect(modalContentLocator).toBeInside(parentLocator, {
+ *   tolerancePercent: 2
+ * });
+ *
+ * @example
+ * // Verify that the modal content is strictly inside its container without any tolerance
+ * await expect(modalContentLocator).toBeInside(parentLocator);
+ */
 export async function toBeInside(
   element: Locator,
   container: Locator,
@@ -40,7 +76,9 @@ export async function toBeInside(
     return { pass: true, message: () => 'Element is properly inside the container.' };
   }
 
-  const message = () =>
-    `Expected element to be fully inside the container within ${tolerancePercent}% tolerance (±${tolerance.toFixed(2)}px), but received overflows: horizontal = ${deltaX.toFixed(2)}px, vertical = ${deltaY.toFixed(2)}px.`;
-  return { pass: false, message };
+  return {
+    pass: false,
+    message: () =>
+      `Expected element to be fully inside the container within ${tolerancePercent}% tolerance (±${tolerance.toFixed(2)}px), but received overflows: horizontal = ${deltaX.toFixed(2)}px, vertical = ${deltaY.toFixed(2)}px.`,
+  };
 }
