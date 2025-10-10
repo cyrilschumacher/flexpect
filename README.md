@@ -4,7 +4,8 @@
 [![CI][ci-image]][ci-url]
 [![Release][release-image]][release-url]
 [![semantic-release: angular][semantic-release-image]][semantic-release-url]
-[![Documentation][Documentation-image]][Documentation-url]
+[![Documentation][documentation-image]][documentation-url]
+[![codecov][codecov-image]][codecov-url]
 
 > Automated layout validation tool using Playwright. Ensures responsive design accuracy across multiple viewports by inspecting element positions and visual alignment.
 
@@ -85,3 +86,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [semantic-release-url]: https://github.com/semantic-release/semantic-release
 [documentation-image]: https://img.shields.io/badge/documentation-available-blue
 [documentation-url]: https://cyrilschumacher.github.io/flexpect/
+[codecov-image]: https://codecov.io/gh/cyrilschumacher/flexpect/graph/badge.svg?token=RTYOKUQF7Z
+[codecov-url]: https://codecov.io/gh/cyrilschumacher/flexpect
