@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/cyrilschumacher/flexpect/compare/v0.8.0...v0.9.0) (2025-10-11)
+
+
+### Features
+
+* implement `toHaveAspectRatio` matcher ([#20](https://github.com/cyrilschumacher/flexpect/issues/20)) ([2d707da](https://github.com/cyrilschumacher/flexpect/commit/2d707dacaa2dc6738b80d0c84c7dc778ac178338))
+
 # [0.8.0](https://github.com/cyrilschumacher/flexpect/compare/v0.7.0...v0.8.0) (2025-10-11)
 
 
