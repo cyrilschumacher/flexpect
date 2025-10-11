@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 import path from 'path';
 
-test.describe('inside detection', () => {
+test.describe('toBeInside matcher', () => {
   test.beforeAll(() => {
     expect.extend({ toBeInside });
   });

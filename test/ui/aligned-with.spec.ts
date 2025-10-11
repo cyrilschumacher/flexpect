@@ -5,12 +5,12 @@ import { toBeAlignedWith } from '@flexpect';
 
 import path from 'path';
 
-test.describe('alignment detection', () => {
+test.describe('toBeAlignedWith matcher', () => {
   test.beforeAll(() => {
     expect.extend({ toBeAlignedWith });
   });
 
-  test.describe('Horizontal alignment detection', () => {
+  test.describe('Horizontal alignment', () => {
     test('should detect horizontal start alignment', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/aligned-with/horizontal-start.html');
       await page.goto(`file://${htmlPath}`);
@@ -32,7 +32,7 @@ test.describe('alignment detection', () => {
     });
   });
 
-  test.describe('Vertical alignment detection', () => {
+  test.describe('Vertical alignment', () => {
     test('should detect vertical end alignment', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/aligned-with/vertical-end.html');
       await page.goto(`file://${htmlPath}`);
@@ -54,7 +54,7 @@ test.describe('alignment detection', () => {
     });
   });
 
-  test.describe('Center alignment detection', () => {
+  test.describe('Center alignment', () => {
     test('should detect horizontal center alignment', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/aligned-with/horizontal-center.html');
       await page.goto(`file://${htmlPath}`);

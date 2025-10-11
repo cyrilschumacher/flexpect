@@ -5,12 +5,12 @@ import { HorizontalAlignment } from '@flexpect/matchers/horizontally-align-with'
 
 import path from 'path';
 
-test.describe('horizontal alignment detection', () => {
+test.describe('toBeHorizontallyAlignedWith matcher', () => {
   test.beforeAll(() => {
     expect.extend({ toBeHorizontallyAlignedWith });
   });
 
-  test.describe('center alignment', () => {
+  test.describe('Center alignment', () => {
     test('should detect with zero tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/center.html');
       await page.goto(`file://${htmlPath}`);
@@ -42,7 +42,7 @@ test.describe('horizontal alignment detection', () => {
     });
   });
 
-  test.describe('left alignment', () => {
+  test.describe('Left alignment', () => {
     test('should detect with zero tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/left.html');
       await page.goto(`file://${htmlPath}`);
@@ -74,7 +74,7 @@ test.describe('horizontal alignment detection', () => {
     });
   });
 
-  test.describe('right alignment', () => {
+  test.describe('Right alignment', () => {
     test('should detect with zero tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/right.html');
       await page.goto(`file://${htmlPath}`);
