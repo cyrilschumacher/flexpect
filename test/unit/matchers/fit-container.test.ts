@@ -1,8 +1,9 @@
-import { toFitContainer } from '@flexpect/matchers/fit-container';
-import { BoundingBox, getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
 import { describe, it, jest } from '@jest/globals';
 import { expect, Locator } from '@playwright/test';
 import { when } from 'jest-when';
+
+import { toFitContainer } from '@flexpect/matchers/fit-container';
+import { BoundingBox, getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 

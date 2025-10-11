@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 import path from 'path';
 
-test.describe('fully centered detection', () => {
+test.describe('toBeFullyCentered matcher', () => {
   test.beforeAll(() => {
     expect.extend({ toBeFullyCentered });
   });

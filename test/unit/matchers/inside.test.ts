@@ -1,8 +1,9 @@
-import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
-import { toBeInside } from '@flexpect/matchers/inside';
 import { describe, it, jest } from '@jest/globals';
 import { Locator, expect } from '@playwright/test';
 import { when } from 'jest-when';
+
+import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
+import { toBeInside } from '@flexpect/matchers/inside';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 

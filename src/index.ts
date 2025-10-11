@@ -4,6 +4,7 @@ import { ToBeAlignedWithOptions } from './matchers/aligned-with';
 import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
 import { ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
 import { ToBeInsideOptions } from './matchers/inside';
+import { ToHaveSameSizeAsOptions } from './matchers/same-size-as';
 import { ToBeVerticallyAlignedWithOptions } from './matchers/vertically-align-with';
 
 declare global {
@@ -33,6 +34,7 @@ declare global {
       toBeInside(container: Locator, options?: ToBeInsideOptions): Promise<R>;
       toBeVerticallyAlignedWith(container: Locator, options?: ToBeVerticallyAlignedWithOptions): Promise<R>;
       toFitContainer(container: Locator): Promise<R>;
+      toHaveSameSizeAs(container: Locator, options?: ToHaveSameSizeAsOptions): Promise<R>;
     }
   }
 }
@@ -42,4 +44,5 @@ export { toFitContainer } from './matchers/fit-container';
 export { toBeFullyCentered } from './matchers/fully-centered';
 export { toBeHorizontallyAlignedWith } from './matchers/horizontally-align-with';
 export { toBeInside } from './matchers/inside';
+export { toHaveSameSizeAs } from './matchers/same-size-as';
 export { toBeVerticallyAlignedWith } from './matchers/vertically-align-with';

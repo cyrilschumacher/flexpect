@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 import path from 'path';
 
-test.describe('fit container detection', () => {
+test.describe('toFitContainer matcher', () => {
   test.beforeAll(() => {
     expect.extend({ toFitContainer });
   });
