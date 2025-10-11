@@ -31,14 +31,16 @@ jobs:
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.CI_GITHUB_TOKEN }}
-
   build-docs:
+    name: Generate and Upload Documentation
     needs: release
     runs-on: ubuntu-latest
-    if: ${{ needs.release.result == 'success' }}
-    name: Generate and Upload Documentation
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout latest commit after semantic-release
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
@@ -49,7 +51,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs
-
   deploy-docs:
     needs: build-docs
     runs-on: ubuntu-latest
