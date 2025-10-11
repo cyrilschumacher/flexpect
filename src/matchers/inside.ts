@@ -20,7 +20,7 @@ function calculateDeltaY(elementBox: BoundingBox, containerBox: BoundingBox, tol
 }
 
 /**
- * Options for the `toBeInside` matcher.
+ * Options for the {@link toBeInside} matcher.
  */
 export interface ToBeInsideOptions {
   /**

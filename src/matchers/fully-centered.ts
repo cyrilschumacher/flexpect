@@ -13,7 +13,7 @@ function isWithinTolerance(valueA: number, valueB: number, tolerance: number): b
 }
 
 /**
- * Options for the `toBeFullyCentered` matcher.
+ * Options for the {@link toBeFullyCentered} matcher.
  */
 export interface ToBeFullyCenteredOptions {
   /**

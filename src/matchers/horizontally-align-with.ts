@@ -49,7 +49,7 @@ export enum HorizontalAlignment {
 }
 
 /**
- * Options for the `toBeHorizontallyAlignedWith` matcher.
+ * Options for the {@link toBeHorizontallyAlignedWith} matcher.
  */
 export interface ToBeHorizontallyAlignedWithOptions {
   /**

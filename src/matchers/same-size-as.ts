@@ -2,7 +2,7 @@ import { Locator, MatcherReturnType } from '@playwright/test';
 import { getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
 
 /**
- * Options for the `toHaveSameSizeAs` matcher.
+ * Options for the {@link toHaveSameSizeAs} matcher.
  */
 export interface ToHaveSameSizeAsOptions {
   /**

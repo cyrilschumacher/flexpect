@@ -49,7 +49,7 @@ export enum VerticalAlignment {
 }
 
 /**
- * Options for the `toBeVerticallyAlignedWith` matcher.
+ * Options for the {@link toBeVerticallyAlignedWith} matcher.
  */
 export interface ToBeVerticallyAlignedWithOptions {
   /**

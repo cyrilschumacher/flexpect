@@ -57,7 +57,7 @@ export enum Axis {
 }
 
 /**
- * Options for the `toBeAlignedWith` matcher.
+ * Options for the {@link toBeAlignedWith} matcher.
  */
 export interface ToBeAlignedWithOptions {
   /**
