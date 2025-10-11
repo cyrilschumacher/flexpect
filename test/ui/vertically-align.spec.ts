@@ -17,8 +17,8 @@ test.describe('toBeVerticallyAlignedWith matcher', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { alignment: VerticalAlignment.Top, tolerancePercent: 0 };
-      await expect(element).toBeVerticallyAlignedWith(container, options);
+      const options = { tolerancePercent: 0 };
+      await expect(element).toBeVerticallyAlignedWith(container, VerticalAlignment.Top, options);
     });
 
     test('should fail top alignment on bottom aligned element', async ({ page }) => {
@@ -27,8 +27,8 @@ test.describe('toBeVerticallyAlignedWith matcher', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { alignment: VerticalAlignment.Top, tolerancePercent: 0 };
-      await expect(element).not.toBeVerticallyAlignedWith(container, options);
+      const options = { tolerancePercent: 0 };
+      await expect(element).not.toBeVerticallyAlignedWith(container, VerticalAlignment.Top, options);
     });
 
     test('should detect top alignment within tolerance', async ({ page }) => {
@@ -37,8 +37,8 @@ test.describe('toBeVerticallyAlignedWith matcher', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { alignment: VerticalAlignment.Top, tolerancePercent: 5 };
-      await expect(element).toBeVerticallyAlignedWith(container, options);
+      const options = { tolerancePercent: 5 };
+      await expect(element).toBeVerticallyAlignedWith(container, VerticalAlignment.Top, options);
     });
   });
 
@@ -49,8 +49,8 @@ test.describe('toBeVerticallyAlignedWith matcher', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { alignment: VerticalAlignment.Bottom, tolerancePercent: 0 };
-      await expect(element).toBeVerticallyAlignedWith(container, options);
+      const options = { tolerancePercent: 0 };
+      await expect(element).toBeVerticallyAlignedWith(container, VerticalAlignment.Bottom, options);
     });
 
     test('should fail bottom alignment on top aligned element', async ({ page }) => {
@@ -60,7 +60,7 @@ test.describe('toBeVerticallyAlignedWith matcher', () => {
       const container = page.locator('#container');
       const element = page.locator('#element');
       const options = { alignment: VerticalAlignment.Bottom, tolerancePercent: 0 };
-      await expect(element).not.toBeVerticallyAlignedWith(container, options);
+      await expect(element).not.toBeVerticallyAlignedWith(container, VerticalAlignment.Bottom, options);
     });
   });
 
@@ -72,7 +72,7 @@ test.describe('toBeVerticallyAlignedWith matcher', () => {
       const container = page.locator('#container');
       const element = page.locator('#element');
       const options = { alignment: VerticalAlignment.Center, tolerancePercent: 0 };
-      await expect(element).toBeVerticallyAlignedWith(container, options);
+      await expect(element).toBeVerticallyAlignedWith(container, VerticalAlignment.Center, options);
     });
 
     test('should fail center alignment on top aligned element', async ({ page }) => {
@@ -82,7 +82,7 @@ test.describe('toBeVerticallyAlignedWith matcher', () => {
       const container = page.locator('#container');
       const element = page.locator('#element');
       const options = { alignment: VerticalAlignment.Center, tolerancePercent: 0 };
-      await expect(element).not.toBeVerticallyAlignedWith(container, options);
+      await expect(element).not.toBeVerticallyAlignedWith(container, VerticalAlignment.Center, options);
     });
   });
 });

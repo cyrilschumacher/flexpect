@@ -17,8 +17,8 @@ test.describe('toBeAlignedWith matcher', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { axis: Axis.Horizontal, mode: Alignment.Start, tolerancePercent: 1 };
-      await expect(element).toBeAlignedWith(container, options);
+      const options = { tolerancePercent: 1 };
+      await expect(element).toBeAlignedWith(container, Axis.Horizontal, Alignment.Start, options);
     });
 
     test('should reject horizontal start alignment if misaligned', async ({ page }) => {
@@ -27,8 +27,8 @@ test.describe('toBeAlignedWith matcher', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { axis: Axis.Horizontal, mode: Alignment.Start, tolerancePercent: 1 };
-      await expect(element).not.toBeAlignedWith(container, options);
+      const options = { tolerancePercent: 1 };
+      await expect(element).not.toBeAlignedWith(container, Axis.Horizontal, Alignment.Start, options);
     });
   });
 
@@ -39,8 +39,8 @@ test.describe('toBeAlignedWith matcher', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { axis: Axis.Vertical, mode: Alignment.End, tolerancePercent: 1 };
-      await expect(element).toBeAlignedWith(container, options);
+      const options = { tolerancePercent: 1 };
+      await expect(element).toBeAlignedWith(container, Axis.Vertical, Alignment.End, options);
     });
 
     test('should reject vertical end alignment if misaligned', async ({ page }) => {
@@ -49,8 +49,8 @@ test.describe('toBeAlignedWith matcher', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { axis: Axis.Vertical, mode: Alignment.End, tolerancePercent: 1 };
-      await expect(element).not.toBeAlignedWith(container, options);
+      const options = { tolerancePercent: 1 };
+      await expect(element).not.toBeAlignedWith(container, Axis.Vertical, Alignment.End, options);
     });
   });
 
@@ -61,8 +61,8 @@ test.describe('toBeAlignedWith matcher', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { axis: Axis.Horizontal, mode: Alignment.Center, tolerancePercent: 1 };
-      await expect(element).toBeAlignedWith(container, options);
+      const options = { tolerancePercent: 1 };
+      await expect(element).toBeAlignedWith(container, Axis.Horizontal, Alignment.Center, options);
     });
 
     test('should detect vertical center alignment', async ({ page }) => {
@@ -71,8 +71,8 @@ test.describe('toBeAlignedWith matcher', () => {
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { axis: Axis.Vertical, mode: Alignment.Center, tolerancePercent: 1 };
-      await expect(element).toBeAlignedWith(container, options);
+      const options = { tolerancePercent: 1 };
+      await expect(element).toBeAlignedWith(container, Axis.Vertical, Alignment.Center, options);
     });
   });
 });
