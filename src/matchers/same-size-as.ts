@@ -21,6 +21,23 @@ export interface ToHaveSameSizeAsOptions {
   tolerancePercent?: number;
 }
 
+/**
+ * Asserts that the target element has the same width and height as the specified container element.
+ *
+ * @param container - A `Locator` representing the element to compare size with.
+ * @param options - Optional comparison options.
+ * @returns A {@link Promise} that resolves with the matcher result.
+ *
+ * @example
+ * // Checks that the element matches the container’s size, with up to 5% tolerance in width and height
+ * await expect(elementLocator).toHaveSameSizeAs(containerLocator, {
+ *   tolerancePercent: 5
+ * });
+ *
+ * @example
+ * // Checks that the element has exactly the same width and height as its container using default alignment options
+ * await expect(elementLocator).toHaveSameSizeAs(containerLocator);
+ */
 export async function toHaveSameSizeAs(
   element: Locator,
   container: Locator,

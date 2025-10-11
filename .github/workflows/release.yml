@@ -6,10 +6,12 @@ permissions:
   id-token: write
 
 on:
-  workflow_run:
-    workflows: ['CI']
-    types:
-      - completed
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   release:

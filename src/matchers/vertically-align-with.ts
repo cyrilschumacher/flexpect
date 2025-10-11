@@ -79,6 +79,25 @@ export interface ToBeVerticallyAlignedWithOptions {
   tolerancePercent?: number;
 }
 
+/**
+ * Asserts that the target element is vertically aligned with the specified container
+ * according to the given alignment type.
+ *
+ * @param container - The container element as a {@link Locator} relative to which vertical alignment is checked.
+ * @param options - Optional size comparison options.
+ * @returns A {@link Promise} that resolves with the matcher result.
+ *
+ * @example
+ * // Check that a header is bottom-aligned with its section container, allowing a 2% vertical tolerance
+ * await expect(headerLocator).toBeVerticallyAlignedWith(parentLocator, {
+ *   alignment: VerticalAlignment.Bottom,
+ *   tolerancePercent: 2
+ * });
+ *
+ * @example
+ * // Check that a header is vertically centered within its section container (default options)
+ * await expect(headerLocator).toBeVerticallyAlignedWith(parentLocator);
+ */
 export async function toBeVerticallyAlignedWith(
   element: Locator,
   container: Locator,

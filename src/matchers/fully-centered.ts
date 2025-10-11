@@ -27,6 +27,21 @@ export interface ToBeFullyCenteredOptions {
   tolerancePercent?: number;
 }
 
+/**
+ * Asserts that the target element is fully centered both horizontally and vertically
+ * within the specified container element.
+ *
+ * @param container - The container element as a {@link Locator} relative to which centering is checked.
+ * @param options - Optional centering options.
+ * @returns A {@link Promise} that resolves with the matcher result.
+ *
+ * @example
+ * // Check that a modal is perfectly centered within the viewport, allowing a 2% margin
+ * const parentLocator = page.locator('#parent');
+ * await expect(modalLocator).toBeFullyCentered(parentLocator, {
+ *   tolerancePercent: 2
+ * });
+ */
 export async function toBeFullyCentered(
   element: Locator,
   container: Locator,
