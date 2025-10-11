@@ -53,16 +53,6 @@ export enum VerticalAlignment {
  */
 export interface ToBeVerticallyAlignedWithOptions {
   /**
-   * The vertical alignment mode to use.
-   *
-   * Determines which vertical edge or point of the element should be aligned.
-   * Possible values are `'top'`, `'center'`, or `'bottom'`.
-   *
-   * @default VerticalAlignment.Center
-   */
-  alignment?: VerticalAlignment;
-
-  /**
    * Allowed tolerance for the vertical alignment difference, expressed as a percentage (%)
    * of the container element's height.
    *
@@ -84,26 +74,27 @@ export interface ToBeVerticallyAlignedWithOptions {
  * according to the given alignment type.
  *
  * @param container - The container element as a {@link Locator} relative to which vertical alignment is checked.
+ * @param alignment - The type of vertical alignment to check (top, center, or bottom).
  * @param options - Optional size comparison options.
  * @returns A {@link Promise} that resolves with the matcher result.
  *
  * @example
  * // Check that a header is bottom-aligned with its section container, allowing a 2% vertical tolerance
- * await expect(headerLocator).toBeVerticallyAlignedWith(parentLocator, {
- *   alignment: VerticalAlignment.Bottom,
+ * await expect(headerLocator).toBeVerticallyAlignedWith(parentLocator, VerticalAlignment.Bottom, {
  *   tolerancePercent: 2
  * });
  *
  * @example
  * // Check that a header is vertically centered within its section container (default options)
- * await expect(headerLocator).toBeVerticallyAlignedWith(parentLocator);
+ * await expect(headerLocator).toBeVerticallyAlignedWith(parentLocator, VerticalAlignment.Center);
  */
 export async function toBeVerticallyAlignedWith(
   element: Locator,
   container: Locator,
+  alignment: VerticalAlignment,
   options: ToBeVerticallyAlignedWithOptions = {},
 ): Promise<MatcherReturnType> {
-  const { alignment = VerticalAlignment.Center, tolerancePercent = 0 } = options;
+  const { tolerancePercent = 0 } = options;
 
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);

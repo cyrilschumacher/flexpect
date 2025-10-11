@@ -1,4 +1,4 @@
-import { Locator } from '@playwright/test';
+import { Locator, MatcherReturnType } from '@playwright/test';
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
 
 function getPosition(box: BoundingBox, axis: Axis, mode: Alignment): number {
@@ -61,26 +61,6 @@ export enum Axis {
  */
 export interface ToBeAlignedWithOptions {
   /**
-   * The axis along which the alignment should be checked.
-   *
-   * - `'horizontal'` for horizontal alignment.
-   * - `'vertical'` for vertical alignment.
-   *
-   * @default Axis.Horizontal
-   */
-  axis?: Axis;
-
-  /**
-   * The alignment mode to use.
-   *
-   * Determines which edge or point of the element should be aligned.
-   * Possible values are `'start'`, `'center'`, or `'end'`.
-   *
-   * @default Alignment.Center
-   */
-  mode?: Alignment;
-
-  /**
    * Allowed tolerance for the alignment expressed as a percentage (%).
    *
    * The matcher will pass if the alignment difference is within this percentage of the reference size.
@@ -92,41 +72,49 @@ export interface ToBeAlignedWithOptions {
 
 /**
  * Asserts that the target element is aligned with the specified container element
- * according to the provided alignment options.
+ * based on the provided axis and alignment mode, considering an optional tolerance percentage.
+ *
+ * This assertion compares the position of the element relative to the container along the given axis (horizontal or
+ * vertical) and verifies if it matches the expected alignment mode (start, center, or end).
+ *
+ * If the alignment falls outside the allowed tolerance, a detailed message is returned to help diagnose the
+ * misalignment.
  *
  * @param container - The container element as a {@link Locator} relative to which alignment is checked.
+ * @param axis - The axis along which to check alignment (horizontal or vertical).
+ * @param mode - The alignment mode to check (start, center, or end).
  * @param options - Optional alignment options.
  * @returns A {@link Promise} that resolves with the matcher result.
  *
  * @example
  * // Checks that the button is horizontally centered with its parent within 2% tolerance
- * await expect(buttonLocator).toBeAlignedWith(parentLocator, {
- *   axis: Axis.Horizontal,
- *   mode: Alignment.Center,
- *   tolerancePercent: 2
+ * await expect(buttonLocator).toBeAlignedWith(parentLocator, Axis.Horizontal, Alignment.Center, {
+ *   tolerancePercent: 2,
  * });
  *
  * @example
- * // Checks that the button is aligned with its parent using default alignment options
- * await expect(buttonLocator).toBeAlignedWith(parentLocator);
+ * // Checks that the button is aligned to the start vertically with no tolerance
+ * await expect(buttonLocator).toBeAlignedWith(parentLocator, Axis.Vertical, Alignment.Start);
  */
 export async function toBeAlignedWith(
   element: Locator,
   container: Locator,
+  axis: Axis,
+  mode: Alignment,
   options: ToBeAlignedWithOptions = {},
-): Promise<{ pass: boolean; message: () => string }> {
-  const { axis = Axis.Horizontal, mode = Alignment.Start, tolerancePercent = 0 } = options;
+): Promise<MatcherReturnType> {
+  const { tolerancePercent = 0 } = options;
 
   const elementBox = await getBoundingBoxOrFail(element);
-  const elementPos = getPosition(elementBox, axis, mode);
-
   const containerBox = await getBoundingBoxOrFail(container);
-  const containerPos = getPosition(containerBox, axis, mode);
 
-  const size = axis === 'horizontal' ? containerBox.width : containerBox.height;
+  const elementPosition = getPosition(elementBox, axis, mode);
+  const containerPosition = getPosition(containerBox, axis, mode);
+
+  const size = axis === Axis.Horizontal ? containerBox.width : containerBox.height;
+
+  const delta = Math.abs(elementPosition - containerPosition);
   const tolerance = (tolerancePercent / 100) * size;
-
-  const delta = Math.abs(elementPos - containerPos);
   if (delta <= tolerance) {
     return {
       pass: true,

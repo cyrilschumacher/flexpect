@@ -53,16 +53,6 @@ export enum HorizontalAlignment {
  */
 export interface ToBeHorizontallyAlignedWithOptions {
   /**
-   * The horizontal alignment mode to use.
-   *
-   * Determines which horizontal edge or point of the element should be aligned.
-   * Possible values are `'left'`, `'center'`, or `'right'`.
-   *
-   * @default HorizontalAlignment.Center
-   */
-  alignment?: HorizontalAlignment;
-
-  /**
    * Allowed tolerance for the horizontal alignment difference, expressed as a percentage (%)
    * of the container element's width.
    *
@@ -84,26 +74,27 @@ export interface ToBeHorizontallyAlignedWithOptions {
  * according to the given alignment type.
  *
  * @param container - The container element as a {@link Locator} relative to which horizontal alignment is checked.
+ * @param alignment - The type of horizontal alignment to check (left, center, or right).
  * @param options - Optional alignment options.
  * @returns A {@link Promise} that resolves with the matcher result.
  *
  * @example
  * // Assert that a button is left-aligned with its card container, allowing 3% horizontal tolerance
- * await expect(buttonLocator).toBeHorizontallyAlignedWith(parentLocator, {
- *   alignment: HorizontalAlignment.Left,
+ * await expect(buttonLocator).toBeHorizontallyAlignedWith(parentLocator, HorizontalAlignment.Left, {
  *   tolerancePercent: 3
  * });
  *
  * @example
  * // Assert that a button is horizontally centered with its card container (default options)
- * await expect(buttonLocator).toBeHorizontallyAlignedWith(parentLocator);
+ * await expect(buttonLocator).toBeHorizontallyAlignedWith(parentLocator, HorizontalAlignment.Center);
  */
 export async function toBeHorizontallyAlignedWith(
   element: Locator,
   container: Locator,
+  alignment: HorizontalAlignment,
   options: ToBeHorizontallyAlignedWithOptions = {},
 ): Promise<MatcherReturnType> {
-  const { alignment = HorizontalAlignment.Center, tolerancePercent = 0 } = options;
+  const { tolerancePercent = 0 } = options;
 
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);

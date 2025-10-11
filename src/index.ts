@@ -1,11 +1,11 @@
 import { Locator } from '@playwright/test';
 
-import { ToBeAlignedWithOptions } from './matchers/aligned-with';
+import { Alignment, Axis, ToBeAlignedWithOptions } from './matchers/aligned-with';
 import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
-import { ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
+import { HorizontalAlignment, ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
 import { ToBeInsideOptions } from './matchers/inside';
 import { ToHaveSameSizeAsOptions } from './matchers/same-size-as';
-import { ToBeVerticallyAlignedWithOptions } from './matchers/vertically-align-with';
+import { ToBeVerticallyAlignedWithOptions, VerticalAlignment } from './matchers/vertically-align-with';
 
 declare global {
   // Disabling the no-namespace rule to allow global type augmentation for Playwright custom matchers,
@@ -28,11 +28,19 @@ declare global {
      * @template R The result type returned by each matcher, typically a Promise resolving to an assertion result.
      */
     interface Matchers<R> {
-      toBeAlignedWith(container: Locator, options?: ToBeAlignedWithOptions): Promise<R>;
+      toBeAlignedWith(container: Locator, axis: Axis, mode: Alignment, options?: ToBeAlignedWithOptions): Promise<R>;
       toBeFullyCentered(container: Locator, options?: ToBeFullyCenteredOptions): Promise<R>;
-      toBeHorizontallyAlignedWith(container: Locator, options?: ToBeHorizontallyAlignedWithOptions): Promise<R>;
+      toBeHorizontallyAlignedWith(
+        container: Locator,
+        alignment: HorizontalAlignment,
+        options?: ToBeHorizontallyAlignedWithOptions,
+      ): Promise<R>;
       toBeInside(container: Locator, options?: ToBeInsideOptions): Promise<R>;
-      toBeVerticallyAlignedWith(container: Locator, options?: ToBeVerticallyAlignedWithOptions): Promise<R>;
+      toBeVerticallyAlignedWith(
+        container: Locator,
+        alignment: VerticalAlignment,
+        options?: ToBeVerticallyAlignedWithOptions,
+      ): Promise<R>;
       toFitContainer(container: Locator): Promise<R>;
       toHaveSameSizeAs(container: Locator, options?: ToHaveSameSizeAsOptions): Promise<R>;
     }
