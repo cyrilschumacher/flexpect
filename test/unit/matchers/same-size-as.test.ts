@@ -26,8 +26,8 @@ describe('toHaveSameSizeAs', () => {
 
     const result = await toHaveSameSizeAs(element, container);
 
+    expect(result.message()).toEqual('Element size matches the container size within the allowed tolerance (0%).');
     expect(result.pass).toBe(true);
-    expect(result.message()).toBe('Element is properly aligned.');
   });
 
   it('should fail when element size differs from container without tolerance', async () => {
@@ -46,8 +46,16 @@ describe('toHaveSameSizeAs', () => {
 
     const result = await toHaveSameSizeAs(element, container);
 
+    expect(result.message()).toEqual(
+      `Element size differs from container size beyond the allowed tolerance of 0%.
+
+Details:
+- Width:  expected 100.00px ±0.00px, got 105.00px (delta: 5.00px)
+- Height: expected 200.00px ±0.00px, got 200.00px (delta: 0.00px)
+
+Please adjust the element's size to match the container.`,
+    );
     expect(result.pass).toBe(false);
-    expect(result.message()).toContain('Expected element to have same size as reference within 0% tolerance');
   });
 
   it('should pass when element size differs but within tolerance', async () => {
@@ -67,6 +75,7 @@ describe('toHaveSameSizeAs', () => {
     const options: ToHaveSameSizeAsOptions = { tolerancePercent: 10 };
     const result = await toHaveSameSizeAs(element, container, options);
 
+    expect(result.message()).toEqual('Element size matches the container size within the allowed tolerance (10%).');
     expect(result.pass).toBe(true);
   });
 
@@ -88,28 +97,14 @@ describe('toHaveSameSizeAs', () => {
     const result = await toHaveSameSizeAs(element, container, options);
 
     expect(result.pass).toBe(false);
-    expect(result.message()).toContain('Expected element to have same size as reference within 10% tolerance');
-  });
+    expect(result.message()).toEqual(
+      `Element size differs from container size beyond the allowed tolerance of 10%.
 
-  it('should correctly format failure message with size details', async () => {
-    const element = {} as Locator;
-    const container = {} as Locator;
+Details:
+- Width:  expected 100.00px ±10.00px, got 120.00px (delta: 20.00px)
+- Height: expected 200.00px ±20.00px, got 230.00px (delta: 30.00px)
 
-    const elementBox = { width: 120, height: 150 };
-    const containerBox = { width: 100, height: 100 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
-
-    const options: ToHaveSameSizeAsOptions = { tolerancePercent: 10 };
-    const result = await toHaveSameSizeAs(element, container, options);
-
-    const message = result.message();
-    expect(message).toContain('Width: expected 100.00px ±10.00px, but received 120.00px (delta: 20.00px)');
-    expect(message).toContain('Height: expected 100.00px ±10.00px, but received 150.00px (delta: 50.00px)');
+Please adjust the element's size to match the container.`,
+    );
   });
 });

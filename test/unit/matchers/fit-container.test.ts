@@ -44,9 +44,13 @@ describe('toFitContainer', () => {
 
     const result = await toFitContainer(element, container);
 
-    expect(result.message()).toEqual(
-      `Expected element to fit exactly within container, but received:\n- Position delta: x=5.00px, y=5.00px\n- Size delta: width=0.00px, height=0.00px`,
-    );
+    expect(result.message()).toEqual(`Element does not fit exactly within the container.
+
+Differences:
+- Position delta: x = 5.00px, y = 5.00px
+- Size delta: width = 0.00px, height = 0.00px
+
+Please ensure the element's position and size exactly match the container's.`);
     expect(result.pass).toBe(false);
   });
 
@@ -66,9 +70,13 @@ describe('toFitContainer', () => {
 
     const result = await toFitContainer(element, container);
 
-    expect(result.message()).toEqual(
-      `Expected element to fit exactly within container, but received:\n- Position delta: x=0.00px, y=0.00px\n- Size delta: width=10.00px, height=-10.00px`,
-    );
+    expect(result.message()).toEqual(`Element does not fit exactly within the container.
+
+Differences:
+- Position delta: x = 0.00px, y = 0.00px
+- Size delta: width = 10.00px, height = -10.00px
+
+Please ensure the element's position and size exactly match the container's.`);
     expect(result.pass).toBe(false);
   });
 
@@ -88,9 +96,13 @@ describe('toFitContainer', () => {
 
     const result = await toFitContainer(element, container);
 
-    expect(result.message()).toEqual(
-      `Expected element to fit exactly within container, but received:\n- Position delta: x=2.00px, y=-2.00px\n- Size delta: width=20.00px, height=-20.00px`,
-    );
+    expect(result.message()).toEqual(`Element does not fit exactly within the container.
+
+Differences:
+- Position delta: x = 2.00px, y = -2.00px
+- Size delta: width = 20.00px, height = -20.00px
+
+Please ensure the element's position and size exactly match the container's.`);
     expect(result.pass).toBe(false);
   });
 });

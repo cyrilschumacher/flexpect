@@ -24,10 +24,10 @@ describe('toBeVerticallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { alignment: VerticalAlignment.Top, tolerancePercent: 0 };
-    const result = await toBeVerticallyAlignedWith(element, container, options);
+    const options = { tolerancePercent: 0 };
+    const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Top, options);
 
-    expect(result.message()).toBe('Element is properly aligned.');
+    expect(result.message()).toEqual('Element is properly top-aligned within the allowed tolerance (0%).');
     expect(result.pass).toBe(true);
   });
 
@@ -45,10 +45,10 @@ describe('toBeVerticallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { alignment: VerticalAlignment.Bottom, tolerancePercent: 10 };
-    const result = await toBeVerticallyAlignedWith(element, container, options);
+    const options = { tolerancePercent: 10 };
+    const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Bottom, options);
 
-    expect(result.message()).toBe('Element is properly aligned.');
+    expect(result.message()).toEqual('Element is properly bottom-aligned within the allowed tolerance (10%).');
     expect(result.pass).toBe(true);
   });
 
@@ -66,10 +66,18 @@ describe('toBeVerticallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { alignment: VerticalAlignment.Center, tolerancePercent: 5 };
-    const result = await toBeVerticallyAlignedWith(element, container, options);
+    const options = { tolerancePercent: 5 };
+    const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Center, options);
 
-    expect(result.message()).toContain('Expected element to be center-aligned');
+    expect(result.message()).toEqual(
+      `Element is not center-aligned within the allowed tolerance of 5%.
+
+Details:
+- Allowed delta: ±5.00px
+- Actual delta:  6.00px
+
+Please adjust the element's vertical position to reduce the alignment difference.`,
+    );
     expect(result.pass).toBe(false);
   });
 
@@ -82,7 +90,7 @@ describe('toBeVerticallyAlignedWith', () => {
       });
 
     const container = {} as Locator;
-    const resultPromise = toBeVerticallyAlignedWith(element, container);
+    const resultPromise = toBeVerticallyAlignedWith(element, container, VerticalAlignment.Top);
 
     await expect(resultPromise).rejects.toThrow('No bounding box');
   });
@@ -101,9 +109,8 @@ describe('toBeVerticallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { alignment: 'invalid-alignment' as never, tolerancePercent: 0 };
-    await expect(toBeVerticallyAlignedWith(element, container, options)).rejects.toThrow(
-      'Unknown vertical alignment: invalid-alignment',
-    );
+    await expect(
+      toBeVerticallyAlignedWith(element, container, 'invalid-alignment' as VerticalAlignment),
+    ).rejects.toThrow('Unknown vertical alignment: invalid-alignment');
   });
 });

@@ -26,7 +26,7 @@ describe('toBeInside', () => {
 
     const result = await toBeInside(element, container);
 
-    expect(result.message()).toBe('Element is properly inside the container.');
+    expect(result.message()).toEqual('Element is properly inside the container within the allowed tolerance (0%).');
     expect(result.pass).toBe(true);
   });
 
@@ -47,7 +47,7 @@ describe('toBeInside', () => {
     const options = { tolerancePercent: 5 };
     const result = await toBeInside(element, container, options);
 
-    expect(result.message()).toBe('Element is properly inside the container.');
+    expect(result.message()).toEqual('Element is properly inside the container within the allowed tolerance (5%).');
     expect(result.pass).toBe(true);
   });
 
@@ -68,7 +68,17 @@ describe('toBeInside', () => {
     const options = { tolerancePercent: 5 };
     const result = await toBeInside(element, container, options);
 
-    expect(result.message()).toContain('Expected element to be fully inside the container');
+    expect(result.message()).toEqual(
+      `Element is not fully inside the container within the allowed tolerance of 5%.
+
+Overflow detected:
+- Horizontal overflow: 10.00px
+- Vertical overflow:   0.00px
+
+Allowed tolerance: ±10.00px
+
+Please adjust the element's position or size to fit entirely inside the container.`,
+    );
     expect(result.pass).toBe(false);
   });
 
@@ -88,7 +98,17 @@ describe('toBeInside', () => {
 
     const result = await toBeInside(element, container);
 
-    expect(result.message()).toContain('overflows');
+    expect(result.message()).toEqual(
+      `Element is not fully inside the container within the allowed tolerance of 0%.
+
+Overflow detected:
+- Horizontal overflow: 10.00px
+- Vertical overflow:   10.00px
+
+Allowed tolerance: ±0.00px
+
+Please adjust the element's position or size to fit entirely inside the container.`,
+    );
     expect(result.pass).toBe(false);
   });
 

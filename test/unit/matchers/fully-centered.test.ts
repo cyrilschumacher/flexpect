@@ -26,7 +26,7 @@ describe('toBeFullyCentered', () => {
 
     const result = await toBeFullyCentered(element, container);
 
-    expect(result.message()).toBe('Element is fully centered within container.');
+    expect(result.message()).toEqual('Element is fully centered within the allowed tolerance (0%).');
     expect(result.pass).toBe(true);
   });
 
@@ -47,7 +47,15 @@ describe('toBeFullyCentered', () => {
     const options = { tolerancePercent: 5 };
     const result = await toBeFullyCentered(element, container, options);
 
-    expect(result.message()).toContain('Expected element to be centered within container');
+    expect(result.message()).toEqual(
+      `Element is not fully centered within the container (allowed tolerance: ±5%).
+
+Offsets:
+- Horizontal: 30.00px (tolerance: ±10.00px)
+- Vertical:   30.00px (tolerance: ±10.00px)
+
+Adjust the element position to bring it closer to the container's center.`,
+    );
     expect(result.pass).toBe(false);
   });
 
@@ -68,7 +76,7 @@ describe('toBeFullyCentered', () => {
     const options = { tolerancePercent: 15 };
     const result = await toBeFullyCentered(element, container, options);
 
-    expect(result.message()).toBe('Element is fully centered within container.');
+    expect(result.message()).toEqual('Element is fully centered within the allowed tolerance (15%).');
     expect(result.pass).toBe(true);
   });
 

@@ -24,10 +24,10 @@ describe('toBeHorizontallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { alignment: HorizontalAlignment.Left, tolerancePercent: 0 };
-    const result = await toBeHorizontallyAlignedWith(element, container, options);
+    const options = { tolerancePercent: 0 };
+    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Left, options);
 
-    expect(result.message()).toBe('Element is properly aligned.');
+    expect(result.message()).toEqual('Element is properly left-aligned within the allowed tolerance (0%).');
     expect(result.pass).toBe(true);
   });
 
@@ -44,10 +44,10 @@ describe('toBeHorizontallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { alignment: HorizontalAlignment.Right, tolerancePercent: 0 };
-    const result = await toBeHorizontallyAlignedWith(element, container, options);
+    const options = { tolerancePercent: 0 };
+    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Right, options);
 
-    expect(result.message()).toBe('Element is properly aligned.');
+    expect(result.message()).toEqual('Element is properly right-aligned within the allowed tolerance (0%).');
     expect(result.pass).toBe(true);
   });
 
@@ -65,10 +65,10 @@ describe('toBeHorizontallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { alignment: HorizontalAlignment.Center, tolerancePercent: 0 };
-    const result = await toBeHorizontallyAlignedWith(element, container, options);
+    const options = { tolerancePercent: 0 };
+    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Center, options);
 
-    expect(result.message()).toBe('Element is properly aligned.');
+    expect(result.message()).toEqual('Element is properly center-aligned within the allowed tolerance (0%).');
     expect(result.pass).toBe(true);
   });
 
@@ -86,14 +86,19 @@ describe('toBeHorizontallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { alignment: HorizontalAlignment.Left, tolerancePercent: 0 };
+    const options = { tolerancePercent: 0 };
+    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Left, options);
 
-    const result = await toBeHorizontallyAlignedWith(element, container, options);
+    expect(result.message()).toEqual(
+      `Element is not left-aligned within the allowed tolerance of 0%.
 
-    expect(result.pass).toBe(false);
-    expect(result.message()).toBe(
-      'Expected element to be left-aligned within 0% tolerance (±0.00px), but received a delta of 10.00px.',
+Details:
+- Allowed delta: ±0.00px
+- Actual delta:  10.00px
+
+Adjust the element's horizontal position to reduce the alignment difference.`,
     );
+    expect(result.pass).toBe(false);
   });
 
   it('should fail when the element is not center aligned within tolerance', async () => {
@@ -110,13 +115,19 @@ describe('toBeHorizontallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { alignment: HorizontalAlignment.Center, tolerancePercent: 0 };
-    const result = await toBeHorizontallyAlignedWith(element, container, options);
+    const options = { tolerancePercent: 0 };
+    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Center, options);
 
-    expect(result.pass).toBe(false);
-    expect(result.message()).toBe(
-      'Expected element to be center-aligned within 0% tolerance (±0.00px), but received a delta of 15.00px.',
+    expect(result.message()).toEqual(
+      `Element is not center-aligned within the allowed tolerance of 0%.
+
+Details:
+- Allowed delta: ±0.00px
+- Actual delta:  15.00px
+
+Adjust the element's horizontal position to reduce the alignment difference.`,
     );
+    expect(result.pass).toBe(false);
   });
 
   it('should fail when the element is not right aligned within tolerance', async () => {
@@ -133,11 +144,17 @@ describe('toBeHorizontallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { alignment: HorizontalAlignment.Right, tolerancePercent: 0 };
-    const result = await toBeHorizontallyAlignedWith(element, container, options);
+    const options = { tolerancePercent: 0 };
+    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Right, options);
 
-    expect(result.message()).toBe(
-      'Expected element to be right-aligned within 0% tolerance (±0.00px), but received a delta of 10.00px.',
+    expect(result.message()).toEqual(
+      `Element is not right-aligned within the allowed tolerance of 0%.
+
+Details:
+- Allowed delta: ±0.00px
+- Actual delta:  10.00px
+
+Adjust the element's horizontal position to reduce the alignment difference.`,
     );
     expect(result.pass).toBe(false);
   });
@@ -156,10 +173,10 @@ describe('toBeHorizontallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { alignment: HorizontalAlignment.Center, tolerancePercent: 5 };
-    const result = await toBeHorizontallyAlignedWith(element, container, options);
+    const options = { tolerancePercent: 5 };
+    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Center, options);
 
-    expect(result.message()).toBe('Element is properly aligned.');
+    expect(result.message()).toEqual('Element is properly center-aligned within the allowed tolerance (5%).');
     expect(result.pass).toBe(true);
   });
 
@@ -172,7 +189,9 @@ describe('toBeHorizontallyAlignedWith', () => {
       });
 
     const container = {} as Locator;
-    await expect(toBeHorizontallyAlignedWith(element, container)).rejects.toThrow('No bounding box');
+    await expect(toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Center)).rejects.toThrow(
+      'No bounding box',
+    );
   });
 
   it('should throw an error when the alignment is unknown', async () => {
@@ -189,9 +208,8 @@ describe('toBeHorizontallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { alignment: 'invalid-alignment' as never, tolerancePercent: 0 };
-    await expect(toBeHorizontallyAlignedWith(element, container, options)).rejects.toThrow(
-      'Unknown horizontal alignment: invalid-alignment',
-    );
+    await expect(
+      toBeHorizontallyAlignedWith(element, container, 'invalid-alignment' as HorizontalAlignment),
+    ).rejects.toThrow('Unknown horizontal alignment: invalid-alignment');
   });
 });
