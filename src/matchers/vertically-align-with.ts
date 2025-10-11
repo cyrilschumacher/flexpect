@@ -73,6 +73,27 @@ export interface ToBeVerticallyAlignedWithOptions {
  * Asserts that the target element is vertically aligned with the specified container
  * according to the given alignment type.
  *
+ * - **Top alignment (`alignment = 'top'`)**:
+ *   ```text
+ *   |[element]|
+ *   |         |
+ *   |         |
+ *   ```
+ *
+ * - **Center alignment (`alignment = 'center'`)**:
+ *   ```text
+ *   |         |
+ *   |[element]|
+ *   |         |
+ *   ```
+ *
+ * - **Bottom alignment (`alignment = 'bottom'`)**:
+ *   ```text
+ *   |         |
+ *   |         |
+ *   |[element]|
+ *   ```
+ *
  * @param container - The container element as a {@link Locator} relative to which vertical alignment is checked.
  * @param alignment - The type of vertical alignment to check (top, center, or bottom).
  * @param options - Optional size comparison options.

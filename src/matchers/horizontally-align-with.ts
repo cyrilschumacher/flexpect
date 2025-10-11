@@ -73,6 +73,21 @@ export interface ToBeHorizontallyAlignedWithOptions {
  * Asserts that the target element is horizontally aligned with the specified container
  * according to the given alignment type.
  *
+ * - **Left alignment (`alignment = 'left'`)**:
+ *   ```text
+ *   |[element]------------------|
+ *   ```
+ *
+ * - **Center alignment (`alignment = 'center'`)**:
+ *   ```text
+ *   |---------[element]---------|
+ *   ```
+ *
+ * - **Right alignment (`alignment = 'right'`)**:
+ *   ```text
+ *   |------------------[element]|
+ *   ```
+ *
  * @param container - The container element as a {@link Locator} relative to which horizontal alignment is checked.
  * @param alignment - The type of horizontal alignment to check (left, center, or right).
  * @param options - Optional alignment options.

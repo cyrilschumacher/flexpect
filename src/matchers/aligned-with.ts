@@ -80,6 +80,46 @@ export interface ToBeAlignedWithOptions {
  * If the alignment falls outside the allowed tolerance, a detailed message is returned to help diagnose the
  * misalignment.
  *
+ * - **Horizontal axis (`axis = 'horizontal'`)**:
+ *   - *Start (`mode = start'`)*:
+ *     ```text
+ *     |[element]------------------|
+ *     |                           |
+ *     |                           |
+ *     ```
+ *   - *Center (`mode = 'center'`)*:
+ *     ```text
+ *     |---------[element]---------|
+ *     |                           |
+ *     |                           |
+ *     ```
+ *   - *End (`mode = 'end'`)*:
+ *     ```text
+ *     |------------------[element]|
+ *     |                           |
+ *     |                           |
+ *     ```
+ *
+ * - **Vertical axis (`axis = 'vertical'`)**:
+ *   - *Start (`mode = 'start'`)*:
+ *     ```text
+ *     |[element]                  |
+ *     |                           |
+ *     |                           |
+ *     ```
+ *   - *Center (`mode = 'center'`)*:
+ *     ```text
+ *     |                           |
+ *     |         [element]         |
+ *     |                           |
+ *     ```
+ *   - *End (`mode = 'end'`)*:
+ *     ```text
+ *     |                           |
+ *     |                           |
+ *     |                  [element]|
+ *     ```
+ *
  * @param container - The container element as a {@link Locator} relative to which alignment is checked.
  * @param axis - The axis along which to check alignment (horizontal or vertical).
  * @param mode - The alignment mode to check (start, center, or end).

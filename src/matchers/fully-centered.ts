@@ -31,6 +31,14 @@ export interface ToBeFullyCenteredOptions {
  * Asserts that the target element is fully centered both horizontally and vertically
  * within the specified container element.
  *
+ * ```text
+ * |-----------------|
+ * |                 |
+ * |    [element]    |
+ * |                 |
+ * |-----------------|
+ * ```
+ *
  * @param container - The container element as a {@link Locator} relative to which centering is checked.
  * @param options - Optional centering options.
  * @returns A {@link Promise} that resolves with the matcher result.
