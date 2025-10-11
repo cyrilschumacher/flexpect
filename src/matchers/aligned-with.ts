@@ -24,7 +24,7 @@ function getPosition(box: BoundingBox, axis: Axis, mode: Alignment): number {
       case Alignment.End:
         return box.y + box.height;
       default:
-        throw new Error(`Invalid alignment mode '${mode}' for axis '${axis}'.`);
+        throw new Error(`Invalid alignment mode: ${mode}`);
     }
   }
 
