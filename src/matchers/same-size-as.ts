@@ -51,7 +51,10 @@ export async function toHaveSameSizeAs(
   const deltaWidth = Math.abs(elementBox.width - containerBox.width);
   const deltaHeight = Math.abs(elementBox.height - containerBox.height);
 
-  if (deltaWidth <= tolerancePercent && deltaHeight <= tolerancePercent) {
+  if (
+    deltaWidth <= (containerBox.width * tolerancePercent) / 100 &&
+    deltaHeight <= (containerBox.height * tolerancePercent) / 100
+  ) {
     return { pass: true, message: () => 'Element is properly aligned.' };
   }
 
