@@ -29,7 +29,7 @@ export interface ToHaveSameSizeAsOptions {
  * @returns A {@link Promise} that resolves with the matcher result.
  *
  * @example
- * // Checks that the element matches the container’s size, with up to 5% tolerance in width and height
+ * // Checks that the element matches the container's size, with up to 5% tolerance in width and height
  * await expect(elementLocator).toHaveSameSizeAs(containerLocator, {
  *   tolerancePercent: 5
  * });
@@ -55,7 +55,10 @@ export async function toHaveSameSizeAs(
     deltaWidth <= (containerBox.width * tolerancePercent) / 100 &&
     deltaHeight <= (containerBox.height * tolerancePercent) / 100
   ) {
-    return { pass: true, message: () => 'Element is properly aligned.' };
+    return {
+      pass: true,
+      message: () => `Element size matches the container size within the allowed tolerance (${tolerancePercent}%).`,
+    };
   }
 
   return {
@@ -64,9 +67,13 @@ export async function toHaveSameSizeAs(
       const widthTolerance = (containerBox.width * tolerancePercent) / 100;
       const heightTolerance = (containerBox.height * tolerancePercent) / 100;
 
-      return `Expected element to have same size as reference within ${tolerancePercent}% tolerance, but:
-- Width: expected ${containerBox.width.toFixed(2)}px ±${widthTolerance.toFixed(2)}px, but received ${elementBox.width.toFixed(2)}px (delta: ${deltaWidth.toFixed(2)}px)
-- Height: expected ${containerBox.height.toFixed(2)}px ±${heightTolerance.toFixed(2)}px, but received ${elementBox.height.toFixed(2)}px (delta: ${deltaHeight.toFixed(2)}px)`;
+      return (
+        `Element size differs from container size beyond the allowed tolerance of ${tolerancePercent}%.\n\n` +
+        `Details:\n` +
+        `- Width:  expected ${containerBox.width.toFixed(2)}px ±${widthTolerance.toFixed(2)}px, got ${elementBox.width.toFixed(2)}px (delta: ${deltaWidth.toFixed(2)}px)\n` +
+        `- Height: expected ${containerBox.height.toFixed(2)}px ±${heightTolerance.toFixed(2)}px, got ${elementBox.height.toFixed(2)}px (delta: ${deltaHeight.toFixed(2)}px)\n\n` +
+        `Please adjust the element's size to match the container.`
+      );
     },
   };
 }

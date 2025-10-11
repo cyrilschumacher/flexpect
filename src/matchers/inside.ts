@@ -73,12 +73,20 @@ export async function toBeInside(
   const deltaX = calculateDeltaX(elementBox, containerBox, tolerance);
   const deltaY = calculateDeltaY(elementBox, containerBox, tolerance);
   if (deltaX === 0 && deltaY === 0) {
-    return { pass: true, message: () => 'Element is properly inside the container.' };
+    return {
+      pass: true,
+      message: () => `Element is properly inside the container within the allowed tolerance (${tolerancePercent}%).`,
+    };
   }
 
   return {
     pass: false,
     message: () =>
-      `Expected element to be fully inside the container within ${tolerancePercent}% tolerance (±${tolerance.toFixed(2)}px), but received overflows: horizontal = ${deltaX.toFixed(2)}px, vertical = ${deltaY.toFixed(2)}px.`,
+      `Element is not fully inside the container within the allowed tolerance of ${tolerancePercent}%.\n\n` +
+      `Overflow detected:\n` +
+      `- Horizontal overflow: ${deltaX.toFixed(2)}px\n` +
+      `- Vertical overflow:   ${deltaY.toFixed(2)}px\n\n` +
+      `Allowed tolerance: ±${tolerance.toFixed(2)}px\n\n` +
+      `Please adjust the element's position or size to fit entirely inside the container.`,
   };
 }

@@ -33,9 +33,13 @@ export async function toFitContainer(element: Locator, container: Locator): Prom
       const widthDiff = elementBox.width - containerBox.width;
       const heightDiff = elementBox.height - containerBox.height;
 
-      return `Expected element to fit exactly within container, but received:
-- Position delta: x=${posXDiff.toFixed(2)}px, y=${posYDiff.toFixed(2)}px
-- Size delta: width=${widthDiff.toFixed(2)}px, height=${heightDiff.toFixed(2)}px`;
+      return (
+        `Element does not fit exactly within the container.\n\n` +
+        `Differences:\n` +
+        `- Position delta: x = ${posXDiff.toFixed(2)}px, y = ${posYDiff.toFixed(2)}px\n` +
+        `- Size delta: width = ${widthDiff.toFixed(2)}px, height = ${heightDiff.toFixed(2)}px\n\n` +
+        `Please ensure the element's position and size exactly match the container's.`
+      );
     },
   };
 }

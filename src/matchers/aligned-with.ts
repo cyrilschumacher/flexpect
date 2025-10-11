@@ -137,6 +137,10 @@ export async function toBeAlignedWith(
   return {
     pass: false,
     message: () =>
-      `Expected element to be aligned (${mode}) along ${axis} axis within ${tolerancePercent}% tolerance (${tolerance.toFixed(2)}px), but difference was ${delta.toFixed(2)}px.`,
+      `Element is misaligned with the container (${mode}, ${axis}).\n\n` +
+      `Details:\n` +
+      `- Allowed deviation: ±${tolerance.toFixed(2)}px (${tolerancePercent}%)\n` +
+      `- Actual deviation:  ${delta.toFixed(2)}px\n\n` +
+      `To fix this, ensure the element is aligned to the container's ${mode.toLowerCase()} edge along the ${axis.toLowerCase()} axis.`,
   };
 }

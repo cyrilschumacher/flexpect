@@ -111,12 +111,19 @@ export async function toBeVerticallyAlignedWith(
   const delta = computeVerticalDelta(alignment, elementBox, containerBox);
   const tolerance = (containerBox.height * tolerancePercent) / 100;
   if (delta <= tolerance) {
-    return { pass: true, message: () => 'Element is properly aligned.' };
+    return {
+      pass: true,
+      message: () => `Element is properly ${alignment}-aligned within the allowed tolerance (${tolerancePercent}%).`,
+    };
   }
 
   return {
     pass: false,
     message: () =>
-      `Expected element to be ${alignment}-aligned within ${tolerancePercent}% tolerance (±${tolerance.toFixed(2)}px), but received a delta of ${delta.toFixed(2)}px.`,
+      `Element is not ${alignment}-aligned within the allowed tolerance of ${tolerancePercent}%.\n\n` +
+      `Details:\n` +
+      `- Allowed delta: ±${tolerance.toFixed(2)}px\n` +
+      `- Actual delta:  ${delta.toFixed(2)}px\n\n` +
+      `Please adjust the element's vertical position to reduce the alignment difference.`,
   };
 }

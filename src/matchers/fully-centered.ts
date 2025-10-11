@@ -60,7 +60,10 @@ export async function toBeFullyCentered(
   const horizontallyCentered = isWithinTolerance(containerCenter.x, elementCenter.x, horizontalTolerance);
   const verticallyCentered = isWithinTolerance(containerCenter.y, elementCenter.y, verticalTolerance);
   if (horizontallyCentered && verticallyCentered) {
-    return { pass: true, message: () => 'Element is fully centered within container.' };
+    return {
+      pass: true,
+      message: () => `Element is fully centered within the allowed tolerance (${tolerancePercent}%).`,
+    };
   }
 
   return {
@@ -68,9 +71,14 @@ export async function toBeFullyCentered(
     message: () => {
       const horizontalOffset = Math.abs(containerCenter.x - elementCenter.x);
       const verticalOffset = Math.abs(containerCenter.y - elementCenter.y);
-      return `Expected element to be centered within container (±${tolerancePercent}%), but:
-- Horizontal offset: ${horizontalOffset.toFixed(2)}px (tolerance: ±${horizontalTolerance.toFixed(2)}px)
-- Vertical offset: ${verticalOffset.toFixed(2)}px (tolerance: ±${verticalTolerance.toFixed(2)}px)`;
+
+      return (
+        `Element is not fully centered within the container (allowed tolerance: ±${tolerancePercent}%).\n\n` +
+        `Offsets:\n` +
+        `- Horizontal: ${horizontalOffset.toFixed(2)}px (tolerance: ±${horizontalTolerance.toFixed(2)}px)\n` +
+        `- Vertical:   ${verticalOffset.toFixed(2)}px (tolerance: ±${verticalTolerance.toFixed(2)}px)\n\n` +
+        `Adjust the element position to bring it closer to the container's center.`
+      );
     },
   };
 }
