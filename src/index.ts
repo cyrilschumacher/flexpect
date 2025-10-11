@@ -1,6 +1,7 @@
 import { Locator } from '@playwright/test';
 
 import { Alignment, Axis, ToBeAlignedWithOptions } from './matchers/aligned-with';
+import { ToHaveAspectRatioOptions } from './matchers/aspect-ratio';
 import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
 import { HorizontalAlignment, ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
 import { ToBeInsideOptions } from './matchers/inside';
@@ -42,12 +43,14 @@ declare global {
         options?: ToBeVerticallyAlignedWithOptions,
       ): Promise<R>;
       toFitContainer(container: Locator): Promise<R>;
+      toHaveAspectRatio(expectedRatio: number, options?: ToHaveAspectRatioOptions): Promise<R>;
       toHaveSameSizeAs(container: Locator, options?: ToHaveSameSizeAsOptions): Promise<R>;
     }
   }
 }
 
 export { toBeAlignedWith } from './matchers/aligned-with';
+export { toHaveAspectRatio } from './matchers/aspect-ratio';
 export { toFitContainer } from './matchers/fit-container';
 export { toBeFullyCentered } from './matchers/fully-centered';
 export { toBeHorizontallyAlignedWith } from './matchers/horizontally-align-with';
