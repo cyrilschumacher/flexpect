@@ -1,11 +1,11 @@
 # flexpect
 
 [![MIT License][license-image]][license-url]
-[![CI][ci-image]][ci-url]
 [![Release][release-image]][release-url]
+[![CI][ci-image]][ci-url]
+[![codecov][codecov-image]][codecov-url]
 [![semantic-release: angular][semantic-release-image]][semantic-release-url]
 [![Documentation][documentation-image]][documentation-url]
-[![codecov][codecov-image]][codecov-url]
 
 > Automated layout validation tool using Playwright. Ensures responsive design accuracy across multiple viewports by inspecting element positions and visual alignment.
 
