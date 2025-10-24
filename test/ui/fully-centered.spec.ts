@@ -8,7 +8,7 @@ test.describe('toBeFullyCentered matcher', () => {
     expect.extend({ toBeFullyCentered });
   });
 
-  test('should detect vertical and horizontal center alignment with zero tolerance', async ({ page }) => {
+  test('should pass vertical and horizontal center alignment with zero tolerance', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/fully-centered/center.html');
     await page.goto(`file://${htmlPath}`);
 
@@ -18,7 +18,7 @@ test.describe('toBeFullyCentered matcher', () => {
     await expect(element).toBeFullyCentered(container, options);
   });
 
-  test('should detect vertical and horizontal center alignment within tolerance', async ({ page }) => {
+  test('should pass vertical and horizontal center alignment within tolerance', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/fully-centered/center-offset.html');
     await page.goto(`file://${htmlPath}`);
 
@@ -28,7 +28,7 @@ test.describe('toBeFullyCentered matcher', () => {
     await expect(element).toBeFullyCentered(container, options);
   });
 
-  test('should reject for left aligned element with zero tolerance', async ({ page }) => {
+  test('should fail for left aligned element with zero tolerance', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/fully-centered/center-offset.html');
     await page.goto(`file://${htmlPath}`);
 

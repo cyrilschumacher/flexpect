@@ -9,7 +9,7 @@ test.describe('toHaveSameSizeAs matcher', () => {
     expect.extend({ toHaveSameSizeAs });
   });
 
-  test('should detect exact same size', async ({ page }) => {
+  test('should pass when element has exact same size as container', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/same-size-as/same-size.html');
     await page.goto(`file://${htmlPath}`);
 
@@ -18,7 +18,7 @@ test.describe('toHaveSameSizeAs matcher', () => {
     await expect(element).toHaveSameSizeAs(container);
   });
 
-  test('should detect different size', async ({ page }) => {
+  test('should fail when element has different size than container', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/same-size-as/different-size.html');
     await page.goto(`file://${htmlPath}`);
 

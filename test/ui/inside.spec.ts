@@ -8,7 +8,7 @@ test.describe('toBeInside matcher', () => {
     expect.extend({ toBeInside });
   });
 
-  test('should detect when element is fully inside container with zero tolerance', async ({ page }) => {
+  test('should pass when element is fully inside container with zero tolerance', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/inside/inside.html');
     await page.goto(`file://${htmlPath}`);
 
@@ -18,7 +18,7 @@ test.describe('toBeInside matcher', () => {
     await expect(element).toBeInside(container, options);
   });
 
-  test('should detect when element is fully inside container within tolerance', async ({ page }) => {
+  test('should pass when element is fully inside container within tolerance', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/inside/inside-offset.html');
     await page.goto(`file://${htmlPath}`);
 
@@ -28,7 +28,7 @@ test.describe('toBeInside matcher', () => {
     await expect(element).toBeInside(container, options);
   });
 
-  test('should reject when element is partially outside container with zero tolerance', async ({ page }) => {
+  test('should fail when element is partially outside container with zero tolerance', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/inside/outside.html');
     await page.goto(`file://${htmlPath}`);
 

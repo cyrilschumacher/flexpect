@@ -11,7 +11,7 @@ test.describe('toBeAlignedWith matcher', () => {
   });
 
   test.describe('Horizontal alignment', () => {
-    test('should detect horizontal start alignment', async ({ page }) => {
+    test('should pass horizontal start alignment', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/aligned-with/horizontal-start.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -21,7 +21,7 @@ test.describe('toBeAlignedWith matcher', () => {
       await expect(element).toBeAlignedWith(container, Axis.Horizontal, Alignment.Start, options);
     });
 
-    test('should reject horizontal start alignment if misaligned', async ({ page }) => {
+    test('should fail horizontal start alignment if misaligned', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/aligned-with/horizontal-center.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -33,7 +33,7 @@ test.describe('toBeAlignedWith matcher', () => {
   });
 
   test.describe('Vertical alignment', () => {
-    test('should detect vertical end alignment', async ({ page }) => {
+    test('should pass vertical end alignment', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/aligned-with/vertical-end.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -43,7 +43,7 @@ test.describe('toBeAlignedWith matcher', () => {
       await expect(element).toBeAlignedWith(container, Axis.Vertical, Alignment.End, options);
     });
 
-    test('should reject vertical end alignment if misaligned', async ({ page }) => {
+    test('should fail vertical end alignment if misaligned', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/aligned-with/vertical-center.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -55,7 +55,7 @@ test.describe('toBeAlignedWith matcher', () => {
   });
 
   test.describe('Center alignment', () => {
-    test('should detect horizontal center alignment', async ({ page }) => {
+    test('should pass horizontal center alignment', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/aligned-with/horizontal-center.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -65,7 +65,7 @@ test.describe('toBeAlignedWith matcher', () => {
       await expect(element).toBeAlignedWith(container, Axis.Horizontal, Alignment.Center, options);
     });
 
-    test('should detect vertical center alignment', async ({ page }) => {
+    test('should pass vertical center alignment', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/aligned-with/vertical-center.html');
       await page.goto(`file://${htmlPath}`);
 

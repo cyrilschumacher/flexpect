@@ -11,7 +11,7 @@ test.describe('toBeHorizontallyAlignedWith matcher', () => {
   });
 
   test.describe('Center alignment', () => {
-    test('should detect with zero tolerance', async ({ page }) => {
+    test('should pass with zero tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/center.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -21,7 +21,7 @@ test.describe('toBeHorizontallyAlignedWith matcher', () => {
       await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Center, options);
     });
 
-    test('should detect within tolerance using offset file', async ({ page }) => {
+    test('should pass within tolerance using offset file', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/center-offset.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -31,7 +31,7 @@ test.describe('toBeHorizontallyAlignedWith matcher', () => {
       await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Center, options);
     });
 
-    test('should reject for left aligned element with zero tolerance', async ({ page }) => {
+    test('should fail for left aligned element with zero tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/center-offset.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -43,7 +43,7 @@ test.describe('toBeHorizontallyAlignedWith matcher', () => {
   });
 
   test.describe('Left alignment', () => {
-    test('should detect with zero tolerance', async ({ page }) => {
+    test('should pass with zero tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/left.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -53,7 +53,7 @@ test.describe('toBeHorizontallyAlignedWith matcher', () => {
       await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Left, options);
     });
 
-    test('should detect within tolerance using right offset file', async ({ page }) => {
+    test('should pass within tolerance using right offset file', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/left-offset.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -63,7 +63,7 @@ test.describe('toBeHorizontallyAlignedWith matcher', () => {
       await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Left, options);
     });
 
-    test('should reject for right aligned element with zero tolerance', async ({ page }) => {
+    test('should fail for right aligned element with zero tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/left-offset.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -75,7 +75,7 @@ test.describe('toBeHorizontallyAlignedWith matcher', () => {
   });
 
   test.describe('Right alignment', () => {
-    test('should detect with zero tolerance', async ({ page }) => {
+    test('should pass with zero tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/right.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -85,7 +85,7 @@ test.describe('toBeHorizontallyAlignedWith matcher', () => {
       await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Right, options);
     });
 
-    test('should detect within tolerance using left offset file', async ({ page }) => {
+    test('should pass within tolerance using left offset file', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/right-offset.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -95,7 +95,7 @@ test.describe('toBeHorizontallyAlignedWith matcher', () => {
       await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Right, options);
     });
 
-    test('should reject for left aligned element with zero tolerance', async ({ page }) => {
+    test('should fail for left aligned element with zero tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/right-offset.html');
       await page.goto(`file://${htmlPath}`);
 
