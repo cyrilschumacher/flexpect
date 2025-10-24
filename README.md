@@ -1,5 +1,6 @@
 # flexpect
 
+[![NPM Package][npm-package-image]][npm-package-url]
 [![MIT License][license-image]][license-url]
 [![Release][release-image]][release-url]
 [![CI][ci-image]][ci-url]
@@ -88,3 +89,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [documentation-url]: https://cyrilschumacher.github.io/flexpect/
 [codecov-image]: https://codecov.io/gh/cyrilschumacher/flexpect/graph/badge.svg?token=RTYOKUQF7Z
 [codecov-url]: https://codecov.io/gh/cyrilschumacher/flexpect
+[npm-package-image]: https://img.shields.io/npm/v/flexpect
+[npm-package-url]: https://www.npmjs.com/package/flexpect
