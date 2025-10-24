@@ -1,3 +1,10 @@
+## [0.10.1](https://github.com/cyrilschumacher/flexpect/compare/v0.10.0...v0.10.1) (2025-10-24)
+
+
+### Bug Fixes
+
+* export enums for matchers ([9a0acb9](https://github.com/cyrilschumacher/flexpect/commit/9a0acb908d7de2d97aded5917e07c5e19c9511f8))
+
 # [0.10.0](https://github.com/cyrilschumacher/flexpect/compare/v0.9.0...v0.10.0) (2025-10-24)
 
 
