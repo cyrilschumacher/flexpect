@@ -45,6 +45,7 @@ declare global {
       toFitContainer(container: Locator): Promise<R>;
       toHaveAspectRatio(expectedRatio: number, options?: ToHaveAspectRatioOptions): Promise<R>;
       toHaveSameSizeAs(container: Locator, options?: ToHaveSameSizeAsOptions): Promise<R>;
+      toNotOverlapWith(reference: Locator): Promise<R>;
     }
   }
 }
@@ -56,4 +57,5 @@ export { toBeFullyCentered } from './matchers/fully-centered';
 export { toBeHorizontallyAlignedWith } from './matchers/horizontally-align-with';
 export { toBeInside } from './matchers/inside';
 export { toHaveSameSizeAs } from './matchers/same-size-as';
+export { toNotOverlapWith } from './matchers/not-overlap-with';
 export { toBeVerticallyAlignedWith } from './matchers/vertically-align-with';

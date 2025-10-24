@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Vertical Overlap</title>
+    <style>
+      #elementA,
+      #elementB {
+        position: absolute;
+        left: 100px;
+        width: 100px;
+        height: 100px;
+      }
+
+      #elementA {
+        top: 100px;
+        background-color: blue;
+      }
+
+      #elementB {
+        top: 150px;
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="elementA"></div>
+    <div id="elementB"></div>
+  </body>
+</html>
