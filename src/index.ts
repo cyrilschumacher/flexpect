@@ -56,6 +56,6 @@ export { toFitContainer } from './matchers/fit-container';
 export { toBeFullyCentered } from './matchers/fully-centered';
 export { toBeHorizontallyAlignedWith } from './matchers/horizontally-align-with';
 export { toBeInside } from './matchers/inside';
-export { toNotOverlapWith } from './matchers/not-overlap-with';
 export { toHaveSameSizeAs } from './matchers/same-size-as';
+export { toNotOverlapWith } from './matchers/not-overlap-with';
 export { toBeVerticallyAlignedWith } from './matchers/vertically-align-with';
