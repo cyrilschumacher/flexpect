@@ -1,3 +1,10 @@
+# [0.10.0](https://github.com/cyrilschumacher/flexpect/compare/v0.9.0...v0.10.0) (2025-10-24)
+
+
+### Features
+
+* implement `toNotOverlapWith` matcher ([#23](https://github.com/cyrilschumacher/flexpect/issues/23)) ([78829c6](https://github.com/cyrilschumacher/flexpect/commit/78829c6b0ca00b694f12a9381670632044bab3d2))
+
 # [0.9.0](https://github.com/cyrilschumacher/flexpect/compare/v0.8.0...v0.9.0) (2025-10-11)
 
 
