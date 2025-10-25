@@ -44,6 +44,7 @@ declare global {
       ): Promise<R>;
       toFitContainer(container: Locator): Promise<R>;
       toHaveAspectRatio(expectedRatio: number, options?: ToHaveAspectRatioOptions): Promise<R>;
+      toHaveColorContrast(minimumContrastRatio: number): Promise<R>;
       toHaveSameSizeAs(container: Locator, options?: ToHaveSameSizeAsOptions): Promise<R>;
       toNotOverlapWith(reference: Locator): Promise<R>;
     }
@@ -52,6 +53,7 @@ declare global {
 
 export { toBeAlignedWith, Alignment, Axis } from './matchers/aligned-with';
 export { toHaveAspectRatio } from './matchers/aspect-ratio';
+export { toHaveColorContrast } from './matchers/color-contrast';
 export { toFitContainer } from './matchers/fit-container';
 export { toBeFullyCentered } from './matchers/fully-centered';
 export { toBeHorizontallyAlignedWith, HorizontalAlignment } from './matchers/horizontally-align-with';
