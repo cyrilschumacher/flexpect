@@ -1,3 +1,10 @@
+# [0.12.0](https://github.com/cyrilschumacher/flexpect/compare/v0.11.0...v0.12.0) (2025-10-30)
+
+
+### Features
+
+* implement `toHaveColorContrast` matcher ([#25](https://github.com/cyrilschumacher/flexpect/issues/25)) ([5f638ee](https://github.com/cyrilschumacher/flexpect/commit/5f638ee8159e76d71d9b439397d1d161e520c532))
+
 # [0.11.0](https://github.com/cyrilschumacher/flexpect/compare/v0.10.1...v0.11.0) (2025-10-30)
 
 
