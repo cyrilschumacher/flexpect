@@ -2,24 +2,26 @@ import { expect } from '@playwright/test';
 
 import {
   toBeAlignedWith,
-  toHaveAspectRatio,
-  toFitContainer,
   toBeFullyCentered,
   toBeHorizontallyAlignedWith,
   toBeInside,
+  toBeVerticallyAlignedWith,
+  toFitContainer,
+  toHaveAspectRatio,
+  toHaveColorContrast,
   toHaveSameSizeAs,
   toNotOverlapWith,
-  toBeVerticallyAlignedWith,
 } from '.';
 
 expect.extend({
   toBeAlignedWith,
-  toHaveAspectRatio,
-  toFitContainer,
   toBeFullyCentered,
   toBeHorizontallyAlignedWith,
   toBeInside,
+  toBeVerticallyAlignedWith,
+  toFitContainer,
+  toHaveAspectRatio,
+  toHaveColorContrast,
   toHaveSameSizeAs,
   toNotOverlapWith,
-  toBeVerticallyAlignedWith,
 });
