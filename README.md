@@ -2,11 +2,9 @@
 
 [![NPM Package][npm-package-image]][npm-package-url]
 [![MIT License][license-image]][license-url]
-[![Release][release-image]][release-url]
 [![CI][ci-image]][ci-url]
+[![Codacy][codacy-image]][codacy-url]
 [![codecov][codecov-image]][codecov-url]
-[![semantic-release: angular][semantic-release-image]][semantic-release-url]
-[![Documentation][documentation-image]][documentation-url]
 
 > Automated layout validation tool using Playwright. Ensures responsive design accuracy across multiple viewports by inspecting element positions and visual alignment.
 
@@ -26,12 +24,27 @@ The matchers integrate naturally with Playwright tests and return clear diagnost
 npm install --save-dev flexpect
 ```
 
-Then import/register the matchers in your Playwright test setup (example shows the typical approach—adjust to your test runner setup):
+To register all matchers automatically, you can still use:
 
 ```typescript
 // playwright.config.ts or global-setup file
 import 'flexpect/register'; // registers custom expect matchers
 ```
+
+If you prefer not to register all matchers provided by flexpect, you can import and register only the ones you need manually in your Playwright setup (or any other test runner like Jest or Vitest):
+
+```typescript
+import { expect } from '@playwright/test';
+import { toBeAlignedWith, toHaveAspectRatio } from 'flexpect';
+
+// Register only the matchers you need
+expect.extend({ toBeAlignedWith, toHaveAspectRatio });
+```
+
+This approach allows you to:
+
+- load only the matchers you actually use,
+- keep full control over which matchers are registered in your test environment.
 
 ## Quick start
 
@@ -42,7 +55,7 @@ Example: assert two elements are horizontally aligned within a 2px tolerance.
 test('labels align with inputs', async ({ page }) => {
   const label = await page.locator('label[for="email"]');
   const input = await page.locator('#email');
-  await expect(label).toBeAlignedWith(input, { axis: 'horizontal', tolerancePercent: 2 });
+  await expect(label).toBeAlignedWith(input, Axis.Horizontal, Alignment.Start, { tolerancePercent: 2 });
 });
 ```
 
@@ -77,17 +90,13 @@ Please follow the existing code style and include unit and integration tests for
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+[npm-package-image]: https://img.shields.io/npm/v/flexpect
+[npm-package-url]: https://www.npmjs.com/package/flexpect
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE
 [ci-image]: https://github.com/cyrilschumacher/flexpect/actions/workflows/ci.yml/badge.svg?branch=main
 [ci-url]: https://github.com/cyrilschumacher/flexpect/actions/workflows/ci.yml
-[release-image]: https://github.com/cyrilschumacher/flexpect/actions/workflows/release.yml/badge.svg?branch=main
-[release-url]: https://github.com/cyrilschumacher/flexpect/actions/workflows/release.yml
-[semantic-release-image]: https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release
-[semantic-release-url]: https://github.com/semantic-release/semantic-release
-[documentation-image]: https://img.shields.io/badge/documentation-available-blue
-[documentation-url]: https://cyrilschumacher.github.io/flexpect/
 [codecov-image]: https://codecov.io/gh/cyrilschumacher/flexpect/graph/badge.svg?token=RTYOKUQF7Z
 [codecov-url]: https://codecov.io/gh/cyrilschumacher/flexpect
-[npm-package-image]: https://img.shields.io/npm/v/flexpect
-[npm-package-url]: https://www.npmjs.com/package/flexpect
+[codacy-image]: https://app.codacy.com/project/badge/Grade/a908d94ab6ef47bc90ff07512a5519bb
+[codacy-url]: https://app.codacy.com/gh/cyrilschumacher/flexpect/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade
