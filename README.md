@@ -26,12 +26,27 @@ The matchers integrate naturally with Playwright tests and return clear diagnost
 npm install --save-dev flexpect
 ```
 
-Then import/register the matchers in your Playwright test setup (example shows the typical approach—adjust to your test runner setup):
+To register all matchers automatically, you can still use:
 
 ```typescript
 // playwright.config.ts or global-setup file
 import 'flexpect/register'; // registers custom expect matchers
 ```
+
+If you prefer not to register all matchers provided by flexpect, you can import and register only the ones you need manually in your Playwright setup (or any other test runner like Jest or Vitest):
+
+```typescript
+import { expect } from '@playwright/test';
+import { toBeAlignedWith, toHaveAspectRatio } from 'flexpect';
+
+// Register only the matchers you need
+expect.extend({ toBeAlignedWith, toHaveAspectRatio });
+```
+
+This approach allows you to:
+
+- load only the matchers you actually use,
+- keep full control over which matchers are registered in your test environment.
 
 ## Quick start
 
@@ -42,7 +57,7 @@ Example: assert two elements are horizontally aligned within a 2px tolerance.
 test('labels align with inputs', async ({ page }) => {
   const label = await page.locator('label[for="email"]');
   const input = await page.locator('#email');
-  await expect(label).toBeAlignedWith(input, { axis: 'horizontal', tolerancePercent: 2 });
+  await expect(label).toBeAlignedWith(input, Axis.Horizontal, Alignment.Start, { tolerancePercent: 2 });
 });
 ```
 
