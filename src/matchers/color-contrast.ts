@@ -1,10 +1,5 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
-
-interface RGBColor {
-  r: number;
-  g: number;
-  b: number;
-}
+import { rgbToHex, RGBColor, parseToRGB } from './helpers/rgb-to-hex';
 
 async function getComputedBackgroundColor(locator: Locator) {
   const backgroundColor = await locator.evaluate((element: HTMLElement) => {
@@ -14,35 +9,16 @@ async function getComputedBackgroundColor(locator: Locator) {
       }
 
       const style = getComputedStyle(currentElement);
-      console.log('Computed style for element:', currentElement, style);
-      if (
-        (style.backgroundColor === 'rgb(0, 0, 0, 0)' || style.backgroundColor === 'transparent') &&
-        currentElement.parentElement
-      ) {
-        return findNonTransparentBackground(currentElement.parentElement);
-      }
-
-      return style.backgroundColor;
+      return style.backgroundColor === 'transparent' ||
+        (style.backgroundColor === 'rgb(0, 0, 0, 0)' && currentElement.parentElement)
+        ? findNonTransparentBackground(currentElement.parentElement)
+        : style.backgroundColor;
     };
 
     return findNonTransparentBackground();
   });
 
-  return parseColorToRGB(backgroundColor);
-}
-
-function parseColorToRGB(color: string): RGBColor {
-  console.log('Parsing color:', color);
-  const match = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
-  if (!match || match[1] === undefined || match[2] === undefined || match[3] === undefined) {
-    throw new Error(`Invalid color format: ${color}. Expected rgb(r, g, b).`);
-  }
-
-  return {
-    r: parseInt(match[1], 10),
-    g: parseInt(match[2], 10),
-    b: parseInt(match[3], 10),
-  };
+  return parseToRGB(backgroundColor);
 }
 
 function transformSRGBToLinear(channelValue: number) {
@@ -79,11 +55,6 @@ function calculateContrastRatio(luminance1: number, luminance2: number) {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
-function rgbToHex(color: RGBColor) {
-  const { r, g, b } = color;
-  return `#${(1 << 24) + (r << 16) + (g << 8) + b}`;
-}
-
 /**
  * Asserts that the target element has sufficient color contrast between its text color and background color,
  * according to the WCAG 2.1 contrast ratio formula.
@@ -100,11 +71,10 @@ function rgbToHex(color: RGBColor) {
  */
 export async function toHaveColorContrast(element: Locator, minimumContrastRatio: number): Promise<MatcherReturnType> {
   const style = await element.evaluate((target) => getComputedStyle(target));
-  const textColor = parseColorToRGB(style.color);
 
-  const backgroundColor = await getComputedBackgroundColor(element);
-
+  const textColor = parseToRGB(style.color);
   const textLuminance = computeRelativeLuminance(textColor);
+  const backgroundColor = await getComputedBackgroundColor(element);
   const backgroundLuminance = computeRelativeLuminance(backgroundColor);
 
   const contrastRatio = calculateContrastRatio(textLuminance, backgroundLuminance);
