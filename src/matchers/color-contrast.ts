@@ -10,7 +10,7 @@ async function getComputedBackgroundColor(locator: Locator) {
 
       const style = getComputedStyle(currentElement);
       return style.backgroundColor === 'transparent' ||
-        (style.backgroundColor === 'rgb(0, 0, 0, 0)' && currentElement.parentElement)
+        (style.backgroundColor === 'rgba(0, 0, 0, 0)' && currentElement.parentElement)
         ? findNonTransparentBackground(currentElement.parentElement)
         : style.backgroundColor;
     };
