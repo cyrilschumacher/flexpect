@@ -1,3 +1,10 @@
+# [0.11.0](https://github.com/cyrilschumacher/flexpect/compare/v0.10.1...v0.11.0) (2025-10-30)
+
+
+### Features
+
+* register custom expect matchers ([1b174e1](https://github.com/cyrilschumacher/flexpect/commit/1b174e1c33ceb10f299e03828745d6e469aa2642))
+
 ## [0.10.1](https://github.com/cyrilschumacher/flexpect/compare/v0.10.0...v0.10.1) (2025-10-24)
 
 
