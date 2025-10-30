@@ -16,7 +16,7 @@ describe('rgbToHex', () => {
     [{ r: 300, g: -50, b: 128 }, '#FF0080'],
     [{ r: 999, g: 999, b: -999 }, '#FFFF00'],
     [{ r: -1, g: 256, b: 100 }, '#00FF64'],
-  ])('For %p as color, should clamp to" %s"', (color, expected) => {
+  ])('For %p as color, should clamp to "%s"', (color, expected) => {
     const hexColor = rgbToHex(color);
     expect(hexColor).toBe(expected);
   });
