@@ -1,7 +1,5 @@
+import { toBeVerticallyAlignedWith, VerticalAlignment } from '@flexpect';
 import { expect, test } from '@playwright/test';
-
-import { toBeVerticallyAlignedWith } from '@flexpect';
-import { VerticalAlignment } from '@flexpect/matchers/vertically-align-with';
 
 import path from 'path';
 

@@ -1,5 +1,6 @@
 import { toHaveColorContrast } from '@flexpect';
 import { expect, test } from '@playwright/test';
+
 import path from 'path';
 
 test.describe('toHaveColorContrast matcher', () => {
