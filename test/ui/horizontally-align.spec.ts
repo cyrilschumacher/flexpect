@@ -1,7 +1,5 @@
+import { HorizontalAlignment, toBeHorizontallyAlignedWith } from '@flexpect';
 import { expect, test } from '@playwright/test';
-
-import { toBeHorizontallyAlignedWith } from '@flexpect';
-import { HorizontalAlignment } from '@flexpect/matchers/horizontally-align-with';
 
 import path from 'path';
 
