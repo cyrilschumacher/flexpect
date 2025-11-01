@@ -73,21 +73,21 @@ export interface ToBeVerticallyAlignedWithOptions {
  * Asserts that the target element is vertically aligned with the specified container
  * according to the given alignment type.
  *
- * - **Top alignment (`alignment = 'top'`)**:
+ * - **Top alignment** (alignment = `VerticalAlignment.Top`):
  *   ```text
  *   |[element]|
  *   |         |
  *   |         |
  *   ```
  *
- * - **Center alignment (`alignment = 'center'`)**:
+ * - **Center alignment** (alignment = `VerticalAlignment.Center`):
  *   ```text
  *   |         |
  *   |[element]|
  *   |         |
  *   ```
  *
- * - **Bottom alignment (`alignment = 'bottom'`)**:
+ * - **Bottom alignment** (alignment = `VerticalAlignment.Bottom`):
  *   ```text
  *   |         |
  *   |         |
