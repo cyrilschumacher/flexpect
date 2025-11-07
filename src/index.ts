@@ -8,6 +8,7 @@ import { ToBeInsideOptions } from './matchers/inside';
 import { ToHaveSameSizeAsOptions } from './matchers/same-size-as';
 import { SpacingAxis, ToHaveSpacingBetweenOptions } from './matchers/spacing-between';
 import { ToBeVerticallyAlignedWithOptions, VerticalAlignment } from './matchers/vertically-align-with';
+import { ToBeWithinViewportOptions } from './matchers/within-viewport';
 
 declare global {
   // Disabling the no-namespace rule to allow global type augmentation for Playwright custom matchers,
@@ -43,17 +44,18 @@ declare global {
         alignment: VerticalAlignment,
         options?: ToBeVerticallyAlignedWithOptions,
       ): Promise<R>;
+      toBeWithinViewport(options?: ToBeWithinViewportOptions): Promise<R>;
       toFitContainer(container: Locator): Promise<R>;
       toHaveAspectRatio(expectedRatio: number, options?: ToHaveAspectRatioOptions): Promise<R>;
       toHaveColorContrast(minimumContrastRatio: number): Promise<R>;
       toHaveSameSizeAs(container: Locator, options?: ToHaveSameSizeAsOptions): Promise<R>;
-      toNotOverlapWith(reference: Locator): Promise<R>;
       toHaveSpacingBetween(
         reference: Locator,
         expectedSpacing: number,
         axis: SpacingAxis,
         options?: ToHaveSpacingBetweenOptions,
       ): Promise<R>;
+      toNotOverlapWith(reference: Locator): Promise<R>;
     }
   }
 }
@@ -69,3 +71,4 @@ export { toNotOverlapWith } from './matchers/not-overlap-with';
 export { toHaveSameSizeAs } from './matchers/same-size-as';
 export { SpacingAxis, toHaveSpacingBetween } from './matchers/spacing-between';
 export { toBeVerticallyAlignedWith, VerticalAlignment } from './matchers/vertically-align-with';
+export { toBeWithinViewport } from './matchers/within-viewport';
