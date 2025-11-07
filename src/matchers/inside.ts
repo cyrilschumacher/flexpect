@@ -27,10 +27,13 @@ export interface ToBeInsideOptions {
    * Allowed tolerance for the containment check, expressed as a percentage (%) of the container's width.
    *
    * This value defines the margin by which the target element can extend beyond the container's horizontal boundaries
-   * while still being considered "inside". For example, a tolerancePercent of 5 allows the element to exceed
-   * the container's width by up to 5% without failing the assertion.
+   * while still being considered "inside".
    *
-   * If omitted, the default is `0`, meaning strict containment with no allowed overflow.
+   * Must be strictly greater than 0. Omitting this option defaults to `0`, which
+   * will cause the assertion to throw an error because zero tolerance is not allowed.
+   *
+   * @example
+   * { tolerancePercent: 5 } // allows the element to exceed the container's width by up to 5%
    *
    * @default 0
    */
@@ -65,6 +68,9 @@ export async function toBeInside(
   options: ToBeInsideOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerancePercent = 0 } = options;
+  if (tolerancePercent < 0) {
+    throw new Error('tolerancePercent must be greater than 0');
+  }
 
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);

@@ -11,9 +11,11 @@ export interface ToHaveAspectRatioOptions {
    * This defines how much the actual aspect ratio can differ from the expected ratio while still passing the
    * assertion.
    *
-   * For example, a tolerancePercent of 5 means the actual ratio can be within ±5% of the expected ratio.
+   * Must be strictly greater than 0. Omitting this option defaults to `0`, which
+   * will cause the assertion to throw an error because zero tolerance is not allowed.
    *
-   * If omitted, the default tolerance is `0`, requiring an exact match.
+   * @example
+   * { tolerancePercent: 5 } // allows the actual ratio to differ by ±5% from the expected ratio
    *
    * @default 0
    */
@@ -53,6 +55,9 @@ export async function toHaveAspectRatio(
   options: ToHaveAspectRatioOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerancePercent = 0 } = options;
+  if (tolerancePercent < 0) {
+    throw new Error('tolerancePercent must be greater than 0');
+  }
 
   const elementBox = await getBoundingBoxOrFail(element);
   const actualRatio = elementBox.width / elementBox.height;

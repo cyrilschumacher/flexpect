@@ -71,9 +71,15 @@ export enum Axis {
  */
 export interface ToBeAlignedWithOptions {
   /**
-   * Allowed tolerance for the alignment expressed as a percentage (%).
+   * Allowed tolerance for the alignment, expressed as a percentage (%).
    *
    * The matcher will pass if the alignment difference is within this percentage of the reference size.
+   *
+   * Must be strictly greater than 0. Omitting this option defaults to `0`, which
+   * will cause the assertion to throw an error because zero tolerance is not allowed.
+   *
+   * @example
+   * { tolerancePercent: 5 } // allows alignment difference up to 5% of the reference size
    *
    * @default 0
    */
@@ -154,6 +160,9 @@ export async function toBeAlignedWith(
   options: ToBeAlignedWithOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerancePercent = 0 } = options;
+  if (tolerancePercent < 0) {
+    throw new Error('tolerancePercent must be greater than 0');
+  }
 
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);

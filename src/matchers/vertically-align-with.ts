@@ -59,10 +59,11 @@ export interface ToBeVerticallyAlignedWithOptions {
    * The matcher passes if the vertical difference between the aligned edges or points
    * of the target and container is within this percentage.
    *
-   * For example, a `tolerancePercent` of 5 allows the elements to be misaligned by up to
-   * 5% of the container's height without failing the assertion.
+   * Must be strictly greater than 0. Omitting this option defaults to `0`, which will
+   * cause the assertion to throw an error because zero tolerance is not allowed.
    *
-   * If omitted, the default tolerance is `0`, requiring exact alignment.
+   * @example
+   * { tolerancePercent: 5 } // allows up to 5% misalignment
    *
    * @default 0
    */
@@ -116,6 +117,9 @@ export async function toBeVerticallyAlignedWith(
   options: ToBeVerticallyAlignedWithOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerancePercent = 0 } = options;
+  if (tolerancePercent < 0) {
+    throw new Error('tolerancePercent must be greater than 0');
+  }
 
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);

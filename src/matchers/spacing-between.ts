@@ -42,10 +42,14 @@ export interface ToHaveSpacingBetweenOptions {
    * Allowed tolerance for the spacing difference, expressed as a **percentage** (%)
    * of the expected spacing.
    *
-   * For example, if `expected` is `16px` and `tolerancePercent` is `10`,
-   * the matcher will pass if the actual spacing is between `14.4px` and `17.6px`.
+   * The matcher passes if the actual spacing differs from the expected spacing
+   * by no more than this percentage.
    *
-   * If omitted, the default tolerance is `0`, requiring exact spacing.
+   * Must be strictly greater than 0. Omitting this option defaults to `0`, which
+   * will cause the assertion to throw an error because zero tolerance is not allowed.
+   *
+   * @example
+   * { tolerancePercent: 10 } // allows actual spacing to differ by ±10% from expected
    *
    * @default 0
    */
@@ -101,6 +105,9 @@ export async function toHaveSpacingBetween(
   options: ToHaveSpacingBetweenOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerancePercent = 0 } = options;
+  if (tolerancePercent < 0) {
+    throw new Error('tolerancePercent must be greater than 0');
+  }
 
   const elementBox = await getBoundingBoxOrFail(element);
   const referenceBox = await getBoundingBoxOrFail(reference);

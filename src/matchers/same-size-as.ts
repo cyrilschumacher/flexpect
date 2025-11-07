@@ -11,10 +11,11 @@ export interface ToHaveSameSizeAsOptions {
    * The matcher will pass if both the width and height differences between the target and reference elements
    * are within this percentage.
    *
-   * For example, a `tolerancePercent` of 5 means the target element's width and height can differ by up to
-   * 5% from the reference element's size without failing the assertion.
+   * Must be strictly greater than 0. Omitting this option defaults to `0`, which
+   * will cause the assertion to throw an error because zero tolerance is not allowed.
    *
-   * If omitted, the default tolerance is `0`, requiring exact size equality.
+   * @example
+   * { tolerancePercent: 5 } // allows width and height to differ by up to ±5% from reference
    *
    * @default 0
    */
@@ -44,6 +45,9 @@ export async function toHaveSameSizeAs(
   options: ToHaveSameSizeAsOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerancePercent = 0 } = options;
+  if (tolerancePercent < 0) {
+    throw new Error('tolerancePercent must be greater than 0');
+  }
 
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);

@@ -17,10 +17,16 @@ function isWithinTolerance(valueA: number, valueB: number, tolerance: number): b
  */
 export interface ToBeFullyCenteredOptions {
   /**
-   * Allowed tolerance for the centering difference expressed as a percentage (%).
+   * Allowed tolerance for the centering difference, expressed as a percentage (%).
    *
-   * The matcher will pass if the element is centered within this percentage
-   * tolerance relative to the container or reference element.
+   * The matcher will pass if the element is centered within this percentage tolerance
+   * relative to the container or reference element.
+   *
+   * Must be strictly greater than 0. Omitting this option defaults to `0`, which
+   * will cause the assertion to throw an error because zero tolerance is not allowed.
+   *
+   * @example
+   * { tolerancePercent: 5 } // allows centering to be off by up to 5%
    *
    * @default 0
    */
@@ -56,6 +62,9 @@ export async function toBeFullyCentered(
   options: ToBeFullyCenteredOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerancePercent = 0 } = options;
+  if (tolerancePercent < 0) {
+    throw new Error('tolerancePercent must be greater than 0');
+  }
 
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);
