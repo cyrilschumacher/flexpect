@@ -52,4 +52,11 @@ describe('parseToRGB', () => {
   ])('For "%s" as string, should throw an error', (input) => {
     expect(() => parseToRGB(input)).toThrow(`Invalid color format: ${input}. Expected rgb(r, g, b).`);
   });
+
+  it.each([
+    ['rgb(256,0,0)', 'Invalid alpha value: 256. Expected a number between 0 and 255.'],
+    ['rgb(999,10,10)', 'Invalid alpha value: 999. Expected a number between 0 and 255.'],
+  ])('should throw an error when a color component is greater than 255: "%s"', (input, message) => {
+    expect(() => parseToRGB(input)).toThrow(message);
+  });
 });
