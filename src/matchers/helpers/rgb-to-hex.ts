@@ -5,6 +5,19 @@ function toHex(value: number): string {
   return hex.toUpperCase();
 }
 
+function validateAlphaValue(alphaValue: string | undefined) {
+  if (alphaValue === undefined) {
+    throw new Error('Incomplete RGB color components');
+  }
+
+  const alphaNumberValue = parseInt(alphaValue, 10);
+  if (isNaN(alphaNumberValue) || alphaNumberValue < 0 || alphaNumberValue > 255) {
+    throw new Error(`Invalid alpha value: ${alphaValue}. Expected a number between 0 and 255.`);
+  }
+
+  return alphaNumberValue;
+}
+
 /** @internal */
 export interface RGBColor {
   r: number;
@@ -26,13 +39,14 @@ export function rgbToHex(color: RGBColor): string {
 /** @internal */
 export function parseToRGB(str: string): RGBColor {
   const match = str.match(/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i);
-  if (!match || match[1] === undefined || match[2] === undefined || match[3] === undefined) {
+  if (!match || match.length < 4) {
     throw new Error(`Invalid color format: ${str}. Expected rgb(r, g, b).`);
   }
 
-  return {
-    r: parseInt(match[1], 10),
-    g: parseInt(match[2], 10),
-    b: parseInt(match[3], 10),
-  };
+  const [, rStr, gStr, bStr] = match;
+  const r = validateAlphaValue(rStr);
+  const g = validateAlphaValue(gStr);
+  const b = validateAlphaValue(bStr);
+
+  return { r, g, b };
 }
