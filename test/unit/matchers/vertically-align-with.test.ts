@@ -105,7 +105,7 @@ Please adjust the element's vertical position to reduce the alignment difference
     await expect(resultPromise).rejects.toThrow('No bounding box');
   });
 
-  it('should throw on unknown alignment', async () => {
+  it('should throw an error on unknown alignment', async () => {
     const element = {} as Locator;
     const elementBox = { x: 0, y: 0, width: 50, height: 50 };
 

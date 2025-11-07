@@ -255,7 +255,7 @@ To fix this, ensure the element is aligned to the container's start edge along t
   });
 
   describe('Axis.Vertical', () => {
-    it('should throw error for invalid mode', async () => {
+    it('should throw an error for invalid mode', async () => {
       const element = {} as Locator;
       const container = {} as Locator;
 

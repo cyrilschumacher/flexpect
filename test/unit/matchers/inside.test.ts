@@ -110,7 +110,7 @@ Please adjust the element's position or size to fit entirely inside the containe
     expect(result.pass).toBe(false);
   });
 
-  it('should throw if element bounding box is null', async () => {
+  it('should throw an error if element bounding box is null', async () => {
     const element = { toString: () => 'element' } as Locator;
     when(getBoundingBoxOrFailMock)
       .calledWith(element)

@@ -73,14 +73,22 @@ Adjust the element position to bring it closer to the container's center.`,
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 15 };
+    const options = { tolerancePercent: 5 };
     const result = await toBeFullyCentered(element, container, options);
 
-    expect(result.message()).toEqual('Element is fully centered within the allowed tolerance (15%).');
-    expect(result.pass).toBe(true);
+    expect(result.message()).toEqual(
+      `Element is not fully centered within the container (allowed tolerance: ±5%).
+
+Offsets:
+- Horizontal: 30.00px (tolerance: ±10.00px)
+- Vertical:   30.00px (tolerance: ±10.00px)
+
+Adjust the element position to bring it closer to the container's center.`,
+    );
+    expect(result.pass).toBe(false);
   });
 
-  it('should throw if container bounding box is null', async () => {
+  it('should throw an errorif container bounding box is null', async () => {
     const element = {} as Locator;
     const elementBox = { x: 0, y: 0, width: 100, height: 100 };
 

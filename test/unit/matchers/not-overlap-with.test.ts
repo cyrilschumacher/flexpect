@@ -90,7 +90,7 @@ Adjust the layout or positioning to ensure the elements do not overlap.`);
     expect(result.pass).toBe(false);
   });
 
-  it('should throw if bounding box is null', async () => {
+  it('should throw an error if bounding box is null', async () => {
     const reference = {} as Locator;
     const target = { toString: () => 'target' } as Locator;
 
