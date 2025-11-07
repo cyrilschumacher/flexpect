@@ -86,15 +86,15 @@ export async function toBeWithinViewport(
       const overflowRight = Math.max(0, x + width - rightBound);
       const overflowBottom = Math.max(0, y + height - bottomBound);
 
-      return (
-        `Element is not fully visible in the viewport${marginPixel > 0 ? ` (required ${marginPixel}px margin)` : ''}.\n\n` +
-        `Details:\n` +
-        `- Viewport size: ${viewportWidth}×${viewportHeight}px\n` +
-        `- Required safe area: [${marginPixel}, ${marginPixel}] → [${rightBound.toFixed(2)}, ${bottomBound.toFixed(2)}]\n` +
-        `- Element bounds: x=${x}, y=${y}, width=${width}, height=${height}\n` +
-        `- Overflow: left=${overflowLeft.toFixed(2)}px, top=${overflowTop.toFixed(2)}px, right=${overflowRight.toFixed(2)}px, bottom=${overflowBottom.toFixed(2)}px\n\n` +
-        `Scroll the page or adjust layout to bring the element fully into view.`
-      );
+      return `Element is not fully visible in the viewport${marginPixel > 0 ? ` (required ${marginPixel}px margin)` : ''}.
+
+Details:
+- Viewport size: ${viewportWidth}×${viewportHeight}px
+- Required safe area: [${marginPixel}, ${marginPixel}] → [${rightBound.toFixed(2)}, ${bottomBound.toFixed(2)}]
+- Element bounds: x=${x}, y=${y}, width=${width}, height=${height}
+- Overflow: left=${overflowLeft.toFixed(2)}px, top=${overflowTop.toFixed(2)}px, right=${overflowRight.toFixed(2)}px, bottom=${overflowBottom.toFixed(2)}px
+
+Scroll the page or adjust layout to bring the element fully into view.`;
     },
   };
 }

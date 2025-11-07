@@ -49,34 +49,42 @@ export interface ToHaveAspectRatioOptions {
  */
 export async function toHaveAspectRatio(
   element: Locator,
-  ratio: number,
+  expectedRatio: number,
   options: ToHaveAspectRatioOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerancePercent = 0 } = options;
 
   const elementBox = await getBoundingBoxOrFail(element);
   const actualRatio = elementBox.width / elementBox.height;
-  const delta = Math.abs(actualRatio - ratio);
+  const delta = Math.abs(actualRatio - expectedRatio);
 
-  const tolerance = (tolerancePercent / 100) * ratio;
-  const lowerBound = ratio - tolerance;
-  const upperBound = ratio + tolerance;
+  const tolerance = (tolerancePercent / 100) * expectedRatio;
+  const lowerBound = expectedRatio - tolerance;
+  const upperBound = expectedRatio + tolerance;
   if (actualRatio >= lowerBound && actualRatio <= upperBound) {
     return {
       pass: true,
       message: () =>
-        `Element has aspect ratio within ${tolerancePercent}% tolerance: expected ≈ ${ratio.toFixed(4)}, actual ${actualRatio.toFixed(4)} (delta ${delta.toFixed(4)}).`,
+        `Element has aspect ratio within ${tolerancePercent}% tolerance: expected ≈ ${expectedRatio.toFixed(4)}, actual ${actualRatio.toFixed(4)} (delta ${delta.toFixed(4)}).`,
     };
   }
 
   return {
     pass: false,
-    message: () =>
-      `Element's aspect ratio is outside the allowed ${tolerancePercent}% range.\n\n` +
-      `Details:\n` +
-      `- Expected ratio: ~${ratio.toFixed(4)}\n` +
-      `- Actual ratio:   ${actualRatio.toFixed(4)}\n` +
-      `- Difference:     ${delta.toFixed(4)} (allowed: ±${tolerance.toFixed(4)})\n\n` +
-      `To fix this, adjust the element's width or height so that its ratio more closely matches the expected ${ratio.toFixed(4)}.`,
+    message: () => {
+      const expectedRatioFormatted = expectedRatio.toFixed(4);
+      const actualRatioFormatted = actualRatio.toFixed(4);
+      const difference = delta.toFixed(4);
+      const allowed = tolerance.toFixed(4);
+
+      return `Element's aspect ratio is outside the allowed ${tolerancePercent}% range.
+
+Details:
+- Expected ratio: ~${expectedRatioFormatted}
+- Actual ratio:   ${actualRatioFormatted}
+- Difference:     ${difference} (allowed: ±${allowed})
+
+To fix this, adjust the element's width or height so that its ratio more closely matches the expected ${expectedRatioFormatted}.`;
+    },
   };
 }

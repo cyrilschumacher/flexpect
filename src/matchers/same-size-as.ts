@@ -67,13 +67,13 @@ export async function toHaveSameSizeAs(
       const widthTolerance = (containerBox.width * tolerancePercent) / 100;
       const heightTolerance = (containerBox.height * tolerancePercent) / 100;
 
-      return (
-        `Element size differs from container size beyond the allowed tolerance of ${tolerancePercent}%.\n\n` +
-        `Details:\n` +
-        `- Width:  expected ${containerBox.width.toFixed(2)}px ±${widthTolerance.toFixed(2)}px, got ${elementBox.width.toFixed(2)}px (delta: ${deltaWidth.toFixed(2)}px)\n` +
-        `- Height: expected ${containerBox.height.toFixed(2)}px ±${heightTolerance.toFixed(2)}px, got ${elementBox.height.toFixed(2)}px (delta: ${deltaHeight.toFixed(2)}px)\n\n` +
-        `Please adjust the element's size to match the container.`
-      );
+      return `Element size differs from container size beyond the allowed tolerance of ${tolerancePercent}%.
+
+Details:
+- Width:  expected ${containerBox.width.toFixed(2)}px ±${widthTolerance.toFixed(2)}px, got ${elementBox.width.toFixed(2)}px (delta: ${deltaWidth.toFixed(2)}px)
+- Height: expected ${containerBox.height.toFixed(2)}px ±${heightTolerance.toFixed(2)}px, got ${elementBox.height.toFixed(2)}px (delta: ${deltaHeight.toFixed(2)}px)
+
+Please adjust the element's size to match the container.`;
     },
   };
 }

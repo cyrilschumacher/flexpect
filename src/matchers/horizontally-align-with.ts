@@ -125,11 +125,17 @@ export async function toBeHorizontallyAlignedWith(
 
   return {
     pass: false,
-    message: () =>
-      `Element is not ${alignment}-aligned within the allowed tolerance of ${tolerancePercent}%.\n\n` +
-      `Details:\n` +
-      `- Allowed delta: ±${tolerance.toFixed(2)}px\n` +
-      `- Actual delta:  ${delta.toFixed(2)}px\n\n` +
-      `Adjust the element's horizontal position to reduce the alignment difference.`,
+    message: () => {
+      const allowedDelta = tolerance.toFixed(2);
+      const actualDelta = delta.toFixed(2);
+
+      return `Element is not ${alignment}-aligned within the allowed tolerance of ${tolerancePercent}%.
+
+Details:
+- Allowed delta: ±${allowedDelta}px
+- Actual delta:  ${actualDelta}px
+
+Adjust the element's horizontal position to reduce the alignment difference.`;
+    },
   };
 }

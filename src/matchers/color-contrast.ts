@@ -90,15 +90,21 @@ export async function toHaveColorContrast(element: Locator, minimumContrastRatio
     message: () => {
       const textColorHex = rgbToHex(textColor);
       const backgroundColorHex = rgbToHex(backgroundColor);
-      return (
-        `Element does not have sufficient color contrast.\n\n` +
-        `Details:\n` +
-        `- Actual contrast ratio: ${contrastRatio.toFixed(2)}\n` +
-        `- Required contrast ratio: ${minimumContrastRatio}:1\n` +
-        `- Text color: ${textColorHex} (Luminance: ${textLuminance.toFixed(4)})\n` +
-        `- Background color: ${backgroundColorHex} (Luminance: ${backgroundLuminance.toFixed(4)})\n\n` +
-        `Adjust the text or background color to achieve a contrast ratio of at least ${minimumContrastRatio}:1.`
-      );
+
+      const actualContrast = contrastRatio.toFixed(2);
+      const requiredContrast = minimumContrastRatio.toFixed(0);
+      const textLuminanceFormatted = textLuminance.toFixed(4);
+      const backgroundLuminanceFormatted = backgroundLuminance.toFixed(4);
+
+      return `Element does not have sufficient color contrast.
+
+Details:
+- Actual contrast ratio: ${actualContrast}
+- Required contrast ratio: ${requiredContrast}:1
+- Text color: ${textColorHex} (Luminance: ${textLuminanceFormatted})
+- Background color: ${backgroundColorHex} (Luminance: ${backgroundLuminanceFormatted})
+
+Adjust the text or background color to achieve a contrast ratio of at least ${requiredContrast}:1.`;
     },
   };
 }

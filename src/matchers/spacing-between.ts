@@ -136,17 +136,18 @@ export async function toHaveSpacingBetween(
         const roundedRightX = rightElement.x.toFixed(2);
         const roundedRightWidth = rightElement.width.toFixed(2);
 
-        return (
-          `Horizontal spacing between elements does not match expected value.\n\n` +
-          `Expected:     ${roundedExpectedSpacing}px ±${tolerancePercent}%\n` +
-          `Measured:     ${roundedActualSpacing}px\n` +
-          `Difference:   ${roundedSpacingDifference}px\n\n` +
-          `Layout details (X axis):\n` +
-          `- Left element:   X=${roundedLeftX}, width=${roundedLeftWidth}px\n` +
-          `- Right element:  X=${roundedRightX}, width=${roundedRightWidth}px\n` +
-          `- Gap between:    ${roundedActualSpacing}px\n\n` +
-          `Use margin, padding, or flex/grid gap to adjust spacing.`
-        );
+        return `Horizontal spacing between elements does not match expected value.
+
+Expected:     ${roundedExpectedSpacing}px ±${tolerancePercent}%
+Measured:     ${roundedActualSpacing}px
+Difference:   ${roundedSpacingDifference}px
+
+Layout details (X axis):
+- Left element:   X=${roundedLeftX}, width=${roundedLeftWidth}px
+- Right element:  X=${roundedRightX}, width=${roundedRightWidth}px
+- Gap between:    ${roundedActualSpacing}px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`;
       }
 
       const topElement = elementBox.y < referenceBox.y ? elementBox : referenceBox;
@@ -157,17 +158,18 @@ export async function toHaveSpacingBetween(
       const roundedBottomY = bottomElement.y.toFixed(2);
       const roundedBottomHeight = bottomElement.height.toFixed(2);
 
-      return (
-        `Vertical spacing between elements does not match expected value.\n\n` +
-        `Expected:     ${roundedExpectedSpacing}px ±${tolerancePercent}%\n` +
-        `Measured:     ${roundedActualSpacing}px\n` +
-        `Difference:   ${roundedSpacingDifference}px\n\n` +
-        `Layout details (Y axis):\n` +
-        `- Top element:    Y=${roundedTopY}, height=${roundedTopHeight}px\n` +
-        `- Bottom element: Y=${roundedBottomY}, height=${roundedBottomHeight}px\n` +
-        `- Gap between:    ${roundedActualSpacing}px\n\n` +
-        `Use margin, padding, or flex/grid gap to adjust spacing.`
-      );
+      return `Vertical spacing between elements does not match expected value.
+
+Expected:     ${roundedExpectedSpacing}px ±${tolerancePercent}%
+Measured:     ${roundedActualSpacing}px
+Difference:   ${roundedSpacingDifference}px
+
+Layout details (Y axis):
+- Top element:    Y=${roundedTopY}, height=${roundedTopHeight}px
+- Bottom element: Y=${roundedBottomY}, height=${roundedBottomHeight}px
+- Gap between:    ${roundedActualSpacing}px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`;
     },
   };
 }

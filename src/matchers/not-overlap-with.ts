@@ -49,16 +49,17 @@ export async function toNotOverlapWith(target: Locator, reference: Locator): Pro
 
       const intersectionArea = xOverlap * yOverlap;
 
-      return (
-        `Elements overlap unexpectedly.\n\n` +
-        `Details:\n` +
-        `- Intersection area: ${intersectionArea.toFixed(2)}px²\n` +
-        `- Overlap width:     ${xOverlap.toFixed(2)}px\n` +
-        `- Overlap height:    ${yOverlap.toFixed(2)}px\n\n` +
-        `Element A: x=${targetBox.x}, y=${targetBox.y}, width=${targetBox.width}, height=${targetBox.height}\n` +
-        `Element B: x=${referenceBox.x}, y=${referenceBox.y}, width=${referenceBox.width}, height=${referenceBox.height}\n\n` +
-        `Adjust the layout or positioning to ensure the elements do not overlap.`
-      );
+      return `Elements overlap unexpectedly.
+
+Details:
+- Intersection area: ${intersectionArea.toFixed(2)}px²
+- Overlap width:     ${xOverlap.toFixed(2)}px
+- Overlap height:    ${yOverlap.toFixed(2)}px
+
+Element A: x=${targetBox.x}, y=${targetBox.y}, width=${targetBox.width}, height=${targetBox.height}
+Element B: x=${referenceBox.x}, y=${referenceBox.y}, width=${referenceBox.width}, height=${referenceBox.height}
+
+Adjust the layout or positioning to ensure the elements do not overlap.`;
     },
   };
 }

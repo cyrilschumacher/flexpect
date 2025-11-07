@@ -80,13 +80,13 @@ export async function toBeFullyCentered(
       const horizontalOffset = Math.abs(containerCenter.x - elementCenter.x);
       const verticalOffset = Math.abs(containerCenter.y - elementCenter.y);
 
-      return (
-        `Element is not fully centered within the container (allowed tolerance: ±${tolerancePercent}%).\n\n` +
-        `Offsets:\n` +
-        `- Horizontal: ${horizontalOffset.toFixed(2)}px (tolerance: ±${horizontalTolerance.toFixed(2)}px)\n` +
-        `- Vertical:   ${verticalOffset.toFixed(2)}px (tolerance: ±${verticalTolerance.toFixed(2)}px)\n\n` +
-        `Adjust the element position to bring it closer to the container's center.`
-      );
+      return `Element is not fully centered within the container (allowed tolerance: ±${tolerancePercent}%).
+
+Offsets:
+- Horizontal: ${horizontalOffset.toFixed(2)}px (tolerance: ±${horizontalTolerance.toFixed(2)}px)
+- Vertical:   ${verticalOffset.toFixed(2)}px (tolerance: ±${verticalTolerance.toFixed(2)}px)
+
+Adjust the element position to bring it closer to the container's center.`;
     },
   };
 }

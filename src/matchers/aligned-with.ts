@@ -174,11 +174,19 @@ export async function toBeAlignedWith(
 
   return {
     pass: false,
-    message: () =>
-      `Element is misaligned with the container (${mode}, ${axis}).\n\n` +
-      `Details:\n` +
-      `- Allowed deviation: ±${tolerance.toFixed(2)}px (${tolerancePercent}%)\n` +
-      `- Actual deviation:  ${delta.toFixed(2)}px\n\n` +
-      `To fix this, ensure the element is aligned to the container's ${mode.toLowerCase()} edge along the ${axis.toLowerCase()} axis.`,
+    message: () => {
+      const allowedDerivation = tolerance.toFixed(2);
+      const actualDerivation = delta.toFixed(2);
+      const lowerCaseMode = mode.toLowerCase();
+      const lowerCaseAxis = axis.toLowerCase();
+
+      return `Element is misaligned with the container (${mode}, ${axis}).
+
+Details:
+- Allowed deviation: ±${allowedDerivation}px (${tolerancePercent}%)
+- Actual deviation:  ${actualDerivation}px
+
+To fix this, ensure the element is aligned to the container's ${lowerCaseMode} edge along the ${lowerCaseAxis} axis.`;
+    },
   };
 }

@@ -81,12 +81,19 @@ export async function toBeInside(
 
   return {
     pass: false,
-    message: () =>
-      `Element is not fully inside the container within the allowed tolerance of ${tolerancePercent}%.\n\n` +
-      `Overflow detected:\n` +
-      `- Horizontal overflow: ${deltaX.toFixed(2)}px\n` +
-      `- Vertical overflow:   ${deltaY.toFixed(2)}px\n\n` +
-      `Allowed tolerance: ±${tolerance.toFixed(2)}px\n\n` +
-      `Please adjust the element's position or size to fit entirely inside the container.`,
+    message: () => {
+      const horizontalOverflow = deltaX.toFixed(2);
+      const verticalOverflow = deltaY.toFixed(2);
+      const allowedTolerance = tolerance.toFixed(2);
+
+      return `Element is not fully inside the container within the allowed tolerance of ${tolerancePercent}%.
+
+Details:
+- Horizontal overflow: ${horizontalOverflow}px
+- Vertical overflow:   ${verticalOverflow}px
+- Allowed tolerance:   ±${allowedTolerance}px
+
+Please adjust the element's position or size to fit entirely inside the container.`;
+    },
   };
 }
