@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Horizontal overlap - spacing = 0</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 50px;
+      }
+
+      #container {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        background: #f1f1f1;
+      }
+
+      #left,
+      #right {
+        position: absolute;
+        width: 100px;
+        height: 60px;
+        background: #c0392b;
+      }
+
+      #left {
+        left: 20px;
+      }
+
+      #right {
+        left: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="left"></div>
+      <div id="right"></div>
+    </div>
+  </body>
+</html>

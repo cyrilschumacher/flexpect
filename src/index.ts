@@ -6,6 +6,7 @@ import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
 import { HorizontalAlignment, ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
 import { ToBeInsideOptions } from './matchers/inside';
 import { ToHaveSameSizeAsOptions } from './matchers/same-size-as';
+import { SpacingAxis, ToHaveSpacingBetweenOptions } from './matchers/spacing-between';
 import { ToBeVerticallyAlignedWithOptions, VerticalAlignment } from './matchers/vertically-align-with';
 
 declare global {
@@ -47,17 +48,24 @@ declare global {
       toHaveColorContrast(minimumContrastRatio: number): Promise<R>;
       toHaveSameSizeAs(container: Locator, options?: ToHaveSameSizeAsOptions): Promise<R>;
       toNotOverlapWith(reference: Locator): Promise<R>;
+      toHaveSpacingBetween(
+        reference: Locator,
+        expectedSpacing: number,
+        axis: SpacingAxis,
+        options?: ToHaveSpacingBetweenOptions,
+      ): Promise<R>;
     }
   }
 }
 
-export { toBeAlignedWith, Alignment, Axis } from './matchers/aligned-with';
+export { Alignment, Axis, toBeAlignedWith } from './matchers/aligned-with';
 export { toHaveAspectRatio } from './matchers/aspect-ratio';
 export { toHaveColorContrast } from './matchers/color-contrast';
 export { toFitContainer } from './matchers/fit-container';
 export { toBeFullyCentered } from './matchers/fully-centered';
-export { toBeHorizontallyAlignedWith, HorizontalAlignment } from './matchers/horizontally-align-with';
+export { HorizontalAlignment, toBeHorizontallyAlignedWith } from './matchers/horizontally-align-with';
 export { toBeInside } from './matchers/inside';
-export { toHaveSameSizeAs } from './matchers/same-size-as';
 export { toNotOverlapWith } from './matchers/not-overlap-with';
+export { toHaveSameSizeAs } from './matchers/same-size-as';
+export { SpacingAxis, toHaveSpacingBetween } from './matchers/spacing-between';
 export { toBeVerticallyAlignedWith, VerticalAlignment } from './matchers/vertically-align-with';

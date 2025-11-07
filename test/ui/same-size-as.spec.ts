@@ -1,6 +1,5 @@
-import { expect, test } from '@playwright/test';
-
 import { toHaveSameSizeAs } from '@flexpect';
+import { expect, test } from '@playwright/test';
 
 import path from 'path';
 

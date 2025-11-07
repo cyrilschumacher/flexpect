@@ -10,6 +10,7 @@ import {
   toHaveAspectRatio,
   toHaveColorContrast,
   toHaveSameSizeAs,
+  toHaveSpacingBetween,
   toNotOverlapWith,
 } from '.';
 
@@ -24,4 +25,5 @@ expect.extend({
   toHaveColorContrast,
   toHaveSameSizeAs,
   toNotOverlapWith,
+  toHaveSpacingBetween,
 });

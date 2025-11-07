@@ -1,7 +1,5 @@
-import { Alignment, Axis } from '@flexpect/matchers/aligned-with';
 import { expect, test } from '@playwright/test';
-
-import { toBeAlignedWith } from '@flexpect';
+import { Alignment, Axis, toBeAlignedWith } from '@flexpect';
 
 import path from 'path';
 
