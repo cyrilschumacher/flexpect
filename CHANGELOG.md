@@ -1,3 +1,10 @@
+# [0.14.0](https://github.com/cyrilschumacher/flexpect/compare/v0.13.0...v0.14.0) (2025-11-07)
+
+
+### Features
+
+* implement `toBeWithinViewport` matcher ([#32](https://github.com/cyrilschumacher/flexpect/issues/32)) ([f570282](https://github.com/cyrilschumacher/flexpect/commit/f5702826724499207ec966d44fd1d38e8e467109))
+
 # [0.13.0](https://github.com/cyrilschumacher/flexpect/compare/v0.12.0...v0.13.0) (2025-11-07)
 
 
