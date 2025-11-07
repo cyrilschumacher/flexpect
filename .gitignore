@@ -168,3 +168,6 @@ test-results/
 
 # Ignore TypeDoc output
 docs/
+
+# Ignore JUnit XML reports
+junit.xml
