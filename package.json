@@ -1,6 +1,6 @@
 {
   "name": "flexpect",
-  "version": "0.14.1",
+  "version": "0.15.0",
   "description": "Automated layout validation tool using Playwright. Ensures responsive design accuracy across multiple viewports by inspecting element positions and visual alignment.",
   "main": "dist/index.mjs",
   "types": "dist/index.d.mts",
