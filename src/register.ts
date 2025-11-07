@@ -6,6 +6,7 @@ import {
   toBeHorizontallyAlignedWith,
   toBeInside,
   toBeVerticallyAlignedWith,
+  toBeWithinViewport,
   toFitContainer,
   toHaveAspectRatio,
   toHaveColorContrast,
@@ -26,4 +27,5 @@ expect.extend({
   toHaveSameSizeAs,
   toNotOverlapWith,
   toHaveSpacingBetween,
+  toBeWithinViewport,
 });
