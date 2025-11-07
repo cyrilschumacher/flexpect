@@ -160,7 +160,6 @@ export async function toBeAlignedWith(
 
   const elementPosition = getPosition(elementBox, axis, mode);
   const containerPosition = getPosition(containerBox, axis, mode);
-
   const size = axis === Axis.Horizontal ? containerBox.width : containerBox.height;
 
   const delta = Math.abs(elementPosition - containerPosition);

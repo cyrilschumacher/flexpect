@@ -26,14 +26,15 @@ export interface ToBeWithinViewportOptions {
  * respecting a safety margin from the viewport edges.
  *
  * ```text
- * ┌─────────────────────────────────────┐
- * │             Viewport                │
- * │  ┌───marginPixel───┐                │
- * │  │                 │                │
- * │  │    [element]    │ ← must be here │
- * │  │                 │                │
- * │  └─────────────────┘                │
- * └─────────────────────────────────────┘
+ * ┌────────────────────────────────────┐
+ * │             Viewport               │
+ * │                                    │
+ * │  ┌──marginPixel──┐                 │
+ * │  │               │                 │
+ * │  │  [element]    │ ← must be here  │
+ * │  │               │                 │
+ * │  └───────────────┘                 │
+ * └────────────────────────────────────┘
  * ```
  *
  * @param element - The {@link Locator} of the element to check.

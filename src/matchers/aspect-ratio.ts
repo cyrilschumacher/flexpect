@@ -33,7 +33,7 @@ export interface ToHaveAspectRatioOptions {
  * aspectRatio = width / height
  * ```
  *
- * @param ratio - The expected aspect ratio (width / height) to check against.
+ * @param expectedRatio - The expected aspect ratio (width / height) to check against.
  * @param options - Optional comparison options.
  * @returns A {@link Promise} that resolves with the matcher result.
  *
