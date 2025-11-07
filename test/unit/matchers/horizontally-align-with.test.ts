@@ -180,6 +180,16 @@ Adjust the element's horizontal position to reduce the alignment difference.`,
     expect(result.pass).toBe(true);
   });
 
+  it('should throw an error for invalid tolerance in percentage', async () => {
+    const element = {} as Locator;
+    const container = {} as Locator;
+    const options = { tolerancePercent: -10 };
+
+    await expect(toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Center, options)).rejects.toThrow(
+      'tolerancePercent must be greater than 0',
+    );
+  });
+
   it('should throw an error when the element bounding box is null', async () => {
     const element = { toString: () => 'element' } as Locator;
     when(getBoundingBoxOrFailMock)
