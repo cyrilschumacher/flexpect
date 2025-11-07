@@ -1,3 +1,10 @@
+## [0.14.1](https://github.com/cyrilschumacher/flexpect/compare/v0.14.0...v0.14.1) (2025-11-07)
+
+
+### Bug Fixes
+
+* **tests:** update expected error messages in matcher tests ([03ccdb4](https://github.com/cyrilschumacher/flexpect/commit/03ccdb4e703315fcfc129db78b5c485752ca3c0f))
+
 # [0.14.0](https://github.com/cyrilschumacher/flexpect/compare/v0.13.0...v0.14.0) (2025-11-07)
 
 
