@@ -10,25 +10,6 @@ jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 describe('toBeAlignedWith', () => {
   const getBoundingBoxOrFailMock = jest.mocked(getBoundingBoxOrFail);
 
-  it('should throw error for invalid axis', async () => {
-    const element = {} as Locator;
-    const container = {} as Locator;
-
-    const elementBox = { x: 100, y: 200, width: 50, height: 50 };
-    const containerBox = { x: 100, y: 200, width: 200, height: 400 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
-
-    await expect(toBeAlignedWith(element, container, 'unknown' as Axis, Alignment.Start)).rejects.toThrow(
-      "Invalid axis: 'unknown'.",
-    );
-  });
-
   describe('Axis.Horizontal', () => {
     it('should throw error for invalid mode', async () => {
       const element = {} as Locator;

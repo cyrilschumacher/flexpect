@@ -2,33 +2,19 @@ import { Locator, MatcherReturnType } from '@playwright/test';
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
 
 function getPosition(box: BoundingBox, axis: Axis, mode: Alignment): number {
-  if (axis === Axis.Horizontal) {
-    switch (mode) {
-      case Alignment.Start:
-        return box.x;
-      case Alignment.Center:
-        return box.x + box.width / 2;
-      case Alignment.End:
-        return box.x + box.width;
-      default:
-        throw new Error(`Invalid alignment mode: ${mode}`);
-    }
-  }
+  const origin = axis === Axis.Horizontal ? box.x : box.y;
+  const length = axis === Axis.Horizontal ? box.width : box.height;
 
-  if (axis === Axis.Vertical) {
-    switch (mode) {
-      case Alignment.Start:
-        return box.y;
-      case Alignment.Center:
-        return box.y + box.height / 2;
-      case Alignment.End:
-        return box.y + box.height;
-      default:
-        throw new Error(`Invalid alignment mode: ${mode}`);
-    }
+  switch (mode) {
+    case Alignment.Start:
+      return origin;
+    case Alignment.Center:
+      return origin + length / 2;
+    case Alignment.End:
+      return origin + length;
+    default:
+      throw new Error(`Invalid alignment mode: ${mode}`);
   }
-
-  throw new Error(`Invalid axis: '${axis}'.`);
 }
 
 /**
