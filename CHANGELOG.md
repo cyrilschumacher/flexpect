@@ -1,3 +1,10 @@
+# [0.15.0](https://github.com/cyrilschumacher/flexpect/compare/v0.14.1...v0.15.0) (2025-11-07)
+
+
+### Features
+
+* validate positive `tolerancePercent` in matchers ([7b9ed41](https://github.com/cyrilschumacher/flexpect/commit/7b9ed41da8404574da1a6c987b9c37580ea35afd))
+
 ## [0.14.1](https://github.com/cyrilschumacher/flexpect/compare/v0.14.0...v0.14.1) (2025-11-07)
 
 
