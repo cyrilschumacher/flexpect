@@ -83,4 +83,13 @@ Details:
 To fix this, adjust the element's width or height so that its ratio more closely matches the expected 1.0000.`);
     expect(result.pass).toBe(false);
   });
+
+  it('should throw an error for invalid tolerance in percentage', async () => {
+    const element = {} as Locator;
+    const options = { tolerancePercent: -10 };
+
+    await expect(toHaveAspectRatio(element, 16 / 9, options)).rejects.toThrow(
+      'tolerancePercent must be greater than 0',
+    );
+  });
 });

@@ -81,7 +81,17 @@ Please adjust the element's vertical position to reduce the alignment difference
     expect(result.pass).toBe(false);
   });
 
-  it('should throw if element bounding box is null', async () => {
+  it('should throw an error for invalid tolerance in percentage', async () => {
+    const element = {} as Locator;
+    const container = {} as Locator;
+    const options = { tolerancePercent: -10 };
+
+    await expect(toBeVerticallyAlignedWith(element, container, VerticalAlignment.Top, options)).rejects.toThrow(
+      'tolerancePercent must be greater than 0',
+    );
+  });
+
+  it('should throw an error if element bounding box is null', async () => {
     const element = { toString: () => 'element' } as Locator;
     when(getBoundingBoxOrFailMock)
       .calledWith(element)

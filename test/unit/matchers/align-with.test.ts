@@ -10,8 +10,18 @@ jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 describe('toBeAlignedWith', () => {
   const getBoundingBoxOrFailMock = jest.mocked(getBoundingBoxOrFail);
 
+  it('should throw an error for invalid tolerance in percentage', async () => {
+    const element = {} as Locator;
+    const container = {} as Locator;
+    const options = { tolerancePercent: -10 };
+
+    await expect(toBeAlignedWith(element, container, Axis.Horizontal, Alignment.Center, options)).rejects.toThrow(
+      'tolerancePercent must be greater than 0',
+    );
+  });
+
   describe('Axis.Horizontal', () => {
-    it('should throw error for invalid mode', async () => {
+    it('should throw an error for invalid mode', async () => {
       const element = {} as Locator;
       const container = {} as Locator;
 

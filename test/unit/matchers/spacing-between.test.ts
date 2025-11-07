@@ -10,6 +10,16 @@ jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 describe('toHaveSpacingBetween', () => {
   const getBoundingBoxOrFailMock = jest.mocked(getBoundingBoxOrFail);
 
+  it('should throw an error for invalid tolerance in percentage', async () => {
+    const element = {} as Locator;
+    const reference = {} as Locator;
+    const options = { tolerancePercent: -10 };
+
+    await expect(toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal, options)).rejects.toThrow(
+      'tolerancePercent must be greater than 0',
+    );
+  });
+
   it('should throw an error when the element bounding box is null', async () => {
     const element = { toString: () => 'element' } as Locator;
     const reference = {} as Locator;

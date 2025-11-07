@@ -107,4 +107,14 @@ Details:
 Please adjust the element's size to match the container.`,
     );
   });
+
+  it('should throw an error for invalid tolerance in percentage', async () => {
+    const element = {} as Locator;
+    const container = {} as Locator;
+    const options = { tolerancePercent: -10 };
+
+    await expect(toHaveSameSizeAs(element, container, options)).rejects.toThrow(
+      'tolerancePercent must be greater than 0',
+    );
+  });
 });
