@@ -391,7 +391,13 @@ To fix this, ensure the element is aligned to the container's center edge along 
 
         const result = await toBeAlignedWith(element, container, Axis.Vertical, Alignment.End, { tolerancePercent: 5 });
 
-        expect(result.message()).toContain('Element is misaligned with the container (end, vertical).');
+        expect(result.message()).toEqual(`Element is misaligned with the container (end, vertical).
+
+Details:
+- Allowed deviation: ±20.00px (5%)
+- Actual deviation:  100.00px
+
+To fix this, ensure the element is aligned to the container's end edge along the vertical axis.`);
         expect(result.pass).toBe(false);
       });
     });
@@ -454,7 +460,13 @@ To fix this, ensure the element is aligned to the container's center edge along 
 
         const result = await toBeAlignedWith(element, container, Axis.Vertical, Alignment.Start);
 
-        expect(result.message()).toContain('Element is misaligned with the container (start, vertical)');
+        expect(result.message()).toEqual(`Element is misaligned with the container (start, vertical).
+
+Details:
+- Allowed deviation: ±0.00px (0%)
+- Actual deviation:  5.00px
+
+To fix this, ensure the element is aligned to the container's start edge along the vertical axis.`);
         expect(result.pass).toBe(false);
       });
     });

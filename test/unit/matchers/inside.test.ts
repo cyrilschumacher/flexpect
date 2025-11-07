@@ -71,11 +71,10 @@ describe('toBeInside', () => {
     expect(result.message()).toEqual(
       `Element is not fully inside the container within the allowed tolerance of 5%.
 
-Overflow detected:
+Details:
 - Horizontal overflow: 10.00px
 - Vertical overflow:   0.00px
-
-Allowed tolerance: ±10.00px
+- Allowed tolerance:   ±10.00px
 
 Please adjust the element's position or size to fit entirely inside the container.`,
     );
@@ -101,11 +100,10 @@ Please adjust the element's position or size to fit entirely inside the containe
     expect(result.message()).toEqual(
       `Element is not fully inside the container within the allowed tolerance of 0%.
 
-Overflow detected:
+Details:
 - Horizontal overflow: 10.00px
 - Vertical overflow:   10.00px
-
-Allowed tolerance: ±0.00px
+- Allowed tolerance:   ±0.00px
 
 Please adjust the element's position or size to fit entirely inside the container.`,
     );
