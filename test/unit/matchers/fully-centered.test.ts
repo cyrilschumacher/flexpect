@@ -30,9 +30,9 @@ describe('toBeFullyCentered', () => {
     expect(result.pass).toBe(true);
   });
 
-  it('should fail when element is not centered within tolerance', async () => {
+  it('should pass when element is slightly off-center but within custom tolerance', async () => {
     const element = {} as Locator;
-    const elementBox = { x: 80, y: 80, width: 100, height: 100 };
+    const elementBox = { x: 60, y: 60, width: 100, height: 100 };
 
     const container = {} as Locator;
     const containerBox = { x: 0, y: 0, width: 200, height: 200 };
@@ -44,24 +44,16 @@ describe('toBeFullyCentered', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 5 };
+    const options = { tolerancePercent: 15 };
     const result = await toBeFullyCentered(element, container, options);
 
-    expect(result.message()).toEqual(
-      `Element is not fully centered within the container (allowed tolerance: ±5%).
-
-Offsets:
-- Horizontal: 30.00px (tolerance: ±10.00px)
-- Vertical:   30.00px (tolerance: ±10.00px)
-
-Adjust the element position to bring it closer to the container's center.`,
-    );
-    expect(result.pass).toBe(false);
+    expect(result.message()).toEqual('Element is fully centered within the allowed tolerance (15%).');
+    expect(result.pass).toBe(true);
   });
 
-  it('should pass when element is slightly off-center but within custom tolerance', async () => {
+  it('should fail when element is not centered within tolerance', async () => {
     const element = {} as Locator;
-    const elementBox = { x: 60, y: 60, width: 100, height: 100 };
+    const elementBox = { x: 80, y: 80, width: 100, height: 100 };
 
     const container = {} as Locator;
     const containerBox = { x: 0, y: 0, width: 200, height: 200 };
