@@ -1,3 +1,15 @@
+# [0.13.0](https://github.com/cyrilschumacher/flexpect/compare/v0.12.0...v0.13.0) (2025-11-07)
+
+
+### Bug Fixes
+
+* apply Prettier formatting ([2c5d2e3](https://github.com/cyrilschumacher/flexpect/commit/2c5d2e336da2b1e2498d750a38f3488393fbeb46))
+
+
+### Features
+
+* implement `toHaveSpacingBetween` matcher ([#26](https://github.com/cyrilschumacher/flexpect/issues/26)) ([b93ba77](https://github.com/cyrilschumacher/flexpect/commit/b93ba7774ff3d0217a305742fd3eb4e352bf1abc))
+
 # [0.12.0](https://github.com/cyrilschumacher/flexpect/compare/v0.11.0...v0.12.0) (2025-10-30)
 
 
