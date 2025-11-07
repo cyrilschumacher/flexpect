@@ -90,11 +90,9 @@ export async function toBeWithinViewport(
         `Element is not fully visible in the viewport${marginPixel > 0 ? ` (required ${marginPixel}px margin)` : ''}.\n\n` +
         `Details:\n` +
         `- Viewport size: ${viewportWidth}×${viewportHeight}px\n` +
-        `- Required safe area: [${marginPixel}, ${marginPixel}] → [${rightBound.toFixed(1)}, ${bottomBound.toFixed(1)}]\n` +
+        `- Required safe area: [${marginPixel}, ${marginPixel}] → [${rightBound.toFixed(2)}, ${bottomBound.toFixed(2)}]\n` +
         `- Element bounds: x=${x}, y=${y}, width=${width}, height=${height}\n` +
-        `- Overflow: left=${overflowLeft.toFixed(1)}px, top=${overflowTop.toFixed(
-          1,
-        )}px, right=${overflowRight.toFixed(1)}px, bottom=${overflowBottom.toFixed(1)}px\n\n` +
+        `- Overflow: left=${overflowLeft.toFixed(2)}px, top=${overflowTop.toFixed(2)}px, right=${overflowRight.toFixed(2)}px, bottom=${overflowBottom.toFixed(2)}px\n\n` +
         `Scroll the page or adjust layout to bring the element fully into view.`
       );
     },

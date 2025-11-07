@@ -61,9 +61,9 @@ describe('toBeWithinViewport', () => {
 
 Details:
 - Viewport size: 800×600px
-- Required safe area: [0, 0] → [800.0, 600.0]
+- Required safe area: [0, 0] → [800.00, 600.00]
 - Element bounds: x=-50, y=-30, width=200, height=150
-- Overflow: left=50.0px, top=30.0px, right=0.0px, bottom=0.0px
+- Overflow: left=50.00px, top=30.00px, right=0.00px, bottom=0.00px
 
 Scroll the page or adjust layout to bring the element fully into view.`);
     expect(result.pass).toBe(false);
@@ -84,9 +84,9 @@ Scroll the page or adjust layout to bring the element fully into view.`);
 
 Details:
 - Viewport size: 1024×768px
-- Required safe area: [80, 80] → [944.0, 688.0]
+- Required safe area: [80, 80] → [944.00, 688.00]
 - Element bounds: x=20, y=20, width=300, height=300
-- Overflow: left=60.0px, top=60.0px, right=0.0px, bottom=0.0px
+- Overflow: left=60.00px, top=60.00px, right=0.00px, bottom=0.00px
 
 Scroll the page or adjust layout to bring the element fully into view.`);
     expect(result.pass).toBe(false);
@@ -107,9 +107,9 @@ Scroll the page or adjust layout to bring the element fully into view.`);
 
 Details:
 - Viewport size: 500×400px
-- Required safe area: [0, 0] → [500.0, 400.0]
+- Required safe area: [0, 0] → [500.00, 400.00]
 - Element bounds: x=350, y=300, width=200, height=150
-- Overflow: left=0.0px, top=0.0px, right=50.0px, bottom=50.0px
+- Overflow: left=0.00px, top=0.00px, right=50.00px, bottom=50.00px
 
 Scroll the page or adjust layout to bring the element fully into view.`);
     expect(result.pass).toBe(false);
@@ -156,9 +156,9 @@ Scroll the page or adjust layout to bring the element fully into view.`);
 
 Details:
 - Viewport size: 1000×1000px
-- Required safe area: [0, 0] → [1000.0, 1000.0]
+- Required safe area: [0, 0] → [1000.00, 1000.00]
 - Element bounds: x=999.6, y=999.6, width=1, height=1
-- Overflow: left=0.0px, top=0.0px, right=0.6px, bottom=0.6px
+- Overflow: left=0.00px, top=0.00px, right=0.60px, bottom=0.60px
 
 Scroll the page or adjust layout to bring the element fully into view.`);
     expect(result.pass).toBe(false);
