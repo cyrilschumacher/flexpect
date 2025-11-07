@@ -2,7 +2,7 @@ import { describe, it, expect, jest } from '@jest/globals';
 import { Locator } from '@playwright/test';
 import { when } from 'jest-when';
 
-import { toHaveSameSizeAs, ToHaveSameSizeAsOptions } from '@flexpect/matchers/same-size-as';
+import { toHaveSameSizeAs } from '@flexpect/matchers/same-size-as';
 import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
@@ -27,6 +27,27 @@ describe('toHaveSameSizeAs', () => {
     const result = await toHaveSameSizeAs(element, container);
 
     expect(result.message()).toEqual('Element size matches the container size within the allowed tolerance (0%).');
+    expect(result.pass).toBe(true);
+  });
+
+  it('should pass when element size differs but within tolerance', async () => {
+    const element = {} as Locator;
+    const container = {} as Locator;
+
+    const elementBox = { width: 105, height: 210 };
+    const containerBox = { width: 100, height: 200 };
+
+    when(getBoundingBoxOrFailMock)
+      .calledWith(element)
+      .mockImplementationOnce(async () => elementBox);
+    when(getBoundingBoxOrFailMock)
+      .calledWith(container)
+      .mockImplementationOnce(async () => containerBox);
+
+    const options = { tolerancePercent: 10 };
+    const result = await toHaveSameSizeAs(element, container, options);
+
+    expect(result.message()).toEqual('Element size matches the container size within the allowed tolerance (10%).');
     expect(result.pass).toBe(true);
   });
 
@@ -58,27 +79,6 @@ Please adjust the element's size to match the container.`,
     expect(result.pass).toBe(false);
   });
 
-  it('should pass when element size differs but within tolerance', async () => {
-    const element = {} as Locator;
-    const container = {} as Locator;
-
-    const elementBox = { width: 105, height: 210 };
-    const containerBox = { width: 100, height: 200 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
-
-    const options: ToHaveSameSizeAsOptions = { tolerancePercent: 10 };
-    const result = await toHaveSameSizeAs(element, container, options);
-
-    expect(result.message()).toEqual('Element size matches the container size within the allowed tolerance (10%).');
-    expect(result.pass).toBe(true);
-  });
-
   it('should fail when element size differs and exceeds tolerance', async () => {
     const element = {} as Locator;
     const container = {} as Locator;
@@ -93,7 +93,7 @@ Please adjust the element's size to match the container.`,
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options: ToHaveSameSizeAsOptions = { tolerancePercent: 10 };
+    const options = { tolerancePercent: 10 };
     const result = await toHaveSameSizeAs(element, container, options);
 
     expect(result.pass).toBe(false);
