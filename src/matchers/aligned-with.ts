@@ -25,8 +25,25 @@ function getPosition(box: BoundingBox, axis: Axis, mode: Alignment): number {
  * to specify how content should be aligned within a container.
  */
 export enum Alignment {
+  /**
+   * Aligns the start edge of the target with the start edge of the container.
+   *
+   * - Horizontal: left edge
+   * - Vertical: top edge
+   */
   Start = 'start',
+
+  /**
+   * Aligns the center of the target with the center of the container.
+   */
   Center = 'center',
+
+  /**
+   * Aligns the end edge of the target with the end edge of the container.
+   *
+   * - Horizontal: right edge
+   * - Vertical: bottom edge
+   */
   End = 'end',
 }
 
@@ -35,10 +52,17 @@ export enum Alignment {
  *
  * @remarks
  * This enum is used to specify whether an alignment should be performed
- * horizontally or vertically.
+ * horizontally (along the X-axis) or vertically (along the Y-axis).
  */
 export enum Axis {
+  /**
+   * Alignment along the horizontal axis (left/right).
+   */
   Horizontal = 'horizontal',
+
+  /**
+   * Alignment along the vertical axis (top/bottom).
+   */
   Vertical = 'vertical',
 }
 
