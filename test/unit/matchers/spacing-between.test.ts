@@ -286,9 +286,8 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
         .calledWith(reference)
         .mockImplementationOnce(async () => referenceBox);
 
-      const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal, {
-        tolerancePercent: 50,
-      });
+      const options = { tolerancePercent: 50 };
+      const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal, options);
 
       expect(result.pass).toBe(false);
       expect(result.message()).toContain('Expected:     10.00px ±50%');
