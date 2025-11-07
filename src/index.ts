@@ -49,7 +49,7 @@ declare global {
       toHaveSameSizeAs(container: Locator, options?: ToHaveSameSizeAsOptions): Promise<R>;
       toNotOverlapWith(reference: Locator): Promise<R>;
       toHaveSpacingBetween(
-        element: Locator,
+        reference: Locator,
         expectedSpacing: number,
         axis: SpacingAxis,
         options?: ToHaveSpacingBetweenOptions,
