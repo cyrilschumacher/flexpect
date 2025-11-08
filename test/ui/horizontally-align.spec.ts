@@ -1,4 +1,4 @@
-import { HorizontalAlignment, toBeHorizontallyAlignedWith } from '@flexpect';
+import { HorizontalAlignment, toBeHorizontallyAlignedWith, ToleranceUnit } from '@flexpect';
 import { expect, test } from '@playwright/test';
 
 import path from 'path';
@@ -8,99 +8,123 @@ test.describe('toBeHorizontallyAlignedWith matcher', () => {
     expect.extend({ toBeHorizontallyAlignedWith });
   });
 
-  test.describe('Center alignment', () => {
-    test('should pass with zero tolerance', async ({ page }) => {
+  test.describe('when the element is center-aligned', () => {
+    test('should pass when the element is centered', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/center.html');
       await page.goto(`file://${htmlPath}`);
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { tolerancePercent: 0 };
-      await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Center, options);
+      await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Center);
     });
 
-    test('should pass within tolerance using offset file', async ({ page }) => {
+    test('should pass when the element is centered within a percentage tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/center-offset.html');
       await page.goto(`file://${htmlPath}`);
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { tolerancePercent: 3 };
+      const options = { tolerance: 3, toleranceUnit: ToleranceUnit.Percent };
       await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Center, options);
     });
 
-    test('should fail for left aligned element with zero tolerance', async ({ page }) => {
+    test('should pass when the element is centered within a pixel tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/center-offset.html');
       await page.goto(`file://${htmlPath}`);
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { tolerancePercent: 0 };
-      await expect(element).not.toBeHorizontallyAlignedWith(container, HorizontalAlignment.Center, options);
+      const options = { tolerance: 8, toleranceUnit: ToleranceUnit.Pixels };
+      await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Center, options);
+    });
+
+    test('should fail when element is misaligned', async ({ page }) => {
+      const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/center-offset.html');
+      await page.goto(`file://${htmlPath}`);
+
+      const container = page.locator('#container');
+      const element = page.locator('#element');
+      await expect(element).not.toBeHorizontallyAlignedWith(container, HorizontalAlignment.Center);
     });
   });
 
-  test.describe('Left alignment', () => {
-    test('should pass with zero tolerance', async ({ page }) => {
+  test.describe('when the element is left-aligned', () => {
+    test('should pass when the element is left-aligned', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/left.html');
       await page.goto(`file://${htmlPath}`);
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { tolerancePercent: 0 };
-      await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Left, options);
+      await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Left);
     });
 
-    test('should pass within tolerance using right offset file', async ({ page }) => {
+    test('should pass when the element is left-aligned within a percentage tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/left-offset.html');
       await page.goto(`file://${htmlPath}`);
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { tolerancePercent: 5 };
+      const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
       await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Left, options);
     });
 
-    test('should fail for right aligned element with zero tolerance', async ({ page }) => {
+    test('should pass when the element is left-aligned within a pixel tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/left-offset.html');
       await page.goto(`file://${htmlPath}`);
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { tolerancePercent: 0 };
-      await expect(element).not.toBeHorizontallyAlignedWith(container, HorizontalAlignment.Left, options);
+      const options = { tolerance: 20, toleranceUnit: ToleranceUnit.Pixels };
+      await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Left, options);
+    });
+
+    test('should fail when element is misaligned', async ({ page }) => {
+      const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/left-offset.html');
+      await page.goto(`file://${htmlPath}`);
+
+      const container = page.locator('#container');
+      const element = page.locator('#element');
+      await expect(element).not.toBeHorizontallyAlignedWith(container, HorizontalAlignment.Left);
     });
   });
 
-  test.describe('Right alignment', () => {
-    test('should pass with zero tolerance', async ({ page }) => {
+  test.describe('when the element is right-aligned', () => {
+    test('should pass when the element is right-aligned', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/right.html');
       await page.goto(`file://${htmlPath}`);
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { tolerancePercent: 0 };
-      await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Right, options);
+      await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Right);
     });
 
-    test('should pass within tolerance using left offset file', async ({ page }) => {
+    test('should pass when the element is right-aligned within a percentage tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/right-offset.html');
       await page.goto(`file://${htmlPath}`);
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { tolerancePercent: 5 };
+      const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
       await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Right, options);
     });
 
-    test('should fail for left aligned element with zero tolerance', async ({ page }) => {
+    test('should pass when the element is right-aligned within a pixel tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/right-offset.html');
       await page.goto(`file://${htmlPath}`);
 
       const container = page.locator('#container');
       const element = page.locator('#element');
-      const options = { tolerancePercent: 0 };
-      await expect(element).not.toBeHorizontallyAlignedWith(container, HorizontalAlignment.Right, options);
+      const options = { tolerance: 20, toleranceUnit: ToleranceUnit.Pixels };
+      await expect(element).toBeHorizontallyAlignedWith(container, HorizontalAlignment.Right, options);
+    });
+
+    test('should fail when the element is misaligned', async ({ page }) => {
+      const htmlPath = path.resolve(__dirname, 'assets/horizontally-align/right-offset.html');
+      await page.goto(`file://${htmlPath}`);
+
+      const container = page.locator('#container');
+      const element = page.locator('#element');
+      await expect(element).not.toBeHorizontallyAlignedWith(container, HorizontalAlignment.Right);
     });
   });
 });

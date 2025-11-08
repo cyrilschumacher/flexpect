@@ -37,7 +37,8 @@ test.describe('toBeWithinViewport matcher', () => {
     await page.goto(`file://${htmlPath}`);
 
     const element = page.locator('#element');
-    await expect(element).toBeWithinViewport({ marginPixel: 50 });
+    const options = { marginPixel: 50 };
+    await expect(element).toBeWithinViewport(options);
   });
 
   test('should fail when element is inside viewport but outside safe margin', async ({ page }) => {
@@ -45,7 +46,8 @@ test.describe('toBeWithinViewport matcher', () => {
     await page.goto(`file://${htmlPath}`);
 
     const element = page.locator('#element');
-    await expect(element).not.toBeWithinViewport({ marginPixel: 100 });
+    const options = { marginPixel: 100 };
+    await expect(element).not.toBeWithinViewport(options);
   });
 
   test('should fail when element overlaps margin boundary', async ({ page }) => {
@@ -53,19 +55,23 @@ test.describe('toBeWithinViewport matcher', () => {
     await page.goto(`file://${htmlPath}`);
 
     const element = page.locator('#element');
-    await expect(element).not.toBeWithinViewport({ marginPixel: 80 });
+    const options = { marginPixel: 80 };
+    await expect(element).not.toBeWithinViewport(options);
   });
 
   test('should fail if viewport is not defined', async ({ browser }) => {
     const context = await browser.newContext({ viewport: { width: 0, height: 0 } });
-    const page = await context.newPage();
 
-    const htmlPath = path.resolve(__dirname, 'assets/within-viewport/fully-visible.html');
-    await page.goto(`file://${htmlPath}`);
+    try {
+      const page = await context.newPage();
 
-    const element = page.locator('#element');
-    await expect(element).not.toBeWithinViewport();
+      const htmlPath = path.resolve(__dirname, 'assets/within-viewport/fully-visible.html');
+      await page.goto(`file://${htmlPath}`);
 
-    await context.close();
+      const element = page.locator('#element');
+      await expect(element).not.toBeWithinViewport();
+    } finally {
+      await context.close();
+    }
   });
 });

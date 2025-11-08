@@ -1,4 +1,4 @@
-import { toBeFullyCentered } from '@flexpect';
+import { toBeFullyCentered, ToleranceUnit } from '@flexpect';
 import { expect, test } from '@playwright/test';
 
 import path from 'path';
@@ -8,23 +8,32 @@ test.describe('toBeFullyCentered matcher', () => {
     expect.extend({ toBeFullyCentered });
   });
 
-  test('should pass vertical and horizontal center alignment with zero tolerance', async ({ page }) => {
+  test('should pass vertical and horizontal center alignment', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/fully-centered/center.html');
     await page.goto(`file://${htmlPath}`);
 
     const container = page.locator('#container');
     const element = page.locator('#element');
-    const options = { tolerancePercent: 0 };
-    await expect(element).toBeFullyCentered(container, options);
+    await expect(element).toBeFullyCentered(container);
   });
 
-  test('should pass vertical and horizontal center alignment within tolerance', async ({ page }) => {
+  test('should pass vertical and horizontal center alignment within a percentage tolerance', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/fully-centered/center-offset.html');
     await page.goto(`file://${htmlPath}`);
 
     const container = page.locator('#container');
     const element = page.locator('#element');
-    const options = { tolerancePercent: 10 };
+    const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Percent };
+    await expect(element).toBeFullyCentered(container, options);
+  });
+
+  test('should pass vertical and horizontal center alignment within a pixel tolerance', async ({ page }) => {
+    const htmlPath = path.resolve(__dirname, 'assets/fully-centered/center-offset.html');
+    await page.goto(`file://${htmlPath}`);
+
+    const container = page.locator('#container');
+    const element = page.locator('#element');
+    const options = { tolerance: 25, toleranceUnit: ToleranceUnit.Pixels };
     await expect(element).toBeFullyCentered(container, options);
   });
 
