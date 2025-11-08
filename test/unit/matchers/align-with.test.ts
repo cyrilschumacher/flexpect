@@ -4,6 +4,7 @@ import { when } from 'jest-when';
 
 import { Alignment, Axis, toBeAlignedWith } from '@flexpect/matchers/aligned-with';
 import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
+import { ToleranceUnit } from '@flexpect/matchers/tolerance';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 
@@ -13,10 +14,10 @@ describe('toBeAlignedWith', () => {
   it('should throw an error for invalid tolerance in percentage', async () => {
     const element = {} as Locator;
     const container = {} as Locator;
-    const options = { tolerancePercent: -10 };
+    const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toBeAlignedWith(element, container, Axis.Horizontal, Alignment.Center, options)).rejects.toThrow(
-      'tolerancePercent must be greater than 0',
+      'tolerance must be greater than 0',
     );
   });
 
@@ -75,7 +76,7 @@ describe('toBeAlignedWith', () => {
           .calledWith(container)
           .mockImplementationOnce(async () => containerBox);
 
-        const options = { tolerancePercent: 10 };
+        const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Percent };
         const result = await toBeAlignedWith(element, container, Axis.Horizontal, Alignment.Center, options);
 
         expect(result.message()).toEqual('Element is aligned (center) along horizontal axis within 10% tolerance.');
@@ -124,7 +125,7 @@ To fix this, ensure the element is aligned to the container's center edge along 
           .calledWith(container)
           .mockImplementationOnce(async () => containerBox);
 
-        const options = { tolerancePercent: 5 };
+        const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
         const result = await toBeAlignedWith(element, container, Axis.Horizontal, Alignment.End, options);
 
         expect(result.message()).toEqual('Element is aligned (end) along horizontal axis within 5% tolerance.');
@@ -145,7 +146,7 @@ To fix this, ensure the element is aligned to the container's center edge along 
           .calledWith(container)
           .mockImplementationOnce(async () => containerBox);
 
-        const options = { tolerancePercent: 10 };
+        const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Percent };
         const result = await toBeAlignedWith(element, container, Axis.Horizontal, Alignment.End, options);
 
         expect(result.message()).toEqual('Element is aligned (end) along horizontal axis within 10% tolerance.');
@@ -217,7 +218,8 @@ To fix this, ensure the element is aligned to the container's end edge along the
           .mockImplementationOnce(async () => containerBox);
 
         const result = await toBeAlignedWith(element, container, Axis.Horizontal, Alignment.Start, {
-          tolerancePercent: 10,
+          tolerance: 10,
+          toleranceUnit: ToleranceUnit.Percent,
         });
 
         expect(result.message()).toEqual('Element is aligned (start) along horizontal axis within 10% tolerance.');
@@ -309,7 +311,7 @@ To fix this, ensure the element is aligned to the container's start edge along t
           .calledWith(container)
           .mockImplementationOnce(async () => containerBox);
 
-        const options = { tolerancePercent: 10 };
+        const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Percent };
         const result = await toBeAlignedWith(element, container, Axis.Vertical, Alignment.Center, options);
 
         expect(result.message()).toEqual('Element is aligned (center) along vertical axis within 10% tolerance.');
@@ -378,7 +380,7 @@ To fix this, ensure the element is aligned to the container's center edge along 
           .calledWith(container)
           .mockImplementationOnce(async () => containerBox);
 
-        const options = { tolerancePercent: 10 };
+        const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Percent };
         const result = await toBeAlignedWith(element, container, Axis.Vertical, Alignment.End, options);
 
         expect(result.message()).toEqual('Element is aligned (end) along vertical axis within 10% tolerance.');
@@ -399,7 +401,8 @@ To fix this, ensure the element is aligned to the container's center edge along 
           .calledWith(container)
           .mockImplementationOnce(async () => containerBox);
 
-        const result = await toBeAlignedWith(element, container, Axis.Vertical, Alignment.End, { tolerancePercent: 5 });
+        const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
+        const result = await toBeAlignedWith(element, container, Axis.Vertical, Alignment.End, options);
 
         expect(result.message()).toEqual(`Element is misaligned with the container (end, vertical).
 
@@ -447,7 +450,7 @@ To fix this, ensure the element is aligned to the container's end edge along the
           .calledWith(container)
           .mockImplementationOnce(async () => containerBox);
 
-        const options = { tolerancePercent: 10 };
+        const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Percent };
         const result = await toBeAlignedWith(element, container, Axis.Vertical, Alignment.Start, options);
 
         expect(result.message()).toEqual('Element is aligned (start) along vertical axis within 10% tolerance.');

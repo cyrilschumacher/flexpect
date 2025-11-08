@@ -4,6 +4,7 @@ import { when } from 'jest-when';
 
 import { toHaveAspectRatio } from '@flexpect/matchers/aspect-ratio';
 import { BoundingBox, getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
+import { ToleranceUnit } from '@flexpect/matchers/tolerance';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 
@@ -21,7 +22,7 @@ describe('toHaveAspectRatio', () => {
     const result = await toHaveAspectRatio(element, 16 / 9);
 
     expect(result.message()).toEqual(
-      'Element has aspect ratio within 0% tolerance: expected ≈ 1.7778, actual 1.7778 (delta 0.0000).',
+      "Element's aspect ratio is within 0% tolerance: 1.7778 (actual) vs ≈ 1.7778 (expected), off by 0.0000.",
     );
     expect(result.pass).toBe(true);
   });
@@ -34,10 +35,10 @@ describe('toHaveAspectRatio', () => {
       .calledWith(element)
       .mockImplementationOnce(async () => box);
 
-    const result = await toHaveAspectRatio(element, 4 / 3, { tolerancePercent: 5 });
+    const result = await toHaveAspectRatio(element, 4 / 3, { tolerance: 5, toleranceUnit: ToleranceUnit.Percent });
 
     expect(result.message()).toEqual(
-      'Element has aspect ratio within 5% tolerance: expected ≈ 1.3333, actual 1.3500 (delta 0.0167).',
+      "Element's aspect ratio is within 5% tolerance: 1.3500 (actual) vs ≈ 1.3333 (expected), off by 0.0167.",
     );
     expect(result.pass).toBe(true);
   });
@@ -50,7 +51,7 @@ describe('toHaveAspectRatio', () => {
       .calledWith(element)
       .mockImplementationOnce(async () => box);
 
-    const result = await toHaveAspectRatio(element, 4 / 3, { tolerancePercent: 2 });
+    const result = await toHaveAspectRatio(element, 4 / 3, { tolerance: 2, toleranceUnit: ToleranceUnit.Percent });
 
     expect(result.message()).toEqual(`Element's aspect ratio is outside the allowed 2% range.
 
@@ -86,10 +87,8 @@ To fix this, adjust the element's width or height so that its ratio more closely
 
   it('should throw an error for invalid tolerance in percentage', async () => {
     const element = {} as Locator;
-    const options = { tolerancePercent: -10 };
+    const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
-    await expect(toHaveAspectRatio(element, 16 / 9, options)).rejects.toThrow(
-      'tolerancePercent must be greater than 0',
-    );
+    await expect(toHaveAspectRatio(element, 16 / 9, options)).rejects.toThrow('tolerance must be greater than 0');
   });
 });

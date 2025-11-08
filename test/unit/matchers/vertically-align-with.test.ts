@@ -4,6 +4,7 @@ import { when } from 'jest-when';
 
 import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
 import { toBeVerticallyAlignedWith, VerticalAlignment } from '@flexpect/matchers/vertically-align-with';
+import { ToleranceUnit } from '@flexpect/matchers/tolerance';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 
@@ -24,7 +25,7 @@ describe('toBeVerticallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 0 };
+    const options = { tolerance: 0, toleranceUnit: ToleranceUnit.Percent };
     const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Top, options);
 
     expect(result.message()).toEqual('Element is properly top-aligned within the allowed tolerance (0%).');
@@ -45,7 +46,7 @@ describe('toBeVerticallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 10 };
+    const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Percent };
     const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Bottom, options);
 
     expect(result.message()).toEqual('Element is properly bottom-aligned within the allowed tolerance (10%).');
@@ -66,7 +67,7 @@ describe('toBeVerticallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 5 };
+    const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
     const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Center, options);
 
     expect(result.message()).toEqual(
@@ -84,10 +85,10 @@ Please adjust the element's vertical position to reduce the alignment difference
   it('should throw an error for invalid tolerance in percentage', async () => {
     const element = {} as Locator;
     const container = {} as Locator;
-    const options = { tolerancePercent: -10 };
+    const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toBeVerticallyAlignedWith(element, container, VerticalAlignment.Top, options)).rejects.toThrow(
-      'tolerancePercent must be greater than 0',
+      'tolerance must be greater than 0',
     );
   });
 

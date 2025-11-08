@@ -4,6 +4,7 @@ import { when } from 'jest-when';
 
 import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
 import { HorizontalAlignment, toBeHorizontallyAlignedWith } from '@flexpect/matchers/horizontally-align-with';
+import { ToleranceUnit } from '@flexpect/matchers/tolerance';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 
@@ -24,8 +25,7 @@ describe('toBeHorizontallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 0 };
-    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Left, options);
+    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Left);
 
     expect(result.message()).toEqual('Element is properly left-aligned within the allowed tolerance (0%).');
     expect(result.pass).toBe(true);
@@ -44,8 +44,7 @@ describe('toBeHorizontallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 0 };
-    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Right, options);
+    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Right);
 
     expect(result.message()).toEqual('Element is properly right-aligned within the allowed tolerance (0%).');
     expect(result.pass).toBe(true);
@@ -65,8 +64,7 @@ describe('toBeHorizontallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 0 };
-    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Center, options);
+    const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Center);
 
     expect(result.message()).toEqual('Element is properly center-aligned within the allowed tolerance (0%).');
     expect(result.pass).toBe(true);
@@ -86,7 +84,7 @@ describe('toBeHorizontallyAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 0 };
+    const options = { tolerance: 0, toleranceUnit: ToleranceUnit.Percent };
     const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Left, options);
 
     expect(result.message()).toEqual(
@@ -115,7 +113,7 @@ Adjust the element's horizontal position to reduce the alignment difference.`,
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 0 };
+    const options = { tolerance: 0, toleranceUnit: ToleranceUnit.Percent };
     const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Center, options);
 
     expect(result.message()).toEqual(
@@ -144,7 +142,7 @@ Adjust the element's horizontal position to reduce the alignment difference.`,
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 0 };
+    const options = { tolerance: 0, toleranceUnit: ToleranceUnit.Percent };
     const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Right, options);
 
     expect(result.message()).toEqual(
@@ -173,7 +171,7 @@ Adjust the element's horizontal position to reduce the alignment difference.`,
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 5 };
+    const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
     const result = await toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Center, options);
 
     expect(result.message()).toEqual('Element is properly center-aligned within the allowed tolerance (5%).');
@@ -183,10 +181,10 @@ Adjust the element's horizontal position to reduce the alignment difference.`,
   it('should throw an error for invalid tolerance in percentage', async () => {
     const element = {} as Locator;
     const container = {} as Locator;
-    const options = { tolerancePercent: -10 };
+    const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Center, options)).rejects.toThrow(
-      'tolerancePercent must be greater than 0',
+      'tolerance must be greater than 0',
     );
   });
 
