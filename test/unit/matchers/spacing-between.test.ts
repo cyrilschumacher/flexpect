@@ -17,7 +17,7 @@ describe('toHaveSpacingBetween', () => {
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal, options)).rejects.toThrow(
-      'tolerance must be greater than 0',
+      'tolerance must be greater than or equal to 0',
     );
   });
 

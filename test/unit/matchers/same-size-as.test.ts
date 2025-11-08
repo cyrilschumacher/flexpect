@@ -114,6 +114,8 @@ Please adjust the element's size to match the container.`,
     const container = {} as Locator;
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
-    await expect(toHaveSameSizeAs(element, container, options)).rejects.toThrow('tolerance must be greater than 0');
+    await expect(toHaveSameSizeAs(element, container, options)).rejects.toThrow(
+      'tolerance must be greater than or equal to 0',
+    );
   });
 });

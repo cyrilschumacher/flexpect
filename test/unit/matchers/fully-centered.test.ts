@@ -106,6 +106,8 @@ Adjust the element position to bring it closer to the container's center.`,
     const container = {} as Locator;
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
-    await expect(toBeFullyCentered(element, container, options)).rejects.toThrow('tolerance must be greater than 0');
+    await expect(toBeFullyCentered(element, container, options)).rejects.toThrow(
+      'tolerance must be greater than or equal to 0',
+    );
   });
 });
