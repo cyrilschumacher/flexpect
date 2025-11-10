@@ -36,9 +36,9 @@ export interface Tolerance {
   /**
    * Allowed tolerance value.
    *
-   * Must be strictly greater than 0. Omitting this option defaults to `0`,
+   * Must be greater than or equal to 0. Omitting this option defaults to `0`,
    * which will typically cause the assertion to fail or throw an error,
-   * since zero tolerance is not allowed.
+   * since zero tolerance is allowed.
    */
   tolerance?: number;
 
