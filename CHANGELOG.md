@@ -1,3 +1,10 @@
+# [0.16.0](https://github.com/cyrilschumacher/flexpect/compare/v0.15.0...v0.16.0) (2025-11-10)
+
+
+### Features
+
+* add Support for Pixel-Based Tolerance ([#39](https://github.com/cyrilschumacher/flexpect/issues/39)) ([2684776](https://github.com/cyrilschumacher/flexpect/commit/2684776a5d64345890a98a1bf44069b004d881e6))
+
 # [0.15.0](https://github.com/cyrilschumacher/flexpect/compare/v0.14.1...v0.15.0) (2025-11-07)
 
 
