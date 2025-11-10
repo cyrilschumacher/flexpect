@@ -1,26 +1,12 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
 import { getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
+import { Tolerance, ToleranceUnit } from './tolerance';
 
 /**
  * Options for the {@link toHaveSameSizeAs} matcher.
  */
-export interface ToHaveSameSizeAsOptions {
-  /**
-   * Allowed tolerance for the size difference, expressed as a percentage (%) of the reference element's dimensions.
-   *
-   * The matcher will pass if both the width and height differences between the target and reference elements
-   * are within this percentage.
-   *
-   * Must be strictly greater than 0. Omitting this option defaults to `0`, which
-   * will cause the assertion to throw an error because zero tolerance is not allowed.
-   *
-   * @example
-   * { tolerancePercent: 5 } // allows width and height to differ by up to ±5% from reference
-   *
-   * @default 0
-   */
-  tolerancePercent?: number;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ToHaveSameSizeAsOptions extends Tolerance {}
 
 /**
  * Asserts that the target element has the same width and height as the specified container element.
@@ -32,7 +18,8 @@ export interface ToHaveSameSizeAsOptions {
  * @example
  * // Checks that the element matches the container's size, with up to 5% tolerance in width and height
  * await expect(elementLocator).toHaveSameSizeAs(containerLocator, {
- *   tolerancePercent: 5
+ *   tolerance: 5,
+ *   toleranceUnit: ToleranceUnit.Percent
  * });
  *
  * @example
@@ -44,34 +31,33 @@ export async function toHaveSameSizeAs(
   container: Locator,
   options: ToHaveSameSizeAsOptions = {},
 ): Promise<MatcherReturnType> {
-  const { tolerancePercent = 0 } = options;
-  if (tolerancePercent < 0) {
-    throw new Error('tolerancePercent must be greater than 0');
+  const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
+  if (tolerance < 0) {
+    throw new Error('tolerance must be greater than or equal to 0');
   }
 
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);
 
+  const widthTolerance = toleranceUnit === ToleranceUnit.Percent ? (containerBox.width * tolerance) / 100 : tolerance;
+  const heightTolerance = toleranceUnit === ToleranceUnit.Percent ? (containerBox.height * tolerance) / 100 : tolerance;
   const deltaWidth = Math.abs(elementBox.width - containerBox.width);
   const deltaHeight = Math.abs(elementBox.height - containerBox.height);
-
-  if (
-    deltaWidth <= (containerBox.width * tolerancePercent) / 100 &&
-    deltaHeight <= (containerBox.height * tolerancePercent) / 100
-  ) {
+  if (deltaWidth <= widthTolerance && deltaHeight <= heightTolerance) {
     return {
       pass: true,
-      message: () => `Element size matches the container size within the allowed tolerance (${tolerancePercent}%).`,
+      message: () => {
+        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+        return `Element size matches the container size within the allowed tolerance (${tolerance}${unit}).`;
+      },
     };
   }
 
   return {
     pass: false,
     message: () => {
-      const widthTolerance = (containerBox.width * tolerancePercent) / 100;
-      const heightTolerance = (containerBox.height * tolerancePercent) / 100;
-
-      return `Element size differs from container size beyond the allowed tolerance of ${tolerancePercent}%.
+      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+      return `Element size differs from container size beyond the allowed tolerance of ${tolerance}${unit}.
 
 Details:
 - Width:  expected ${containerBox.width.toFixed(2)}px ±${widthTolerance.toFixed(2)}px, got ${elementBox.width.toFixed(2)}px (delta: ${deltaWidth.toFixed(2)}px)

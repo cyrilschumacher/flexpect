@@ -4,6 +4,7 @@ import { when } from 'jest-when';
 
 import { toHaveSpacingBetween, SpacingAxis } from '@flexpect/matchers/spacing-between';
 import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
+import { ToleranceUnit } from '@flexpect/matchers/tolerance';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 
@@ -13,10 +14,10 @@ describe('toHaveSpacingBetween', () => {
   it('should throw an error for invalid tolerance in percentage', async () => {
     const element = {} as Locator;
     const reference = {} as Locator;
-    const options = { tolerancePercent: -10 };
+    const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal, options)).rejects.toThrow(
-      'tolerancePercent must be greater than 0',
+      'tolerance must be greater than or equal to 0',
     );
   });
 
@@ -109,7 +110,8 @@ describe('toHaveSpacingBetween', () => {
         .mockImplementationOnce(async () => referenceBox);
 
       const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal, {
-        tolerancePercent: 10,
+        tolerance: 10,
+        toleranceUnit: ToleranceUnit.Percent,
       });
 
       expect(result.message()).toEqual('Spacing is 11.00px (horizontal) — within ±10% (±1.00px) of 10px.');
@@ -265,11 +267,11 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
         .calledWith(reference)
         .mockImplementationOnce(async () => referenceBox);
 
-      const options = { tolerancePercent: 50 };
+      const options = { tolerance: 50, toleranceUnit: ToleranceUnit.Percent };
       const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal, options);
 
-      expect(result.pass).toBe(true);
       expect(result.message()).toEqual('Spacing is 14.00px (horizontal) — within ±50% (±5.00px) of 10px.');
+      expect(result.pass).toBe(true);
     });
 
     it('should fail when spacing difference exceeds tolerance percent', async () => {
@@ -286,13 +288,22 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
         .calledWith(reference)
         .mockImplementationOnce(async () => referenceBox);
 
-      const options = { tolerancePercent: 50 };
+      const options = { tolerance: 50, toleranceUnit: ToleranceUnit.Percent };
       const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal, options);
 
+      expect(result.message()).toEqual(`Horizontal spacing between elements does not match expected value.
+
+Expected:     10.00px ±50%
+Measured:     16.00px
+Difference:   6.00px
+
+Layout details (X axis):
+- Left element:   X=10.00, width=50.00px
+- Right element:  X=76.00, width=30.00px
+- Gap between:    16.00px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
-      expect(result.message()).toContain('Expected:     10.00px ±50%');
-      expect(result.message()).toContain('Measured:     16.00px');
-      expect(result.message()).toContain('Difference:   6.00px');
     });
   });
 });

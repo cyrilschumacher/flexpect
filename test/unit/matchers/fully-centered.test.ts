@@ -4,6 +4,7 @@ import { when } from 'jest-when';
 
 import { toBeFullyCentered } from '@flexpect/matchers/fully-centered';
 import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
+import { ToleranceUnit } from '@flexpect/matchers/tolerance';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 
@@ -44,7 +45,7 @@ describe('toBeFullyCentered', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 15 };
+    const options = { tolerance: 15, toleranceUnit: ToleranceUnit.Percent };
     const result = await toBeFullyCentered(element, container, options);
 
     expect(result.message()).toEqual('Element is fully centered within the allowed tolerance (15%).');
@@ -65,7 +66,7 @@ describe('toBeFullyCentered', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 5 };
+    const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
     const result = await toBeFullyCentered(element, container, options);
 
     expect(result.message()).toEqual(
@@ -103,10 +104,10 @@ Adjust the element position to bring it closer to the container's center.`,
   it('should throw an error for invalid tolerance in percentage', async () => {
     const element = {} as Locator;
     const container = {} as Locator;
-    const options = { tolerancePercent: -10 };
+    const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toBeFullyCentered(element, container, options)).rejects.toThrow(
-      'tolerancePercent must be greater than 0',
+      'tolerance must be greater than or equal to 0',
     );
   });
 });

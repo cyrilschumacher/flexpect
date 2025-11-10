@@ -1,4 +1,4 @@
-import { toHaveSameSizeAs } from '@flexpect';
+import { toHaveSameSizeAs, ToleranceUnit } from '@flexpect';
 import { expect, test } from '@playwright/test';
 
 import path from 'path';
@@ -17,6 +17,26 @@ test.describe('toHaveSameSizeAs matcher', () => {
     await expect(element).toHaveSameSizeAs(container);
   });
 
+  test('should pass when size difference is within a percentage tolerance', async ({ page }) => {
+    const htmlPath = path.resolve(__dirname, 'assets/same-size-as/size-with-tolerance.html');
+    await page.goto(`file://${htmlPath}`);
+
+    const container = page.locator('#container');
+    const element = page.locator('#element');
+    const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Percent };
+    await expect(element).toHaveSameSizeAs(container, options);
+  });
+
+  test('should pass when size difference is within a pixel tolerance', async ({ page }) => {
+    const htmlPath = path.resolve(__dirname, 'assets/same-size-as/size-with-tolerance.html');
+    await page.goto(`file://${htmlPath}`);
+
+    const container = page.locator('#container');
+    const element = page.locator('#element');
+    const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Pixels };
+    await expect(element).toHaveSameSizeAs(container, options);
+  });
+
   test('should fail when element has different size than container', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/same-size-as/different-size.html');
     await page.goto(`file://${htmlPath}`);
@@ -26,23 +46,13 @@ test.describe('toHaveSameSizeAs matcher', () => {
     await expect(element).not.toHaveSameSizeAs(container);
   });
 
-  test('should pass when size difference is within tolerance', async ({ page }) => {
-    const htmlPath = path.resolve(__dirname, 'assets/same-size-as/size-with-tolerance.html');
-    await page.goto(`file://${htmlPath}`);
-
-    const container = page.locator('#container');
-    const element = page.locator('#element');
-    const options = { tolerancePercent: 10 };
-    await expect(element).toHaveSameSizeAs(container, options);
-  });
-
   test('should fail when size difference exceeds tolerance', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/same-size-as/size-out-of-tolerance.html');
     await page.goto(`file://${htmlPath}`);
 
     const container = page.locator('#container');
     const element = page.locator('#element');
-    const options = { tolerancePercent: 5 };
+    const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
     await expect(element).not.toHaveSameSizeAs(container, options);
   });
 });

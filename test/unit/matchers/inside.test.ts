@@ -4,6 +4,7 @@ import { when } from 'jest-when';
 
 import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
 import { toBeInside } from '@flexpect/matchers/inside';
+import { ToleranceUnit } from '@flexpect/matchers/tolerance';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 
@@ -44,7 +45,7 @@ describe('toBeInside', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 5 };
+    const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
     const result = await toBeInside(element, container, options);
 
     expect(result.message()).toEqual('Element is properly inside the container within the allowed tolerance (5%).');
@@ -65,16 +66,15 @@ describe('toBeInside', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 5 };
+    const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
     const result = await toBeInside(element, container, options);
 
     expect(result.message()).toEqual(
       `Element is not fully inside the container within the allowed tolerance of 5%.
 
 Details:
-- Horizontal overflow: 10.00px
-- Vertical overflow:   0.00px
-- Allowed tolerance:   ±10.00px
+- Horizontal overflow: 10.00px (allowed: ±10.00px)
+- Vertical overflow:   0.00px (allowed: ±10.00px)
 
 Please adjust the element's position or size to fit entirely inside the container.`,
     );
@@ -101,9 +101,8 @@ Please adjust the element's position or size to fit entirely inside the containe
       `Element is not fully inside the container within the allowed tolerance of 0%.
 
 Details:
-- Horizontal overflow: 10.00px
-- Vertical overflow:   10.00px
-- Allowed tolerance:   ±0.00px
+- Horizontal overflow: 10.00px (allowed: ±0.00px)
+- Vertical overflow:   10.00px (allowed: ±0.00px)
 
 Please adjust the element's position or size to fit entirely inside the container.`,
     );

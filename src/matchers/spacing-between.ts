@@ -1,5 +1,6 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
+import { Tolerance, ToleranceUnit } from './tolerance';
 
 function computeSpacing(elementBox: BoundingBox, referenceBox: BoundingBox, axis: SpacingAxis) {
   const elementStart = axis === SpacingAxis.Horizontal ? elementBox.x : elementBox.y;
@@ -37,24 +38,8 @@ export enum SpacingAxis {
 /**
  * Options for the {@link toHaveSpacingBetween} matcher.
  */
-export interface ToHaveSpacingBetweenOptions {
-  /**
-   * Allowed tolerance for the spacing difference, expressed as a **percentage** (%)
-   * of the expected spacing.
-   *
-   * The matcher passes if the actual spacing differs from the expected spacing
-   * by no more than this percentage.
-   *
-   * Must be strictly greater than 0. Omitting this option defaults to `0`, which
-   * will cause the assertion to throw an error because zero tolerance is not allowed.
-   *
-   * @example
-   * { tolerancePercent: 10 } // allows actual spacing to differ by ±10% from expected
-   *
-   * @default 0
-   */
-  tolerancePercent?: number;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ToHaveSpacingBetweenOptions extends Tolerance {}
 
 /**
  * Asserts that the spacing between two elements matches the expected value along the specified axis.
@@ -95,7 +80,10 @@ export interface ToHaveSpacingBetweenOptions {
  *
  * @example
  * // Vertical spacing: 24px ± 5%
- * await expect(header).toHaveSpacingBetween(content, 24, SpacingAxis.Vertical, { tolerancePercent: 5 });
+ * await expect(header).toHaveSpacingBetween(content, 24, SpacingAxis.Vertical, {
+ *   tolerance: 5,
+ *   toleranceUnit: ToleranceUnit.Percent
+ * });
  */
 export async function toHaveSpacingBetween(
   element: Locator,
@@ -104,9 +92,9 @@ export async function toHaveSpacingBetween(
   axis: SpacingAxis,
   options: ToHaveSpacingBetweenOptions = {},
 ): Promise<MatcherReturnType> {
-  const { tolerancePercent = 0 } = options;
-  if (tolerancePercent < 0) {
-    throw new Error('tolerancePercent must be greater than 0');
+  const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
+  if (tolerance < 0) {
+    throw new Error('tolerance must be greater than or equal to 0');
   }
 
   const elementBox = await getBoundingBoxOrFail(element);
@@ -114,15 +102,17 @@ export async function toHaveSpacingBetween(
 
   const spacing = computeSpacing(elementBox, referenceBox, axis);
 
-  const tolerance = (expectedSpacing * tolerancePercent) / 100;
+  const toleranceInPixels = toleranceUnit === ToleranceUnit.Percent ? (expectedSpacing * tolerance) / 100 : tolerance;
   const delta = Math.abs(spacing - expectedSpacing);
-  if (delta <= tolerance) {
+  if (delta <= toleranceInPixels) {
     return {
       pass: true,
       message: () => {
+        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
         const roundedSpacing = spacing.toFixed(2);
-        const roundedTolerance = tolerance.toFixed(2);
-        return `Spacing is ${roundedSpacing}px (${axis}) — within ±${tolerancePercent}% (±${roundedTolerance}px) of ${expectedSpacing}px.`;
+        const roundedTolerance = toleranceInPixels.toFixed(2);
+
+        return `Spacing is ${roundedSpacing}px (${axis}) — within ±${tolerance}${unit} (±${roundedTolerance}px) of ${expectedSpacing}px.`;
       },
     };
   }
@@ -130,6 +120,8 @@ export async function toHaveSpacingBetween(
   return {
     pass: false,
     message: () => {
+      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+
       const roundedExpectedSpacing = expectedSpacing.toFixed(2);
       const roundedActualSpacing = spacing.toFixed(2);
       const roundedSpacingDifference = delta.toFixed(2);
@@ -145,7 +137,7 @@ export async function toHaveSpacingBetween(
 
         return `Horizontal spacing between elements does not match expected value.
 
-Expected:     ${roundedExpectedSpacing}px ±${tolerancePercent}%
+Expected:     ${roundedExpectedSpacing}px ±${tolerance}${unit}
 Measured:     ${roundedActualSpacing}px
 Difference:   ${roundedSpacingDifference}px
 
@@ -167,7 +159,7 @@ Use margin, padding, or flex/grid gap to adjust spacing.`;
 
       return `Vertical spacing between elements does not match expected value.
 
-Expected:     ${roundedExpectedSpacing}px ±${tolerancePercent}%
+Expected:     ${roundedExpectedSpacing}px ±${tolerance}${unit}
 Measured:     ${roundedActualSpacing}px
 Difference:   ${roundedSpacingDifference}px
 

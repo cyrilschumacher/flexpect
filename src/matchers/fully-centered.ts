@@ -1,5 +1,7 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
+
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
+import { Tolerance, ToleranceUnit } from './tolerance';
 
 function getCenter(boundingBox: BoundingBox) {
   return {
@@ -15,23 +17,8 @@ function isWithinTolerance(valueA: number, valueB: number, tolerance: number): b
 /**
  * Options for the {@link toBeFullyCentered} matcher.
  */
-export interface ToBeFullyCenteredOptions {
-  /**
-   * Allowed tolerance for the centering difference, expressed as a percentage (%).
-   *
-   * The matcher will pass if the element is centered within this percentage tolerance
-   * relative to the container or reference element.
-   *
-   * Must be strictly greater than 0. Omitting this option defaults to `0`, which
-   * will cause the assertion to throw an error because zero tolerance is not allowed.
-   *
-   * @example
-   * { tolerancePercent: 5 } // allows centering to be off by up to 5%
-   *
-   * @default 0
-   */
-  tolerancePercent?: number;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ToBeFullyCenteredOptions extends Tolerance {}
 
 /**
  * Asserts that the target element is fully centered both horizontally and vertically
@@ -53,7 +40,8 @@ export interface ToBeFullyCenteredOptions {
  * // Check that a modal is perfectly centered within the viewport, allowing a 2% margin
  * const parentLocator = page.locator('#parent');
  * await expect(modalLocator).toBeFullyCentered(parentLocator, {
- *   tolerancePercent: 2
+ *   tolerance: 2,
+ *   toleranceUnit: ToleranceUnit.Percent
  * });
  */
 export async function toBeFullyCentered(
@@ -61,16 +49,19 @@ export async function toBeFullyCentered(
   container: Locator,
   options: ToBeFullyCenteredOptions = {},
 ): Promise<MatcherReturnType> {
-  const { tolerancePercent = 0 } = options;
-  if (tolerancePercent < 0) {
-    throw new Error('tolerancePercent must be greater than 0');
+  const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
+  if (tolerance < 0) {
+    throw new Error('tolerance must be greater than or equal to 0');
   }
 
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);
 
-  const horizontalTolerance = (containerBox.width * tolerancePercent) / 100;
-  const verticalTolerance = (containerBox.height * tolerancePercent) / 100;
+  const horizontalTolerance =
+    toleranceUnit === ToleranceUnit.Percent ? (containerBox.width * tolerance) / 100 : tolerance;
+  const verticalTolerance =
+    toleranceUnit === ToleranceUnit.Percent ? (containerBox.height * tolerance) / 100 : tolerance;
+
   const elementCenter = getCenter(elementBox);
   const containerCenter = getCenter(containerBox);
 
@@ -79,17 +70,21 @@ export async function toBeFullyCentered(
   if (horizontallyCentered && verticallyCentered) {
     return {
       pass: true,
-      message: () => `Element is fully centered within the allowed tolerance (${tolerancePercent}%).`,
+      message: () => {
+        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+        return `Element is fully centered within the allowed tolerance (${tolerance}${unit}).`;
+      },
     };
   }
+
+  const horizontalOffset = Math.abs(containerCenter.x - elementCenter.x);
+  const verticalOffset = Math.abs(containerCenter.y - elementCenter.y);
 
   return {
     pass: false,
     message: () => {
-      const horizontalOffset = Math.abs(containerCenter.x - elementCenter.x);
-      const verticalOffset = Math.abs(containerCenter.y - elementCenter.y);
-
-      return `Element is not fully centered within the container (allowed tolerance: ±${tolerancePercent}%).
+      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+      return `Element is not fully centered within the container (allowed tolerance: ±${tolerance}${unit}).
 
 Offsets:
 - Horizontal: ${horizontalOffset.toFixed(2)}px (tolerance: ±${horizontalTolerance.toFixed(2)}px)

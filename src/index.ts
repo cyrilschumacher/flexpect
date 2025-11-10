@@ -70,5 +70,6 @@ export { toBeInside } from './matchers/inside';
 export { toNotOverlapWith } from './matchers/not-overlap-with';
 export { toHaveSameSizeAs } from './matchers/same-size-as';
 export { SpacingAxis, toHaveSpacingBetween } from './matchers/spacing-between';
+export { ToleranceUnit } from './matchers/tolerance';
 export { toBeVerticallyAlignedWith, VerticalAlignment } from './matchers/vertically-align-with';
 export { toBeWithinViewport } from './matchers/within-viewport';

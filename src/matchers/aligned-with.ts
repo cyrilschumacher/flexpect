@@ -1,5 +1,7 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
+
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
+import { Tolerance, ToleranceUnit } from './tolerance';
 
 function getPosition(box: BoundingBox, axis: Axis, mode: Alignment): number {
   const origin = axis === Axis.Horizontal ? box.x : box.y;
@@ -69,22 +71,8 @@ export enum Axis {
 /**
  * Options for the {@link toBeAlignedWith} matcher.
  */
-export interface ToBeAlignedWithOptions {
-  /**
-   * Allowed tolerance for the alignment, expressed as a percentage (%).
-   *
-   * The matcher will pass if the alignment difference is within this percentage of the reference size.
-   *
-   * Must be strictly greater than 0. Omitting this option defaults to `0`, which
-   * will cause the assertion to throw an error because zero tolerance is not allowed.
-   *
-   * @example
-   * { tolerancePercent: 5 } // allows alignment difference up to 5% of the reference size
-   *
-   * @default 0
-   */
-  tolerancePercent?: number;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ToBeAlignedWithOptions extends Tolerance {}
 
 /**
  * Asserts that the target element is aligned with the specified container element
@@ -145,7 +133,8 @@ export interface ToBeAlignedWithOptions {
  * @example
  * // Checks that the button is horizontally centered with its parent within 2% tolerance
  * await expect(buttonLocator).toBeAlignedWith(parentLocator, Axis.Horizontal, Alignment.Center, {
- *   tolerancePercent: 2,
+ *   tolerance: 2,
+ *   toleranceUnit: ToleranceUnit.Percent
  * });
  *
  * @example
@@ -159,9 +148,9 @@ export async function toBeAlignedWith(
   mode: Alignment,
   options: ToBeAlignedWithOptions = {},
 ): Promise<MatcherReturnType> {
-  const { tolerancePercent = 0 } = options;
-  if (tolerancePercent < 0) {
-    throw new Error('tolerancePercent must be greater than 0');
+  const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
+  if (tolerance < 0) {
+    throw new Error('tolerance must be greater than or equal to 0');
   }
 
   const elementBox = await getBoundingBoxOrFail(element);
@@ -171,28 +160,33 @@ export async function toBeAlignedWith(
   const containerPosition = getPosition(containerBox, axis, mode);
   const size = axis === Axis.Horizontal ? containerBox.width : containerBox.height;
 
+  const toleranceInPixels = toleranceUnit === ToleranceUnit.Percent ? (tolerance / 100) * size : tolerance;
   const delta = Math.abs(elementPosition - containerPosition);
-  const tolerance = (tolerancePercent / 100) * size;
-  if (delta <= tolerance) {
+  if (delta <= toleranceInPixels) {
     return {
       pass: true,
-      message: () => `Element is aligned (${mode}) along ${axis} axis within ${tolerancePercent}% tolerance.`,
+      message: () => {
+        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+        return `Element is aligned (${mode}) along ${axis} axis within ${tolerance}${unit} tolerance.`;
+      },
     };
   }
 
   return {
     pass: false,
     message: () => {
-      const allowedDerivation = tolerance.toFixed(2);
-      const actualDerivation = delta.toFixed(2);
+      const allowedDeviation = toleranceInPixels.toFixed(2);
+      const actualDeviation = delta.toFixed(2);
       const lowerCaseMode = mode.toLowerCase();
       const lowerCaseAxis = axis.toLowerCase();
+
+      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
 
       return `Element is misaligned with the container (${mode}, ${axis}).
 
 Details:
-- Allowed deviation: ±${allowedDerivation}px (${tolerancePercent}%)
-- Actual deviation:  ${actualDerivation}px
+- Allowed deviation: ±${allowedDeviation}px (${tolerance}${unit})
+- Actual deviation:  ${actualDeviation}px
 
 To fix this, ensure the element is aligned to the container's ${lowerCaseMode} edge along the ${lowerCaseAxis} axis.`;
     },

@@ -4,6 +4,7 @@ import { when } from 'jest-when';
 
 import { toHaveSameSizeAs } from '@flexpect/matchers/same-size-as';
 import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
+import { ToleranceUnit } from '@flexpect/matchers/tolerance';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 
@@ -44,7 +45,7 @@ describe('toHaveSameSizeAs', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 10 };
+    const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Percent };
     const result = await toHaveSameSizeAs(element, container, options);
 
     expect(result.message()).toEqual('Element size matches the container size within the allowed tolerance (10%).');
@@ -93,10 +94,9 @@ Please adjust the element's size to match the container.`,
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    const options = { tolerancePercent: 10 };
+    const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Percent };
     const result = await toHaveSameSizeAs(element, container, options);
 
-    expect(result.pass).toBe(false);
     expect(result.message()).toEqual(
       `Element size differs from container size beyond the allowed tolerance of 10%.
 
@@ -106,15 +106,16 @@ Details:
 
 Please adjust the element's size to match the container.`,
     );
+    expect(result.pass).toBe(false);
   });
 
   it('should throw an error for invalid tolerance in percentage', async () => {
     const element = {} as Locator;
     const container = {} as Locator;
-    const options = { tolerancePercent: -10 };
+    const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toHaveSameSizeAs(element, container, options)).rejects.toThrow(
-      'tolerancePercent must be greater than 0',
+      'tolerance must be greater than or equal to 0',
     );
   });
 });

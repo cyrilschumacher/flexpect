@@ -1,26 +1,13 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
+
 import { getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
+import { Tolerance, ToleranceUnit } from './tolerance';
 
 /**
  * Options for the {@link toHaveAspectRatio} matcher.
  */
-export interface ToHaveAspectRatioOptions {
-  /**
-   * The allowed tolerance for the aspect ratio comparison, expressed as a percentage.
-   *
-   * This defines how much the actual aspect ratio can differ from the expected ratio while still passing the
-   * assertion.
-   *
-   * Must be strictly greater than 0. Omitting this option defaults to `0`, which
-   * will cause the assertion to throw an error because zero tolerance is not allowed.
-   *
-   * @example
-   * { tolerancePercent: 5 } // allows the actual ratio to differ by ±5% from the expected ratio
-   *
-   * @default 0
-   */
-  tolerancePercent?: number;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ToHaveAspectRatioOptions extends Tolerance {}
 
 /**
  * Asserts that the target element has the specified aspect ratio (width divided by height),
@@ -46,7 +33,8 @@ export interface ToHaveAspectRatioOptions {
  * @example
  * // Checks that the element has an aspect ratio close to 4:3 within 3% tolerance
  * await expect(elementLocator).toHaveAspectRatio(4 / 3, {
- *   tolerancePercent: 3,
+ *   tolerance: 3,
+ *   toleranceUnit: ToleranceUnit.Percent
  * });
  */
 export async function toHaveAspectRatio(
@@ -54,35 +42,44 @@ export async function toHaveAspectRatio(
   expectedRatio: number,
   options: ToHaveAspectRatioOptions = {},
 ): Promise<MatcherReturnType> {
-  const { tolerancePercent = 0 } = options;
-  if (tolerancePercent < 0) {
-    throw new Error('tolerancePercent must be greater than 0');
+  const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
+  if (tolerance < 0) {
+    throw new Error('tolerance must be greater than or equal to 0');
   }
 
   const elementBox = await getBoundingBoxOrFail(element);
   const actualRatio = elementBox.width / elementBox.height;
   const delta = Math.abs(actualRatio - expectedRatio);
 
-  const tolerance = (tolerancePercent / 100) * expectedRatio;
-  const lowerBound = expectedRatio - tolerance;
-  const upperBound = expectedRatio + tolerance;
+  const toleranceInPixels = toleranceUnit === ToleranceUnit.Percent ? (tolerance / 100) * expectedRatio : tolerance;
+  const lowerBound = expectedRatio - toleranceInPixels;
+  const upperBound = expectedRatio + toleranceInPixels;
+
   if (actualRatio >= lowerBound && actualRatio <= upperBound) {
     return {
       pass: true,
-      message: () =>
-        `Element has aspect ratio within ${tolerancePercent}% tolerance: expected ≈ ${expectedRatio.toFixed(4)}, actual ${actualRatio.toFixed(4)} (delta ${delta.toFixed(4)}).`,
+      message: () => {
+        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+
+        const formattedExpected = expectedRatio.toFixed(4);
+        const formattedActual = actualRatio.toFixed(4);
+        const formattedDelta = delta.toFixed(4);
+
+        return `Element's aspect ratio is within ${tolerance}${unit} tolerance: ${formattedActual} (actual) vs ≈ ${formattedExpected} (expected), off by ${formattedDelta}.`;
+      },
     };
   }
+
+  const expectedRatioFormatted = expectedRatio.toFixed(4);
+  const actualRatioFormatted = actualRatio.toFixed(4);
+  const difference = delta.toFixed(4);
+  const allowed = toleranceInPixels.toFixed(4);
 
   return {
     pass: false,
     message: () => {
-      const expectedRatioFormatted = expectedRatio.toFixed(4);
-      const actualRatioFormatted = actualRatio.toFixed(4);
-      const difference = delta.toFixed(4);
-      const allowed = tolerance.toFixed(4);
-
-      return `Element's aspect ratio is outside the allowed ${tolerancePercent}% range.
+      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+      return `Element's aspect ratio is outside the allowed ${tolerance}${unit} range.
 
 Details:
 - Expected ratio: ~${expectedRatioFormatted}

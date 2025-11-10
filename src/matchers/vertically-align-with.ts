@@ -1,5 +1,6 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
+import { Tolerance, ToleranceUnit } from './tolerance';
 
 function computeVerticalDelta(
   alignment: VerticalAlignment,
@@ -51,24 +52,8 @@ export enum VerticalAlignment {
 /**
  * Options for the {@link toBeVerticallyAlignedWith} matcher.
  */
-export interface ToBeVerticallyAlignedWithOptions {
-  /**
-   * Allowed tolerance for the vertical alignment difference, expressed as a percentage (%)
-   * of the container element's height.
-   *
-   * The matcher passes if the vertical difference between the aligned edges or points
-   * of the target and container is within this percentage.
-   *
-   * Must be strictly greater than 0. Omitting this option defaults to `0`, which will
-   * cause the assertion to throw an error because zero tolerance is not allowed.
-   *
-   * @example
-   * { tolerancePercent: 5 } // allows up to 5% misalignment
-   *
-   * @default 0
-   */
-  tolerancePercent?: number;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ToBeVerticallyAlignedWithOptions extends Tolerance {}
 
 /**
  * Asserts that the target element is vertically aligned with the specified container
@@ -103,7 +88,8 @@ export interface ToBeVerticallyAlignedWithOptions {
  * @example
  * // Check that a header is bottom-aligned with its section container, allowing a 2% vertical tolerance
  * await expect(headerLocator).toBeVerticallyAlignedWith(parentLocator, VerticalAlignment.Bottom, {
- *   tolerancePercent: 2
+ *   tolerance: 2,
+ *   toleranceUnit: ToleranceUnit.Percent,
  * });
  *
  * @example
@@ -116,30 +102,36 @@ export async function toBeVerticallyAlignedWith(
   alignment: VerticalAlignment,
   options: ToBeVerticallyAlignedWithOptions = {},
 ): Promise<MatcherReturnType> {
-  const { tolerancePercent = 0 } = options;
-  if (tolerancePercent < 0) {
-    throw new Error('tolerancePercent must be greater than 0');
+  const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
+  if (tolerance < 0) {
+    throw new Error('tolerance must be greater than or equal to 0');
   }
 
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);
 
   const delta = computeVerticalDelta(alignment, elementBox, containerBox);
-  const tolerance = (containerBox.height * tolerancePercent) / 100;
-  if (delta <= tolerance) {
+  const toleranceInPixels =
+    toleranceUnit === ToleranceUnit.Percent ? (containerBox.height * tolerance) / 100 : tolerance;
+  if (delta <= toleranceInPixels) {
     return {
       pass: true,
-      message: () => `Element is properly ${alignment}-aligned within the allowed tolerance (${tolerancePercent}%).`,
+      message: () => {
+        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+        return `Element is properly ${alignment}-aligned within the allowed tolerance (${tolerance}${unit}).`;
+      },
     };
   }
 
   return {
     pass: false,
     message: () => {
-      const allowedDelta = tolerance.toFixed(2);
+      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+
+      const allowedDelta = toleranceInPixels.toFixed(2);
       const actualDelta = delta.toFixed(2);
 
-      return `Element is not ${alignment}-aligned within the allowed tolerance of ${tolerancePercent}%.
+      return `Element is not ${alignment}-aligned within the allowed tolerance of ${tolerance}${unit}.
 
 Details:
 - Allowed delta: ±${allowedDelta}px

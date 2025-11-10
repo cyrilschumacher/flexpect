@@ -1,5 +1,6 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
+import { Tolerance, ToleranceUnit } from './tolerance';
 
 function calculateDeltaX(elementBox: BoundingBox, containerBox: BoundingBox, tolerance: number): number {
   const overflowLeft = Math.max(0, containerBox.x - elementBox.x - tolerance);
@@ -22,23 +23,8 @@ function calculateDeltaY(elementBox: BoundingBox, containerBox: BoundingBox, tol
 /**
  * Options for the {@link toBeInside} matcher.
  */
-export interface ToBeInsideOptions {
-  /**
-   * Allowed tolerance for the containment check, expressed as a percentage (%) of the container's width.
-   *
-   * This value defines the margin by which the target element can extend beyond the container's horizontal boundaries
-   * while still being considered "inside".
-   *
-   * Must be strictly greater than 0. Omitting this option defaults to `0`, which
-   * will cause the assertion to throw an error because zero tolerance is not allowed.
-   *
-   * @example
-   * { tolerancePercent: 5 } // allows the element to exceed the container's width by up to 5%
-   *
-   * @default 0
-   */
-  tolerancePercent?: number;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ToBeInsideOptions extends Tolerance {}
 
 /**
  * Asserts that the target element is fully contained within the specified container element,
@@ -55,7 +41,8 @@ export interface ToBeInsideOptions {
  * @example
  * // Verify that the modal content is fully inside its container with a 2% tolerance
  * await expect(modalContentLocator).toBeInside(parentLocator, {
- *   tolerancePercent: 2
+ *   tolerance: 2,
+ *   toleranceUnit: ToleranceUnit.Percent
  * });
  *
  * @example
@@ -67,37 +54,50 @@ export async function toBeInside(
   container: Locator,
   options: ToBeInsideOptions = {},
 ): Promise<MatcherReturnType> {
-  const { tolerancePercent = 0 } = options;
-  if (tolerancePercent < 0) {
-    throw new Error('tolerancePercent must be greater than 0');
+  const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
+  if (tolerance < 0) {
+    throw new Error('tolerance must be greater than or equal to 0');
   }
 
   const elementBox = await getBoundingBoxOrFail(element);
   const containerBox = await getBoundingBoxOrFail(container);
 
-  const tolerance = (containerBox.width * tolerancePercent) / 100;
-  const deltaX = calculateDeltaX(elementBox, containerBox, tolerance);
-  const deltaY = calculateDeltaY(elementBox, containerBox, tolerance);
+  const toleranceInPixelsX =
+    toleranceUnit === ToleranceUnit.Percent ? (containerBox.width * tolerance) / 100 : tolerance;
+  const toleranceInPixelsY =
+    toleranceUnit === ToleranceUnit.Percent ? (containerBox.height * tolerance) / 100 : tolerance;
+
+  const deltaX = calculateDeltaX(elementBox, containerBox, toleranceInPixelsX);
+  const deltaY = calculateDeltaY(elementBox, containerBox, toleranceInPixelsY);
+
   if (deltaX === 0 && deltaY === 0) {
     return {
       pass: true,
-      message: () => `Element is properly inside the container within the allowed tolerance (${tolerancePercent}%).`,
+      message: () => {
+        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+        return `Element is properly inside the container within the allowed tolerance (${tolerance}${unit}).`;
+      },
     };
   }
 
   return {
     pass: false,
     message: () => {
+      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+
       const horizontalOverflow = deltaX.toFixed(2);
       const verticalOverflow = deltaY.toFixed(2);
-      const allowedTolerance = tolerance.toFixed(2);
+      const allowedToleranceX = toleranceInPixelsX.toFixed(2);
+      const allowedToleranceY = toleranceInPixelsY.toFixed(2);
 
-      return `Element is not fully inside the container within the allowed tolerance of ${tolerancePercent}%.
+      const toleranceValue =
+        toleranceUnit === ToleranceUnit.Percent ? `${tolerance}${unit}` : `${tolerance.toFixed(2)}${unit}`;
+
+      return `Element is not fully inside the container within the allowed tolerance of ${toleranceValue}.
 
 Details:
-- Horizontal overflow: ${horizontalOverflow}px
-- Vertical overflow:   ${verticalOverflow}px
-- Allowed tolerance:   ±${allowedTolerance}px
+- Horizontal overflow: ${horizontalOverflow}px (allowed: ±${allowedToleranceX}px)
+- Vertical overflow:   ${verticalOverflow}px (allowed: ±${allowedToleranceY}px)
 
 Please adjust the element's position or size to fit entirely inside the container.`;
     },

@@ -11,6 +11,7 @@ test.describe('toFitContainer matcher', () => {
   test('should pass element that fits container', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/fit-container/fits-container.html');
     await page.goto(`file://${htmlPath}`);
+
     const container = page.locator('#container');
     const element = page.locator('#element');
     await expect(element).toFitContainer(container);
@@ -19,6 +20,7 @@ test.describe('toFitContainer matcher', () => {
   test('should fail element that is too small for container', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/fit-container/too-small.html');
     await page.goto(`file://${htmlPath}`);
+
     const container = page.locator('#container');
     const element = page.locator('#element');
     await expect(element).not.toFitContainer(container);
@@ -27,6 +29,7 @@ test.describe('toFitContainer matcher', () => {
   test('should fail element that overflows container', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/fit-container/overflows-container.html');
     await page.goto(`file://${htmlPath}`);
+
     const container = page.locator('#container');
     const element = page.locator('#element');
     await expect(element).not.toFitContainer(container);
@@ -35,6 +38,7 @@ test.describe('toFitContainer matcher', () => {
   test('should fail element with margin that causes overflow', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/fit-container/with-margin.html');
     await page.goto(`file://${htmlPath}`);
+
     const container = page.locator('#container');
     const element = page.locator('#element');
     await expect(element).not.toFitContainer(container);
@@ -43,6 +47,7 @@ test.describe('toFitContainer matcher', () => {
   test('should fail element with border and padding that exceeds container', async ({ page }) => {
     const htmlPath = path.resolve(__dirname, 'assets/fit-container/with-border-and-padding.html');
     await page.goto(`file://${htmlPath}`);
+
     const container = page.locator('#container');
     const element = page.locator('#element');
     await expect(element).not.toFitContainer(container);
