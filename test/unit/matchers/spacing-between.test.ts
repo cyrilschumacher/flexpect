@@ -61,7 +61,49 @@ describe('toHaveSpacingBetween', () => {
       expect(result.pass).toBe(true);
     });
 
-    it('should fail when horizontal spacing is too small', async () => {
+    it('should fail when horizontal spacing is too large and element is left-aligned', async () => {
+      const element = {} as Locator;
+      const elementBox = { x: 10, y: 0, width: 50, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+
+      const reference = {} as Locator;
+      const referenceBox = { x: 80, y: 0, width: 30, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(reference).mockResolvedValueOnce(referenceBox);
+
+      const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal);
+
+      expect(result.pass).toBe(false);
+      expect(result.message()).toEqual(
+        `Horizontal spacing between elements does not match expected value.\n\n` +
+          `Expected:     10.00px ±0%\n` +
+          `Measured:     20.00px\n` +
+          `Difference:   10.00px\n\n` +
+          `Layout details (X axis):\n` +
+          `- Left element:   X=10.00, width=50.00px\n` +
+          `- Right element:  X=80.00, width=30.00px\n` +
+          `- Gap between:    20.00px\n\n` +
+          `Use margin, padding, or flex/grid gap to adjust spacing.`,
+      );
+    });
+
+    it('should fail when horizontal spacing is too large and reference is left-aligned', async () => {
+      const element = {} as Locator;
+      const elementBox = { x: 80, y: 0, width: 30, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+
+      const reference = {} as Locator;
+      const referenceBox = { x: 10, y: 0, width: 50, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(reference).mockResolvedValueOnce(referenceBox);
+
+      const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal);
+
+      expect(result.pass).toBe(false);
+      expect(result.message()).toContain('Measured:     20.00px');
+      expect(result.message()).toContain('Left element:   X=10.00');
+      expect(result.message()).toContain('Right element:  X=80.00');
+    });
+
+    it('should fail when horizontal spacing is too small and element is left-aligned', async () => {
       const element = {} as Locator;
       const elementBox = { x: 10, y: 0, width: 50, height: 100 } as never;
       when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
@@ -86,7 +128,24 @@ describe('toHaveSpacingBetween', () => {
       expect(result.pass).toBe(false);
     });
 
-    it('should fail when elements overlap horizontally with gap equal to 0', async () => {
+    it('should fail when horizontal spacing is too small and reference is left-aligned', async () => {
+      const element = {} as Locator;
+      const elementBox = { x: 65, y: 0, width: 30, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+
+      const reference = {} as Locator;
+      const referenceBox = { x: 10, y: 0, width: 50, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(reference).mockResolvedValueOnce(referenceBox);
+
+      const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal);
+
+      expect(result.pass).toBe(false);
+      expect(result.message()).toContain('Measured:     5.00px');
+      expect(result.message()).toContain('Left element:   X=10.00');
+      expect(result.message()).toContain('Right element:  X=65.00');
+    });
+
+    it('should fail when elements overlap horizontally with gap equal to 0 and element is left-aligned', async () => {
       const element = {} as Locator;
       const elementBox = { x: 10, y: 0, width: 60, height: 100 } as never;
       when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
@@ -110,6 +169,21 @@ Layout details (X axis):
 
 Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
+    });
+
+    it('should fail when elements overlap horizontally with gap equal to 0 and reference is left-aligned', async () => {
+      const element = {} as Locator;
+      const elementBox = { x: 50, y: 0, width: 30, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+
+      const reference = {} as Locator;
+      const referenceBox = { x: 10, y: 0, width: 60, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(reference).mockResolvedValueOnce(referenceBox);
+
+      const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal);
+
+      expect(result.pass).toBe(false);
+      expect(result.message()).toContain('Measured:     0.00px');
     });
 
     describe('with tolerance in percent', () => {
@@ -238,7 +312,7 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(true);
     });
 
-    it('should fail when vertical spacing is too large', async () => {
+    it('should fail when vertical spacing is too large and element is on top', async () => {
       const element = {} as Locator;
       const elementBox = { x: 0, y: 10, width: 100, height: 50 } as never;
       when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
@@ -249,7 +323,6 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
 
       const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Vertical);
 
-      expect(result.pass).toBe(false);
       expect(result.message()).toEqual(
         `Vertical spacing between elements does not match expected value.\n\n` +
           `Expected:     10.00px ±0%\n` +
@@ -261,6 +334,137 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
           `- Gap between:    20.00px\n\n` +
           `Use margin, padding, or flex/grid gap to adjust spacing.`,
       );
+      expect(result.pass).toBe(false);
+    });
+
+    it('should fail when vertical spacing is too large and reference is on top', async () => {
+      const element = {} as Locator;
+      const elementBox = { x: 0, y: 80, width: 100, height: 30 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+
+      const reference = {} as Locator;
+      const referenceBox = { x: 0, y: 10, width: 100, height: 50 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(reference).mockResolvedValueOnce(referenceBox);
+
+      const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Vertical);
+
+      expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
+
+Expected:     10.00px ±0%
+Measured:     20.00px
+Difference:   10.00px
+
+Layout details (Y axis):
+- Top element:    Y=10.00, height=50.00px
+- Bottom element: Y=80.00, height=30.00px
+- Gap between:    20.00px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`);
+      expect(result.pass).toBe(false);
+    });
+
+    it('should fail when vertical spacing is too small and element is on top', async () => {
+      const element = {} as Locator;
+      const elementBox = { x: 0, y: 10, width: 100, height: 50 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+
+      const reference = {} as Locator;
+      const referenceBox = { x: 0, y: 65, width: 100, height: 30 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(reference).mockResolvedValueOnce(referenceBox);
+
+      const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Vertical);
+
+      expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
+
+Expected:     10.00px ±0%
+Measured:     5.00px
+Difference:   5.00px
+
+Layout details (Y axis):
+- Top element:    Y=10.00, height=50.00px
+- Bottom element: Y=65.00, height=30.00px
+- Gap between:    5.00px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`);
+      expect(result.pass).toBe(false);
+    });
+
+    it('should fail when vertical spacing is too small and reference is on top', async () => {
+      const element = {} as Locator;
+      const elementBox = { x: 0, y: 65, width: 100, height: 30 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+
+      const reference = {} as Locator;
+      const referenceBox = { x: 0, y: 10, width: 100, height: 50 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(reference).mockResolvedValueOnce(referenceBox);
+
+      const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Vertical);
+
+      expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
+
+Expected:     10.00px ±0%
+Measured:     5.00px
+Difference:   5.00px
+
+Layout details (Y axis):
+- Top element:    Y=10.00, height=50.00px
+- Bottom element: Y=65.00, height=30.00px
+- Gap between:    5.00px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`);
+      expect(result.pass).toBe(false);
+    });
+
+    it('should fail when elements overlap vertically with gap equal to 0 and element is on top', async () => {
+      const element = {} as Locator;
+      const elementBox = { x: 0, y: 10, width: 100, height: 60 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+
+      const reference = {} as Locator;
+      const referenceBox = { x: 0, y: 50, width: 100, height: 30 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(reference).mockResolvedValueOnce(referenceBox);
+
+      const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Vertical);
+
+      expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
+
+Expected:     10.00px ±0%
+Measured:     0.00px
+Difference:   10.00px
+
+Layout details (Y axis):
+- Top element:    Y=10.00, height=60.00px
+- Bottom element: Y=50.00, height=30.00px
+- Gap between:    0.00px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`);
+      expect(result.pass).toBe(false);
+    });
+
+    it('should fail when elements overlap vertically with gap equal to 0 and reference is on top', async () => {
+      const element = {} as Locator;
+      const elementBox = { x: 0, y: 50, width: 100, height: 30 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+
+      const reference = {} as Locator;
+      const referenceBox = { x: 0, y: 10, width: 100, height: 60 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(reference).mockResolvedValueOnce(referenceBox);
+
+      const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Vertical);
+
+      expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
+
+Expected:     10.00px ±0%
+Measured:     0.00px
+Difference:   10.00px
+
+Layout details (Y axis):
+- Top element:    Y=10.00, height=60.00px
+- Bottom element: Y=50.00, height=30.00px
+- Gap between:    0.00px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`);
+      expect(result.pass).toBe(false);
     });
 
     describe('with tolerance in percent', () => {
