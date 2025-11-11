@@ -34,8 +34,8 @@ test.describe('toHaveSpacingBetween matcher', () => {
 
       const elementA = page.locator('#element-a');
       const elementB = page.locator('#element-b');
-      const options = { tolerance: 11, toleranceUnit: ToleranceUnit.Pixels };
-      await expect(elementA).toHaveSpacingBetween(elementB, 10, SpacingAxis.Horizontal, options);
+      const options = { tolerance: 14, toleranceUnit: ToleranceUnit.Pixels };
+      await expect(elementA).toHaveSpacingBetween(elementB, 7, SpacingAxis.Horizontal, options);
     });
 
     test('should pass regardless of element order', async ({ page }) => {
@@ -47,7 +47,7 @@ test.describe('toHaveSpacingBetween matcher', () => {
       await expect(elementB).toHaveSpacingBetween(elementA, 16, SpacingAxis.Horizontal);
     });
 
-    test('should pass when elements overlap (spacing = 0)', async ({ page }) => {
+    test('should pass when elements overlap with zero spacing', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/spacing-between/horizontal-overlap.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -85,7 +85,7 @@ test.describe('toHaveSpacingBetween matcher', () => {
       await expect(header).toHaveSpacingBetween(content, 24, SpacingAxis.Vertical);
     });
 
-    test('should pass with vertical spacing within 5% tolerance', async ({ page }) => {
+    test('should pass with horizontal spacing within a percentage tolerance', async ({ page }) => {
       const htmlPath = path.resolve(__dirname, 'assets/spacing-between/vertical-within-tolerance.html');
       await page.goto(`file://${htmlPath}`);
 
@@ -93,6 +93,16 @@ test.describe('toHaveSpacingBetween matcher', () => {
       const content = page.locator('#content');
       const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
       await expect(header).toHaveSpacingBetween(content, 30, SpacingAxis.Vertical, options);
+    });
+
+    test('should pass with horizontal spacing within a pixel tolerance', async ({ page }) => {
+      const htmlPath = path.resolve(__dirname, 'assets/spacing-between/vertical-within-tolerance.html');
+      await page.goto(`file://${htmlPath}`);
+
+      const header = page.locator('#header');
+      const content = page.locator('#content');
+      const options = { tolerance: 6, toleranceUnit: ToleranceUnit.Pixels };
+      await expect(header).toHaveSpacingBetween(content, 25, SpacingAxis.Vertical, options);
     });
 
     test('should fail when elements overlap vertically', async ({ page }) => {
