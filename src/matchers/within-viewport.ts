@@ -54,6 +54,9 @@ export async function toBeWithinViewport(
   options: ToBeWithinViewportOptions = {},
 ): Promise<MatcherReturnType> {
   const { marginPixel = 0 } = options;
+  if (marginPixel < 0) {
+    throw new Error('marginPixel must be greater than or equal to 0');
+  }
 
   const page = element.page();
   const viewportSize = page.viewportSize();

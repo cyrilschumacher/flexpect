@@ -13,77 +13,52 @@ describe('toBeVerticallyAlignedWith', () => {
 
   it('should pass when element is top-aligned within container', async () => {
     const element = {} as Locator;
-    const elementBox = { x: 0, y: 10, width: 50, height: 50 };
+    const elementBox = { x: 0, y: 10, width: 50, height: 50 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
     const container = {} as Locator;
-    const containerBox = { x: 0, y: 10, width: 200, height: 200 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
+    const containerBox = { x: 0, y: 10, width: 200, height: 200 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
     const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Top);
 
-    expect(result.message()).toEqual('Element is properly top-aligned within the allowed tolerance (0%).');
+    expect(result.message()).toEqual('Element is properly top aligned.');
     expect(result.pass).toBe(true);
   });
 
   it('should pass when element is bottom-aligned within container', async () => {
     const element = {} as Locator;
+    const elementBox = { x: 0, y: 160, width: 50, height: 50 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+
     const container = {} as Locator;
-
-    const elementBox = { x: 0, y: 160, width: 50, height: 50 };
-    const containerBox = { x: 0, y: 10, width: 200, height: 200 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
+    const containerBox = { x: 0, y: 10, width: 200, height: 200 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
     const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Bottom);
 
-    expect(result.message()).toEqual('Element is properly bottom-aligned within the allowed tolerance (0%).');
+    expect(result.message()).toEqual('Element is properly bottom aligned.');
     expect(result.pass).toBe(true);
   });
 
   it('should pass when element is center-aligned within container', async () => {
     const element = {} as Locator;
+    const elementBox = { x: 0, y: 85, width: 50, height: 50 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
+
     const container = {} as Locator;
-
-    const elementBox = { x: 0, y: 85, width: 50, height: 50 };
-    const containerBox = { x: 0, y: 10, width: 200, height: 200 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
+    const containerBox = { x: 0, y: 10, width: 200, height: 200 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
     const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Center);
 
-    expect(result.message()).toEqual('Element is properly center-aligned within the allowed tolerance (0%).');
+    expect(result.message()).toEqual('Element is properly center aligned.');
     expect(result.pass).toBe(true);
   });
 
   it('should throw an error on unknown alignment', async () => {
     const element = {} as Locator;
-    const elementBox = { x: 0, y: 0, width: 50, height: 50 };
-
     const container = {} as Locator;
-    const containerBox = { x: 0, y: 0, width: 200, height: 200 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
 
     await expect(
       toBeVerticallyAlignedWith(element, container, 'invalid-alignment' as VerticalAlignment),
@@ -93,38 +68,28 @@ describe('toBeVerticallyAlignedWith', () => {
   describe('with tolerance in percent', () => {
     it('should pass when element is bottom-aligned within tolerance', async () => {
       const element = {} as Locator;
-      const elementBox = { x: 0, y: 150, width: 50, height: 50 };
+      const elementBox = { x: 0, y: 150, width: 50, height: 50 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
       const container = {} as Locator;
-      const containerBox = { x: 0, y: 100, width: 200, height: 100 };
-
-      when(getBoundingBoxOrFailMock)
-        .calledWith(element)
-        .mockImplementationOnce(async () => elementBox);
-      when(getBoundingBoxOrFailMock)
-        .calledWith(container)
-        .mockImplementationOnce(async () => containerBox);
+      const containerBox = { x: 0, y: 100, width: 200, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
       const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Percent };
       const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Bottom, options);
 
-      expect(result.message()).toEqual('Element is properly bottom-aligned within the allowed tolerance (10%).');
+      expect(result.message()).toEqual('Element is properly bottom aligned with a tolerance of 10%.');
       expect(result.pass).toBe(true);
     });
 
     it('should fail when element is center-aligned but outside tolerance', async () => {
       const element = {} as Locator;
-      const elementBox = { x: 0, y: 119, width: 50, height: 50 };
+      const elementBox = { x: 0, y: 119, width: 50, height: 50 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
       const container = {} as Locator;
-      const containerBox = { x: 0, y: 100, width: 200, height: 100 };
-
-      when(getBoundingBoxOrFailMock)
-        .calledWith(element)
-        .mockImplementationOnce(async () => elementBox);
-      when(getBoundingBoxOrFailMock)
-        .calledWith(container)
-        .mockImplementationOnce(async () => containerBox);
+      const containerBox = { x: 0, y: 100, width: 200, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
       const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
       const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Center, options);
@@ -155,38 +120,28 @@ Please adjust the element's vertical position to reduce the alignment difference
   describe('with tolerance in pixels', () => {
     it('should pass when element is bottom-aligned within tolerance', async () => {
       const element = {} as Locator;
-      const elementBox = { x: 0, y: 150, width: 50, height: 50 };
+      const elementBox = { x: 0, y: 150, width: 50, height: 50 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
       const container = {} as Locator;
-      const containerBox = { x: 0, y: 100, width: 200, height: 100 };
-
-      when(getBoundingBoxOrFailMock)
-        .calledWith(element)
-        .mockImplementationOnce(async () => elementBox);
-      when(getBoundingBoxOrFailMock)
-        .calledWith(container)
-        .mockImplementationOnce(async () => containerBox);
+      const containerBox = { x: 0, y: 100, width: 200, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
       const options = { tolerance: 100, toleranceUnit: ToleranceUnit.Pixels };
       const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Bottom, options);
 
-      expect(result.message()).toEqual('Element is properly bottom-aligned within the allowed tolerance (100px).');
+      expect(result.message()).toEqual('Element is properly bottom aligned with a tolerance of 100px.');
       expect(result.pass).toBe(true);
     });
 
     it('should fail when element is center-aligned but outside tolerance', async () => {
       const element = {} as Locator;
-      const elementBox = { x: 0, y: 119, width: 50, height: 50 };
+      const elementBox = { x: 0, y: 119, width: 50, height: 50 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
       const container = {} as Locator;
-      const containerBox = { x: 0, y: 100, width: 200, height: 100 };
-
-      when(getBoundingBoxOrFailMock)
-        .calledWith(element)
-        .mockImplementationOnce(async () => elementBox);
-      when(getBoundingBoxOrFailMock)
-        .calledWith(container)
-        .mockImplementationOnce(async () => containerBox);
+      const containerBox = { x: 0, y: 100, width: 200, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
       const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Pixels };
       const result = await toBeVerticallyAlignedWith(element, container, VerticalAlignment.Center, options);

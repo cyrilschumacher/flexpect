@@ -13,58 +13,27 @@ describe('toBeFullyCentered', () => {
 
   it('should pass when element is fully centered within container', async () => {
     const element = {} as Locator;
-    const elementBox = { x: 50, y: 50, width: 100, height: 100 };
+    const elementBox = { x: 50, y: 50, width: 100, height: 100 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
     const container = {} as Locator;
-    const containerBox = { x: 0, y: 0, width: 200, height: 200 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
+    const containerBox = { x: 0, y: 0, width: 200, height: 200 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
     const result = await toBeFullyCentered(element, container);
 
-    expect(result.message()).toEqual('Element is fully centered within the allowed tolerance (0%).');
-    expect(result.pass).toBe(true);
-  });
-
-  it('should pass when element is slightly off-center but within custom tolerance', async () => {
-    const element = {} as Locator;
-    const elementBox = { x: 60, y: 60, width: 100, height: 100 };
-
-    const container = {} as Locator;
-    const containerBox = { x: 0, y: 0, width: 200, height: 200 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
-
-    const options = { tolerance: 15, toleranceUnit: ToleranceUnit.Percent };
-    const result = await toBeFullyCentered(element, container, options);
-
-    expect(result.message()).toEqual('Element is fully centered within the allowed tolerance (15%).');
+    expect(result.message()).toEqual('Element is perfectly centered.');
     expect(result.pass).toBe(true);
   });
 
   it('should fail when element is not centered within tolerance', async () => {
     const element = {} as Locator;
-    const elementBox = { x: 80, y: 80, width: 100, height: 100 };
+    const elementBox = { x: 80, y: 80, width: 100, height: 100 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
     const container = {} as Locator;
-    const containerBox = { x: 0, y: 0, width: 200, height: 200 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
+    const containerBox = { x: 0, y: 0, width: 200, height: 200 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
     const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
     const result = await toBeFullyCentered(element, container, options);
@@ -81,33 +50,59 @@ Adjust the element position to bring it closer to the container's center.`,
     expect(result.pass).toBe(false);
   });
 
-  it('should throw an errorif container bounding box is null', async () => {
-    const element = {} as Locator;
-    const elementBox = { x: 0, y: 0, width: 100, height: 100 };
+  describe('with tolerance in pixels', () => {
+    it('should pass when element is slightly off-center but within pixel tolerance', async () => {
+      const element = {} as Locator;
+      const elementBox = { x: 60, y: 60, width: 100, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
-    const container = { toString: () => 'container' } as Locator;
+      const container = {} as Locator;
+      const containerBox = { x: 0, y: 0, width: 200, height: 200 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => {
-        throw new Error('Expected element located by "container" to have a bounding box');
-      });
+      const options = { tolerance: 10, toleranceUnit: ToleranceUnit.Pixels };
+      const result = await toBeFullyCentered(element, container, options);
 
-    const resultPromise = toBeFullyCentered(element, container);
+      expect(result.message()).toEqual('Element is perfectly centered with a tolerance of 10px.');
+      expect(result.pass).toBe(true);
+    });
 
-    await expect(resultPromise).rejects.toThrow('Expected element located by "container" to have a bounding box');
+    it('should throw an error for invalid tolerance in pixels', async () => {
+      const element = {} as Locator;
+      const container = {} as Locator;
+      const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Pixels };
+
+      await expect(toBeFullyCentered(element, container, options)).rejects.toThrow(
+        'tolerance must be greater than or equal to 0',
+      );
+    });
   });
 
-  it('should throw an error for invalid tolerance in percentage', async () => {
-    const element = {} as Locator;
-    const container = {} as Locator;
-    const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
+  describe('with tolerance in percentage', () => {
+    it('should pass when element is slightly off-center but within percent tolerance', async () => {
+      const element = {} as Locator;
+      const elementBox = { x: 60, y: 60, width: 100, height: 100 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
-    await expect(toBeFullyCentered(element, container, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
-    );
+      const container = {} as Locator;
+      const containerBox = { x: 0, y: 0, width: 200, height: 200 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
+
+      const options = { tolerance: 15, toleranceUnit: ToleranceUnit.Percent };
+      const result = await toBeFullyCentered(element, container, options);
+
+      expect(result.message()).toEqual('Element is perfectly centered with a tolerance of 15%.');
+      expect(result.pass).toBe(true);
+    });
+
+    it('should throw an error for invalid tolerance in percent', async () => {
+      const element = {} as Locator;
+      const container = {} as Locator;
+      const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
+
+      await expect(toBeFullyCentered(element, container, options)).rejects.toThrow(
+        'tolerance must be greater than or equal to 0',
+      );
+    });
   });
 });

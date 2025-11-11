@@ -12,7 +12,7 @@ describe('toHaveColorContrast', () => {
     const element = { evaluate: mockEvaluate } as unknown as Locator;
     const result = await toHaveColorContrast(element, 4.5);
 
-    expect(result.message()).toEqual('Element has sufficient color contrast (ratio: 21.00).');
+    expect(result.message()).toEqual('Element color contrast is good, with a ratio of 21.00.');
     expect(result.pass).toBe(true);
   });
 

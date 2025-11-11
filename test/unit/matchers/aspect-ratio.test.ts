@@ -3,7 +3,7 @@ import { expect, Locator } from '@playwright/test';
 import { when } from 'jest-when';
 
 import { toHaveAspectRatio } from '@flexpect/matchers/aspect-ratio';
-import { BoundingBox, getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
+import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
 import { ToleranceUnit } from '@flexpect/matchers/tolerance';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
@@ -13,27 +13,21 @@ describe('toHaveAspectRatio', () => {
 
   it('should pass when aspect ratio matches exactly', async () => {
     const element = {} as Locator;
-    const box = { x: 0, y: 0, width: 16, height: 9 } as BoundingBox;
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => box);
+    const box = { x: 0, y: 0, width: 16, height: 9 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(box);
 
     const result = await toHaveAspectRatio(element, 16 / 9);
 
     expect(result.message()).toEqual(
-      "Element's aspect ratio is within 0% tolerance: 1.7778 (actual) vs ≈ 1.7778 (expected), off by 0.0000.",
+      'Element aspect ratio matches the expected value exactly, with 1.7778 actual and 1.7778 expected.',
     );
     expect(result.pass).toBe(true);
   });
 
   it('should fail when aspect ratio is outside tolerance', async () => {
     const element = {} as Locator;
-    const box = { x: 0, y: 0, width: 22, height: 20 } as BoundingBox;
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => box);
+    const box = { x: 0, y: 0, width: 22, height: 20 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(box);
 
     const result = await toHaveAspectRatio(element, 1);
 
@@ -51,28 +45,22 @@ To fix this, adjust the element's width or height so that its ratio more closely
   describe('with tolerance in pixels', () => {
     it('should pass when aspect ratio is within pixel tolerance', async () => {
       const element = {} as Locator;
-      const box = { x: 0, y: 0, width: 28, height: 20 } as BoundingBox;
-
-      when(getBoundingBoxOrFailMock)
-        .calledWith(element)
-        .mockImplementationOnce(async () => box);
+      const elementBox = { x: 0, y: 0, width: 28, height: 20 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
       const options = { tolerance: 1, toleranceUnit: ToleranceUnit.Pixels };
       const result = await toHaveAspectRatio(element, 4 / 3, options);
 
       expect(result.message()).toEqual(
-        "Element's aspect ratio is within 1px tolerance: 1.4000 (actual) vs ≈ 1.3333 (expected), off by 0.0667.",
+        'Element aspect ratio is within 1px of the expected value, with 1.4000 actual, 1.3333 expected, and an offset of 0.0667.',
       );
       expect(result.pass).toBe(true);
     });
 
     it('should fail when aspect ratio is outside pixel tolerance', async () => {
       const element = {} as Locator;
-      const box = { x: 0, y: 0, width: 30, height: 20 } as BoundingBox;
-
-      when(getBoundingBoxOrFailMock)
-        .calledWith(element)
-        .mockImplementationOnce(async () => box);
+      const elementBox = { x: 0, y: 0, width: 30, height: 20 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
       const options = { tolerance: 0, toleranceUnit: ToleranceUnit.Pixels };
       const result = await toHaveAspectRatio(element, 4 / 3, options);
@@ -101,28 +89,22 @@ To fix this, adjust the element's width or height so that its ratio more closely
   describe('with tolerance in percent', () => {
     it('should pass when aspect ratio is within percent tolerance', async () => {
       const element = {} as Locator;
-      const box = { x: 0, y: 0, width: 27, height: 20 } as BoundingBox;
-
-      when(getBoundingBoxOrFailMock)
-        .calledWith(element)
-        .mockImplementationOnce(async () => box);
+      const elementBox = { x: 0, y: 0, width: 27, height: 20 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
       const options = { tolerance: 5, toleranceUnit: ToleranceUnit.Percent };
       const result = await toHaveAspectRatio(element, 4 / 3, options);
 
       expect(result.message()).toEqual(
-        "Element's aspect ratio is within 5% tolerance: 1.3500 (actual) vs ≈ 1.3333 (expected), off by 0.0167.",
+        'Element aspect ratio is within 5% of the expected value, with 1.3500 actual, 1.3333 expected, and an offset of 0.0167.',
       );
       expect(result.pass).toBe(true);
     });
 
     it('should fail when aspect ratio is outside percent tolerance', async () => {
       const element = {} as Locator;
-      const box = { x: 0, y: 0, width: 28, height: 20 } as BoundingBox;
-
-      when(getBoundingBoxOrFailMock)
-        .calledWith(element)
-        .mockImplementationOnce(async () => box);
+      const elementBox = { x: 0, y: 0, width: 28, height: 20 } as never;
+      when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
       const options = { tolerance: 2, toleranceUnit: ToleranceUnit.Percent };
       const result = await toHaveAspectRatio(element, 4 / 3, options);

@@ -3,7 +3,7 @@ import { expect, Locator } from '@playwright/test';
 import { when } from 'jest-when';
 
 import { toFitContainer } from '@flexpect/matchers/fit-container';
-import { BoundingBox, getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
+import { getBoundingBoxOrFail } from '@flexpect/matchers/helpers/get-bounding-box-or-fail';
 
 jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 
@@ -12,15 +12,12 @@ describe('toFitContainer', () => {
 
   it('should pass when element fits exactly within container', async () => {
     const element = {} as Locator;
-    const container = {} as Locator;
-    const box = { x: 10, y: 20, width: 100, height: 200 } as BoundingBox;
+    const elementBox = { x: 10, y: 20, width: 100, height: 200 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => box);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => box);
+    const container = {} as Locator;
+    const containerBox = { x: 10, y: 20, width: 100, height: 200 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
     const result = await toFitContainer(element, container);
 
@@ -30,17 +27,12 @@ describe('toFitContainer', () => {
 
   it('should fail when element position differs', async () => {
     const element = {} as Locator;
-    const elementBox = { x: 15, y: 25, width: 100, height: 200 };
+    const elementBox = { x: 15, y: 25, width: 100, height: 200 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
     const container = {} as Locator;
-    const containerBox = { x: 10, y: 20, width: 100, height: 200 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
+    const containerBox = { x: 10, y: 20, width: 100, height: 200 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
     const result = await toFitContainer(element, container);
 
@@ -56,17 +48,12 @@ Please ensure the element's position and size exactly match the container's.`);
 
   it('should fail when element size differs', async () => {
     const element = {} as Locator;
-    const elementBox = { x: 10, y: 20, width: 110, height: 190 };
+    const elementBox = { x: 10, y: 20, width: 110, height: 190 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
     const container = {} as Locator;
-    const containerBox = { x: 10, y: 20, width: 100, height: 200 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
+    const containerBox = { x: 10, y: 20, width: 100, height: 200 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
     const result = await toFitContainer(element, container);
 
@@ -82,17 +69,12 @@ Please ensure the element's position and size exactly match the container's.`);
 
   it('should fail when both position and size differ', async () => {
     const element = {} as Locator;
-    const elementBox = { x: 12, y: 18, width: 120, height: 180 };
+    const elementBox = { x: 12, y: 18, width: 120, height: 180 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
 
     const container = {} as Locator;
-    const containerBox = { x: 10, y: 20, width: 100, height: 200 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
+    const containerBox = { x: 10, y: 20, width: 100, height: 200 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
 
     const result = await toFitContainer(element, container);
 

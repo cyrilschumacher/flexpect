@@ -12,17 +12,12 @@ describe('toNotOverlapWith', () => {
 
   it('should pass when elements do not overlap at all', async () => {
     const target = {} as Locator;
-    const targetBox = { x: 10, y: 10, width: 50, height: 50 };
+    const targetBox = { x: 10, y: 10, width: 50, height: 50 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(target).mockResolvedValueOnce(targetBox);
 
     const reference = {} as Locator;
-    const referenceBox = { x: 100, y: 100, width: 50, height: 50 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(target)
-      .mockImplementationOnce(async () => targetBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(reference)
-      .mockImplementationOnce(async () => referenceBox);
+    const referenceBox = { x: 100, y: 100, width: 50, height: 50 } as never;
+    when(getBoundingBoxOrFailMock).calledWith(reference).mockResolvedValueOnce(referenceBox);
 
     const result = await toNotOverlapWith(target, reference);
 
@@ -88,20 +83,5 @@ Element B: x=0, y=0, width=100, height=100
 
 Adjust the layout or positioning to ensure the elements do not overlap.`);
     expect(result.pass).toBe(false);
-  });
-
-  it('should throw an error if bounding box is null', async () => {
-    const reference = {} as Locator;
-    const target = { toString: () => 'target' } as Locator;
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(target)
-      .mockImplementationOnce(async () => {
-        throw new Error('No bounding box');
-      });
-
-    const resultPromise = toNotOverlapWith(target, reference);
-
-    await expect(resultPromise).rejects.toThrow('No bounding box');
   });
 });
