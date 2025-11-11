@@ -117,8 +117,12 @@ export async function toBeVerticallyAlignedWith(
     return {
       pass: true,
       message: () => {
+        if (tolerance === 0) {
+          return `Element is properly ${alignment} aligned.`;
+        }
+
         const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element is properly ${alignment}-aligned within the allowed tolerance (${tolerance}${unit}).`;
+        return `Element is properly ${alignment} aligned with a tolerance of ${tolerance}${unit}.`;
       },
     };
   }

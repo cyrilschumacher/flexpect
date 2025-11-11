@@ -75,7 +75,9 @@ export async function toBeWithinViewport(
     return {
       pass: true,
       message: () =>
-        `Element is fully visible within the viewport${marginPixel > 0 ? ` (with ${marginPixel}px margin)` : ''}.`,
+        marginPixel
+          ? `Element is fully visible in the viewport, including a ${marginPixel}px margin.`
+          : 'Element is fully visible in the viewport.',
     };
   }
 

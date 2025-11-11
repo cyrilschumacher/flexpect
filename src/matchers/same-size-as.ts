@@ -47,8 +47,12 @@ export async function toHaveSameSizeAs(
     return {
       pass: true,
       message: () => {
+        if (tolerance === 0) {
+          return 'Element size matches the container size exactly.';
+        }
+
         const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element size matches the container size within the allowed tolerance (${tolerance}${unit}).`;
+        return `Element size fits the container perfectly with a tolerance of ${tolerance}${unit}.`;
       },
     };
   }

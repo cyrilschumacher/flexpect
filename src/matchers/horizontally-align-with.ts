@@ -111,6 +111,10 @@ export async function toBeHorizontallyAlignedWith(
     return {
       pass: true,
       message: () => {
+        if (tolerance === 0) {
+          return `Element is perfectly ${alignment}-aligned.`;
+        }
+
         const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
         return `Element is properly ${alignment}-aligned within the allowed tolerance (${tolerance}${unit}).`;
       },

@@ -74,8 +74,12 @@ export async function toBeInside(
     return {
       pass: true,
       message: () => {
+        if (tolerance === 0) {
+          return `Element is properly inside the container.`;
+        }
+
         const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element is properly inside the container within the allowed tolerance (${tolerance}${unit}).`;
+        return `Element is properly inside the container with a tolerance of ${tolerance}${unit}.`;
       },
     };
   }

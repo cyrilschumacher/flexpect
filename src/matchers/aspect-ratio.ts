@@ -59,13 +59,15 @@ export async function toHaveAspectRatio(
     return {
       pass: true,
       message: () => {
-        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-
         const formattedExpected = expectedRatio.toFixed(4);
         const formattedActual = actualRatio.toFixed(4);
         const formattedDelta = delta.toFixed(4);
+        if (tolerance === 0) {
+          return `Element aspect ratio matches the expected value exactly, with ${actualRatio.toFixed(4)} actual and ${expectedRatio.toFixed(4)} expected.`;
+        }
 
-        return `Element's aspect ratio is within ${tolerance}${unit} tolerance: ${formattedActual} (actual) vs ≈ ${formattedExpected} (expected), off by ${formattedDelta}.`;
+        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+        return `Element aspect ratio is within ${tolerance}${unit} of the expected value, with ${formattedActual} actual, ${formattedExpected} expected, and an offset of ${formattedDelta}.`;
       },
     };
   }

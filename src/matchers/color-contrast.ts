@@ -81,7 +81,10 @@ export async function toHaveColorContrast(element: Locator, minimumContrastRatio
   if (contrastRatio >= minimumContrastRatio) {
     return {
       pass: true,
-      message: () => `Element has sufficient color contrast (ratio: ${contrastRatio.toFixed(2)}).`,
+      message: () => {
+        const formattedContrastRatio = contrastRatio.toFixed(2);
+        return `Element color contrast is good, with a ratio of ${formattedContrastRatio}.`;
+      },
     };
   }
 

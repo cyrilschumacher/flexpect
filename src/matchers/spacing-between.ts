@@ -108,11 +108,14 @@ export async function toHaveSpacingBetween(
     return {
       pass: true,
       message: () => {
-        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
         const roundedSpacing = spacing.toFixed(2);
         const roundedTolerance = toleranceInPixels.toFixed(2);
+        if (tolerance === 0) {
+          return `Element spacing on the ${axis} axis is exactly ${roundedSpacing}px as expected.`;
+        }
 
-        return `Spacing is ${roundedSpacing}px (${axis}) — within ±${tolerance}${unit} (±${roundedTolerance}px) of ${expectedSpacing}px.`;
+        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+        return `Element spacing on the ${axis} axis is ${roundedSpacing}px, within ±${tolerance}${unit} (±${roundedTolerance}px) of the expected ${expectedSpacing}px.`;
       },
     };
   }

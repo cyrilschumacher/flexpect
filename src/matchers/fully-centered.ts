@@ -71,8 +71,12 @@ export async function toBeFullyCentered(
     return {
       pass: true,
       message: () => {
+        if (tolerance === 0) {
+          return 'Element is perfectly centered.';
+        }
+
         const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element is fully centered within the allowed tolerance (${tolerance}${unit}).`;
+        return `Element is perfectly centered with a tolerance of ${tolerance}${unit}.`;
       },
     };
   }

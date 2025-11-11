@@ -166,6 +166,10 @@ export async function toBeAlignedWith(
     return {
       pass: true,
       message: () => {
+        if (tolerance === 0) {
+          return `Element is aligned (${mode}) along ${axis} axis.`;
+        }
+
         const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
         return `Element is aligned (${mode}) along ${axis} axis within ${tolerance}${unit} tolerance.`;
       },
