@@ -65,55 +65,55 @@ export enum DistanceSide {
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ToHaveDistanceFromOptions extends Tolerance {}
 
-/**
- * Asserts that the target element has a specific distance from another element on a given side.
- *
- * - **Top side** (side = `DistanceSide.Top`):
- * ```text
- * ┌───────────────────────┐
- * |   Reference Element   |
+/**
+ * Asserts that the target element has a specific distance from another element on a given side.
+ *
+ * - **Top side** (side = `DistanceSide.Top`):
+ * ```text
+ * ┌───────────────────────┐
+ * |   Reference Element   |
  * └───────────────────────┘
  *            ↑
  *            |  Expected distance = 100px
  * ┌───────────────────────┐
- * |     Target Element    |
- * └───────────────────────┘
- * ```
- * - **Bottom side** (side = `DistanceSide.Bottom`):
- * ```text
- * ┌───────────────────────┐
- * |     Target Element    |
+ * |     Target Element    |
+ * └───────────────────────┘
+ * ```
+ * - **Bottom side** (side = `DistanceSide.Bottom`):
+ * ```text
+ * ┌───────────────────────┐
+ * |     Target Element    |
  * └───────────────────────┘
  *            |  Expected distance = 100px
  *            ↓
- * ┌───────────────────────┐
- * |   Reference Element   |
- * └───────────────────────┘
- * ```
- * - **Left side** (side = `DistanceSide.Left`):
- * ```text
- * ┌───────────────────────┐             ┌───────────────────────┐
- * |   Reference Element   | <--100px--> |     Target Element    |
- * └───────────────────────┘             └───────────────────────┘
- * ```
- * - **Right side** (side = `DistanceSide.Right`):
- * ```text
- * ┌───────────────────────┐             ┌───────────────────────┐
- * |     Target Element    | <--100px--> |   Reference Element   |
+ * ┌───────────────────────┐
+ * |   Reference Element   |
+ * └───────────────────────┘
+ * ```
+ * - **Left side** (side = `DistanceSide.Left`):
+ * ```text
+ * ┌───────────────────────┐             ┌───────────────────────┐
+ * |   Reference Element   | <--100px--> |     Target Element    |
+ * └───────────────────────┘             └───────────────────────┘
+ * ```
+ * - **Right side** (side = `DistanceSide.Right`):
+ * ```text
+ * ┌───────────────────────┐             ┌───────────────────────┐
+ * |     Target Element    | <--100px--> |   Reference Element   |
  * └───────────────────────┘             └───────────────────────┘
  * ```
  *
  * @param element - The target element (Locator).
- * @param reference - The reference element to compare against.
- * @param side - Which side of the reference to measure distance from.
- * @param expectedDistanceInPixels - Expected distance in pixels between the elements.
- * @param options - Optional distance options.
- * @returns A {@link Promise} that resolves with the matcher result.
- *
- * @example
- * // Check that element is 100px below reference, allowing 10px of tolerance
+ * @param reference - The reference element to compare against.
+ * @param side - Which side of the reference to measure distance from.
+ * @param expectedDistanceInPixels - Expected distance in pixels between the elements.
+ * @param options - Optional distance options.
+ * @returns A {@link Promise} that resolves with the matcher result.
+ *
+ * @example
+ * // Check that element is 100px below reference, allowing 10px of tolerance
  * await expect(element).toHaveDistanceFrom(reference, DistanceSide.Top, 100, {
- *   tolerance: 10,
+ *   tolerance: 10,
  *   toleranceUnit: ToleranceUnit.Pixels
  * });
  *
@@ -161,6 +161,7 @@ export async function toHaveDistanceFrom(
     message: () => {
       const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
 
+      const actualDistance = delta.toFixed(2);
       const allowedDeviation = toleranceInPixels.toFixed(2);
       const difference = (delta - expectedDistanceInPixels).toFixed(2);
 
@@ -175,7 +176,7 @@ export async function toHaveDistanceFrom(
 
 Details:
 - Expected distance: ${expectedDistanceInPixels}px
-- Actual distance:   ${delta.toFixed(2)}px
+- Actual distance:   ${actualDistance}px
 - Allowed deviation: ±${allowedDeviation}px (±${tolerance}${unit})
 - Difference:        ${difference}px
 
