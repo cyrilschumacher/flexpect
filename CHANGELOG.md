@@ -1,3 +1,10 @@
+# [0.17.0](https://github.com/cyrilschumacher/flexpect/compare/v0.16.0...v0.17.0) (2025-11-14)
+
+
+### Features
+
+* implement `toBeAtDistanceFrom` matcher ([#40](https://github.com/cyrilschumacher/flexpect/issues/40)) ([10619e0](https://github.com/cyrilschumacher/flexpect/commit/10619e09a4de33cc040372afac9aba8141912e29))
+
 # [0.16.0](https://github.com/cyrilschumacher/flexpect/compare/v0.15.0...v0.16.0) (2025-11-10)
 
 
