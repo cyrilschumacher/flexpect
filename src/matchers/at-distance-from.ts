@@ -106,8 +106,8 @@ export interface ToHaveDistanceFromOptions extends Tolerance {}
  * @param reference - The reference element to compare against.
  * @param side - Which side of the reference to measure distance from.
  * @param expectedDistanceInPixels - Expected distance in pixels between the elements.
- * @param options - Configuration options, including the expected distance (expectedPx) and tolerance (tolerancePx).
- * @returns A {@link MatcherReturnType} indicating whether the test passed or failed.
+ * @param options - Optional distance options.
+ * @returns A {@link Promise} that resolves with the matcher result.
  *
  * @example
  * // Check that element is 100px below reference, allowing 10px of tolerance
