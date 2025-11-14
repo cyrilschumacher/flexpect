@@ -112,6 +112,7 @@ export interface ToHaveDistanceFromOptions extends Tolerance {}
  * @example
  * // Check that element is 100px below reference, allowing 10px of tolerance
  * await expect(element).toHaveDistanceFrom(reference, DistanceSide.Top, 100, {
+ *   tolerance: 10,
  *   toleranceUnit: ToleranceUnit.Pixels
  * });
  *
