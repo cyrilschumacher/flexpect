@@ -2,6 +2,7 @@ import { Locator } from '@playwright/test';
 
 import { Alignment, Axis, ToBeAlignedWithOptions } from './matchers/aligned-with';
 import { ToHaveAspectRatioOptions } from './matchers/aspect-ratio';
+import { DistanceSide, ToHaveDistanceFromOptions } from './matchers/at-distance-from';
 import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
 import { HorizontalAlignment, ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
 import { ToBeInsideOptions } from './matchers/inside';
@@ -32,6 +33,12 @@ declare global {
      */
     interface Matchers<R> {
       toBeAlignedWith(container: Locator, axis: Axis, mode: Alignment, options?: ToBeAlignedWithOptions): Promise<R>;
+      toHaveDistanceFrom(
+        reference: Locator,
+        side: DistanceSide,
+        expectedDistanceInPixels: number,
+        options?: ToHaveDistanceFromOptions,
+      ): Promise<R>;
       toBeFullyCentered(container: Locator, options?: ToBeFullyCenteredOptions): Promise<R>;
       toBeHorizontallyAlignedWith(
         container: Locator,
@@ -62,6 +69,7 @@ declare global {
 
 export { Alignment, Axis, toBeAlignedWith } from './matchers/aligned-with';
 export { toHaveAspectRatio } from './matchers/aspect-ratio';
+export { DistanceSide, toHaveDistanceFrom } from './matchers/at-distance-from';
 export { toHaveColorContrast } from './matchers/color-contrast';
 export { toFitContainer } from './matchers/fit-container';
 export { toBeFullyCentered } from './matchers/fully-centered';
