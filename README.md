@@ -55,14 +55,17 @@ Example: assert two elements are horizontally aligned within a 2px tolerance.
 test('labels align with inputs', async ({ page }) => {
   const label = await page.locator('label[for="email"]');
   const input = await page.locator('#email');
-  await expect(label).toBeAlignedWith(input, Axis.Horizontal, Alignment.Start, { tolerancePercent: 2 });
+  await expect(label).toBeAlignedWith(input, Axis.Horizontal, Alignment.Start, {
+    tolerance: 2,
+    toleranceUnit: ToleranceUnit.Pixel,
+  });
 });
 ```
 
 Example: assert same width
 
 ```typescript
-await expect(cardA).toHaveSameWidthAs(cardB, { tolerancePercent: 1 });
+await expect(cardA).toHaveSameWidthAs(cardB, { tolerance: 17, toleranceUnit: ToleranceUnit.Percent });
 ```
 
 ## Examples
