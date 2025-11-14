@@ -31,7 +31,7 @@ export interface ToBeWithinViewportOptions {
  * │                                    │
  * │  ┌──marginPixel──┐                 │
  * │  │               │                 │
- * │  │  [element]    │ ← must be here  │
+ * │  │   [element]   │ ← must be here  │
  * │  │               │                 │
  * │  └───────────────┘                 │
  * └────────────────────────────────────┘
