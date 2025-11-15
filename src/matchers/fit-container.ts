@@ -3,8 +3,56 @@ import { getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
 
 /**
  * Asserts that the target element fits entirely within the bounds of the specified container element.
- * The check ensures that all sides of the target element (top, bottom, left, right)
- * are strictly within the bounds of the container, with no partial overlap allowed.
+ * The check ensures that all sides of the target element (top, bottom, left, right) are strictly within
+ * the bounds of the container, with no partial overlap allowed.
+ *
+ * - **Perfect Fit** (Pass):
+ * ```text
+ * ┌─────────────────────┐
+ * │      Container      │
+ * ├─────────────────────┤
+ * │┌───────────────────┐│
+ * ││                   ││
+ * ││      Element      ││
+ * ││   (Perfect Fit)   ││
+ * ││                   ││
+ * │└───────────────────┘│
+ * └─────────────────────┘
+ * ```
+ * - **Position Mismatch** (Fail):
+ * ```text
+ * ┌──────────────────────┐
+ * │       Container      │
+ * ├──────────────────────┤
+ * │                      │
+ * │ ┌──────────────────┐ │
+ * │ │     Element      │ │
+ * │ │ (Wrong Position) │ │
+ * │ └──────────────────┘ │
+ * └──────────────────────┘
+ * ```
+ * - **Size Mismatch** (Fail):
+ * ```text
+ * ┌─────────────────────┐
+ * │      Container      │
+ * ├─────────────────────┤
+ * │ ┌─────────────────┐ │
+ * │ │     Element     │ │
+ * │ │   (Too Small)   │ │
+ * │ └─────────────────┘ │
+ * └─────────────────────┘
+ * ```
+ * - **Overflow** (Fail):
+ * ```text
+ * ┌─────────────────────┐
+ * │      Container      │
+ * ├─────────────────────┤
+ * │┌────────────────────┼─┐
+ * ││       Element      │ │
+ * ││      (Overflow)    │ │
+ * │└────────────────────┼─┘
+ * └─────────────────────┘
+ * ```
  *
  * @param container - The container element as a {@link Locator} within which the element is expected to fit.
  * @returns A {@link Promise} that resolves with the matcher result.

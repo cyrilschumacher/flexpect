@@ -78,51 +78,72 @@ export interface ToBeAlignedWithOptions extends Tolerance {}
  * Asserts that the target element is aligned with the specified container element
  * based on the provided axis and alignment mode, considering an optional tolerance percentage.
  *
- * This assertion compares the position of the element relative to the container along the given axis (horizontal or
- * vertical) and verifies if it matches the expected alignment mode (start, center, or end).
- *
- * If the alignment falls outside the allowed tolerance, a detailed message is returned to help diagnose the
- * misalignment.
- *
- * - **Horizontal axis (`axis = 'horizontal'`)**:
- *   - *Start (`mode = start'`)*:
- *     ```text
- *     |[element]------------------|
- *     |                           |
- *     |                           |
- *     ```
- *   - *Center (`mode = 'center'`)*:
- *     ```text
- *     |---------[element]---------|
- *     |                           |
- *     |                           |
- *     ```
- *   - *End (`mode = 'end'`)*:
- *     ```text
- *     |------------------[element]|
- *     |                           |
- *     |                           |
- *     ```
- *
- * - **Vertical axis (`axis = 'vertical'`)**:
- *   - *Start (`mode = 'start'`)*:
- *     ```text
- *     |[element]                  |
- *     |                           |
- *     |                           |
- *     ```
- *   - *Center (`mode = 'center'`)*:
- *     ```text
- *     |                           |
- *     |         [element]         |
- *     |                           |
- *     ```
- *   - *End (`mode = 'end'`)*:
- *     ```text
- *     |                           |
- *     |                           |
- *     |                  [element]|
- *     ```
+ * - **Horizontal Start Alignment**:
+ * ```text
+ * ┌─────────────────────────────────┐
+ * │           Container             │
+ * ├─────────────────────────────────┤
+ * │┌─────────┐                      │
+ * ││ Element │                      │
+ * │└─────────┘                      │
+ * └─────────────────────────────────┘
+ * ```
+ * - **Horizontal Center Alignment**:
+ * ```text
+ * ┌─────────────────────────────────┐
+ * │           Container             │
+ * ├─────────────────────────────────┤
+ * │          ┌─────────┐            │
+ * │          │ Element │            │
+ * │          └─────────┘            │
+ * └─────────────────────────────────┘
+ * ```
+ * - **Horizontal End Alignment**:
+ * ```text
+ * ┌─────────────────────────────────┐
+ * │           Container             │
+ * ├─────────────────────────────────┤
+ * │                      ┌─────────┐│
+ * │                      │ Element ││
+ * │                      └─────────┘│
+ * └─────────────────────────────────┘
+ * ```
+ * - **Vertical Start Alignment**:
+ * ```text
+ * ┌─────────────────────────────────┐
+ * │           Container             │
+ * ├─────────────────────────────────┤
+ * │┌───────────────────────────────┐│
+ * ││           Element             ││
+ * │└───────────────────────────────┘│
+ * │                                 │
+ * │                                 │
+ * └─────────────────────────────────┘
+ * ```
+ * - **Vertical Center Alignment**:
+ * ```text
+ * ┌─────────────────────────────────┐
+ * │           Container             │
+ * ├─────────────────────────────────┤
+ * │                                 │
+ * │┌───────────────────────────────┐│
+ * ││           Element             ││
+ * │└───────────────────────────────┘│
+ * │                                 │
+ * └─────────────────────────────────┘
+ * ```
+ * - **Vertical End Alignment**:
+ * ```text
+ * ┌─────────────────────────────────┐
+ * │           Container             │
+ * ├─────────────────────────────────┤
+ * │                                 │
+ * │                                 │
+ * │┌───────────────────────────────┐│
+ * ││           Element             ││
+ * │└───────────────────────────────┘│
+ * └─────────────────────────────────┘
+ * ```
  *
  * @param container - The container element as a {@link Locator} relative to which alignment is checked.
  * @param axis - The axis along which to check alignment (horizontal or vertical).

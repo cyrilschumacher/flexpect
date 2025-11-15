@@ -51,23 +51,43 @@ export interface ToHaveSpacingBetweenOptions extends Tolerance {}
  * Elements are automatically ordered by position (left → right or top → bottom), regardless of parameter order.
  *
  * - **Horizontal spacing** (axis = `SpacingAxis.Horizontal`):
- *   ```text
- *   [Element A]        [Element B]
- *   |---------|        |---------|
- *             <--16px-->
- *   ```
+ * ```text
+ * ┌───────────┐                ┌───────────┐
+ * │ Element A │◄── 16px gap ──►│ Element B │
+ * └───────────┘                └───────────┘
+ * ```
  *
  * - **Vertical spacing** (axis = `SpacingAxis.Vertical`):
- *   ```text
- *   [Element A]
- *   |----------|
- *        |
- *        | 16px
- *        |
- *   [Element B]
- *   |----------|
- *   ```
+ * ```text
+ * ┌───────────────┐
+ * │   Element A   │
+ * └───────────────┘
+ *         ▲
+ *         │ 16px gap
+ *         ▼
+ * ┌───────────────┐
+ * │   Element B   │
+ * └───────────────┘
+ * ```
  *
+ * - **No spacing** (elements touching):
+ * ```text
+ * ┌───────────┐┌───────────┐
+ * │ Element A ││ Element B │
+ * └───────────┘└───────────┘
+ *              ◄─ 0px gap ─►
+ * ```
+ *
+ * - **Overlapping elements** (negative spacing):
+ * ```text
+ * ┌───────────┼───────────┐
+ * │ Element A │ Element B │
+ * └───────────┼───────────┘
+ *             │
+ *         ◄─overlap─►
+ * ```
+ *
+ * @param element - The first element as a {@link Locator}.
  * @param reference - The reference element as a {@link Locator} relative to which spacing is measured.
  * @param expectedSpacing - Expected gap between the two elements, in pixels (≥ 0).
  * @param axis - The axis along which to measure spacing.

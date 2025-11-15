@@ -60,26 +60,41 @@ export interface ToBeVerticallyAlignedWithOptions extends Tolerance {}
  * according to the given alignment type.
  *
  * - **Top alignment** (alignment = `VerticalAlignment.Top`):
- *   ```text
- *   |[element]|
- *   |         |
- *   |         |
- *   ```
+ * ```text
+ * ┌─────────────────────────────────┐
+ * │┌───────────┐        Container   │
+ * ││  Element  │                    │
+ * │└───────────┘                    │
+ * │                                 │
+ * │                                 │
+ * └─────────────────────────────────┘
+ * ```
  *
  * - **Center alignment** (alignment = `VerticalAlignment.Center`):
- *   ```text
- *   |         |
- *   |[element]|
- *   |         |
- *   ```
+ * ```text
+ * ┌─────────────────────────────────┐
+ * │             Container           │
+ * │                                 │
+ * │┌───────────┐                    │
+ * ││  Element  │                    │
+ * │└───────────┘                    │
+ * │                                 │
+ * └─────────────────────────────────┘
+ * ```
  *
  * - **Bottom alignment** (alignment = `VerticalAlignment.Bottom`):
- *   ```text
- *   |         |
- *   |         |
- *   |[element]|
- *   ```
+ * ```text
+ * ┌─────────────────────────────────┐
+ * │             Container           │
+ * │                                 │
+ * │                                 │
+ * │┌───────────┐                    │
+ * ││  Element  │                    │
+ * │└───────────┘                    │
+ * └─────────────────────────────────┘
+ * ```
  *
+ * @param element - The element as a {@link Locator} to check for vertical alignment.
  * @param container - The container element as a {@link Locator} relative to which vertical alignment is checked.
  * @param alignment - The type of vertical alignment to check (top, center, or bottom).
  * @param options - Optional size comparison options.
