@@ -3,6 +3,7 @@ import { expect } from '@playwright/test';
 import {
   toBeAbove,
   toBeAlignedWith,
+  toBeBelow,
   toBeFullyCentered,
   toBeHorizontallyAlignedWith,
   toBeInside,
@@ -20,6 +21,7 @@ import {
 expect.extend({
   toBeAbove,
   toBeAlignedWith,
+  toBeBelow,
   toBeFullyCentered,
   toBeHorizontallyAlignedWith,
   toBeInside,

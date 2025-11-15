@@ -4,6 +4,7 @@ import { ToBeAboveOptions } from './matchers/above';
 import { Alignment, Axis, ToBeAlignedWithOptions } from './matchers/aligned-with';
 import { ToHaveAspectRatioOptions } from './matchers/aspect-ratio';
 import { DistanceSide, ToHaveDistanceFromOptions } from './matchers/at-distance-from';
+import { toBeBelowOptions } from './matchers/below';
 import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
 import { HorizontalAlignment, ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
 import { ToBeInsideOptions } from './matchers/inside';
@@ -35,12 +36,7 @@ declare global {
     interface Matchers<R> {
       toBeAbove(reference: Locator, options?: ToBeAboveOptions): Promise<R>;
       toBeAlignedWith(container: Locator, axis: Axis, mode: Alignment, options?: ToBeAlignedWithOptions): Promise<R>;
-      toHaveDistanceFrom(
-        reference: Locator,
-        side: DistanceSide,
-        expectedDistanceInPixels: number,
-        options?: ToHaveDistanceFromOptions,
-      ): Promise<R>;
+      toBeBelow(reference: Locator, options?: toBeBelowOptions): Promise<R>;
       toBeFullyCentered(container: Locator, options?: ToBeFullyCenteredOptions): Promise<R>;
       toBeHorizontallyAlignedWith(
         container: Locator,
@@ -57,6 +53,12 @@ declare global {
       toFitContainer(container: Locator): Promise<R>;
       toHaveAspectRatio(expectedRatio: number, options?: ToHaveAspectRatioOptions): Promise<R>;
       toHaveColorContrast(minimumContrastRatio: number): Promise<R>;
+      toHaveDistanceFrom(
+        reference: Locator,
+        side: DistanceSide,
+        expectedDistanceInPixels: number,
+        options?: ToHaveDistanceFromOptions,
+      ): Promise<R>;
       toHaveSameSizeAs(container: Locator, options?: ToHaveSameSizeAsOptions): Promise<R>;
       toHaveSpacingBetween(
         reference: Locator,
@@ -73,6 +75,7 @@ export { toBeAbove } from './matchers/above';
 export { Alignment, Axis, toBeAlignedWith } from './matchers/aligned-with';
 export { toHaveAspectRatio } from './matchers/aspect-ratio';
 export { DistanceSide, toHaveDistanceFrom } from './matchers/at-distance-from';
+export { toBeBelow } from './matchers/below';
 export { toHaveColorContrast } from './matchers/color-contrast';
 export { toFitContainer } from './matchers/fit-container';
 export { toBeFullyCentered } from './matchers/fully-centered';
