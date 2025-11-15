@@ -1,5 +1,6 @@
 import { Locator } from '@playwright/test';
 
+import { ToBeAboveOptions } from './matchers/above';
 import { Alignment, Axis, ToBeAlignedWithOptions } from './matchers/aligned-with';
 import { ToHaveAspectRatioOptions } from './matchers/aspect-ratio';
 import { DistanceSide, ToHaveDistanceFromOptions } from './matchers/at-distance-from';
@@ -32,6 +33,7 @@ declare global {
      * @template R The result type returned by each matcher, typically a Promise resolving to an assertion result.
      */
     interface Matchers<R> {
+      toBeAbove(reference: Locator, options?: ToBeAboveOptions): Promise<R>;
       toBeAlignedWith(container: Locator, axis: Axis, mode: Alignment, options?: ToBeAlignedWithOptions): Promise<R>;
       toHaveDistanceFrom(
         reference: Locator,
@@ -67,6 +69,7 @@ declare global {
   }
 }
 
+export { toBeAbove } from './matchers/above';
 export { Alignment, Axis, toBeAlignedWith } from './matchers/aligned-with';
 export { toHaveAspectRatio } from './matchers/aspect-ratio';
 export { DistanceSide, toHaveDistanceFrom } from './matchers/at-distance-from';

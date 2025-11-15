@@ -1,6 +1,7 @@
 import { expect } from '@playwright/test';
 
 import {
+  toBeAbove,
   toBeAlignedWith,
   toBeFullyCentered,
   toBeHorizontallyAlignedWith,
@@ -17,6 +18,7 @@ import {
 } from '.';
 
 expect.extend({
+  toBeAbove,
   toBeAlignedWith,
   toBeFullyCentered,
   toBeHorizontallyAlignedWith,
