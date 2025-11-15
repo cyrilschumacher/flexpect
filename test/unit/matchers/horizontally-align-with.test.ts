@@ -76,7 +76,7 @@ describe('toBeHorizontallyAlignedWith', () => {
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Center, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 
@@ -86,7 +86,7 @@ describe('toBeHorizontallyAlignedWith', () => {
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Pixels };
 
     await expect(toBeHorizontallyAlignedWith(element, container, HorizontalAlignment.Center, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 

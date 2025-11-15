@@ -16,7 +16,7 @@ describe('toBeAbove', () => {
     const options = { tolerance: -5, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toBeAbove(element, reference, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 
@@ -26,7 +26,7 @@ describe('toBeAbove', () => {
     const options = { tolerance: -5, toleranceUnit: ToleranceUnit.Pixels };
 
     await expect(toBeAbove(element, reference, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 

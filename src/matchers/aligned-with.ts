@@ -150,7 +150,7 @@ export async function toBeAlignedWith(
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
   if (tolerance < 0) {
-    throw new Error('tolerance must be greater than or equal to 0');
+    throw new Error('"tolerance" must be greater than or equal to 0');
   }
 
   const elementBox = await getBoundingBoxOrFail(element);

@@ -40,9 +40,9 @@ export async function toFitContainer(element: Locator, container: Locator): Prom
 
       return `Element does not fit exactly within the container.
 
-Differences:
+Details:
 - Position delta: x = ${horizontalPositionDelta}px, y = ${verticalPositionDelta}px
-- Size delta: width = ${widthSizeDelta}px, height = ${heightSizeDelta}px
+- Size delta:     width = ${widthSizeDelta}px, height = ${heightSizeDelta}px
 
 Please ensure the element's position and size exactly match the container's.`;
     },

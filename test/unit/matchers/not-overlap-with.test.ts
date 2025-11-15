@@ -48,9 +48,6 @@ Details:
 - Overlap width:     30.00px
 - Overlap height:    30.00px
 
-Element A: x=50, y=50, width=60, height=60
-Element B: x=80, y=80, width=50, height=50
-
 Adjust the layout or positioning to ensure the elements do not overlap.`);
     expect(result.pass).toBe(false);
   });
@@ -77,9 +74,6 @@ Details:
 - Intersection area: 10000.00px²
 - Overlap width:     100.00px
 - Overlap height:    100.00px
-
-Element A: x=0, y=0, width=100, height=100
-Element B: x=0, y=0, width=100, height=100
 
 Adjust the layout or positioning to ensure the elements do not overlap.`);
     expect(result.pass).toBe(false);

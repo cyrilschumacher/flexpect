@@ -94,7 +94,7 @@ export async function toHaveSpacingBetween(
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
   if (tolerance < 0) {
-    throw new Error('tolerance must be greater than or equal to 0');
+    throw new Error('"tolerance" must be greater than or equal to 0');
   }
 
   const elementBox = await getBoundingBoxOrFail(element);
@@ -140,14 +140,13 @@ export async function toHaveSpacingBetween(
 
         return `Horizontal spacing between elements does not match expected value.
 
-Expected:     ${roundedExpectedSpacing}px ±${tolerance}${unit}
-Measured:     ${roundedActualSpacing}px
-Difference:   ${roundedSpacingDifference}px
-
-Layout details (X axis):
-- Left element:   X=${roundedLeftX}, width=${roundedLeftWidth}px
-- Right element:  X=${roundedRightX}, width=${roundedRightWidth}px
-- Gap between:    ${roundedActualSpacing}px
+Details:
+- Expected spacing:  ${roundedExpectedSpacing}px ±${tolerance}${unit}
+- Measured spacing:  ${roundedActualSpacing}px
+- Difference:        ${roundedSpacingDifference}px
+- Left element:      X=${roundedLeftX}, width=${roundedLeftWidth}px
+- Right element:     X=${roundedRightX}, width=${roundedRightWidth}px
+- Gap between:       ${roundedActualSpacing}px
 
 Use margin, padding, or flex/grid gap to adjust spacing.`;
       }
@@ -162,14 +161,13 @@ Use margin, padding, or flex/grid gap to adjust spacing.`;
 
       return `Vertical spacing between elements does not match expected value.
 
-Expected:     ${roundedExpectedSpacing}px ±${tolerance}${unit}
-Measured:     ${roundedActualSpacing}px
-Difference:   ${roundedSpacingDifference}px
-
-Layout details (Y axis):
-- Top element:    Y=${roundedTopY}, height=${roundedTopHeight}px
-- Bottom element: Y=${roundedBottomY}, height=${roundedBottomHeight}px
-- Gap between:    ${roundedActualSpacing}px
+Details:
+- Expected spacing:  ${roundedExpectedSpacing}px ±${tolerance}${unit}
+- Measured spacing:  ${roundedActualSpacing}px
+- Difference:        ${roundedSpacingDifference}px
+- Top element:       Y=${roundedTopY}, height=${roundedTopHeight}px
+- Bottom element:    Y=${roundedBottomY}, height=${roundedBottomHeight}px
+- Gap between:       ${roundedActualSpacing}px
 
 Use margin, padding, or flex/grid gap to adjust spacing.`;
     },

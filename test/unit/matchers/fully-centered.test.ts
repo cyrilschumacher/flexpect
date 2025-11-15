@@ -41,7 +41,7 @@ describe('toBeFullyCentered', () => {
     expect(result.message()).toEqual(
       `Element is not fully centered within the container (allowed tolerance: ±5%).
 
-Offsets:
+Details:
 - Horizontal: 30.00px (tolerance: ±10.00px)
 - Vertical:   30.00px (tolerance: ±10.00px)
 
@@ -56,7 +56,7 @@ Adjust the element position to bring it closer to the container's center.`,
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toBeFullyCentered(element, container, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 
@@ -66,7 +66,7 @@ Adjust the element position to bring it closer to the container's center.`,
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Pixels };
 
     await expect(toBeFullyCentered(element, container, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 
@@ -101,7 +101,7 @@ Adjust the element position to bring it closer to the container's center.`,
 
       expect(result.message()).toEqual(`Element is not fully centered within the container (allowed tolerance: ±5px).
 
-Offsets:
+Details:
 - Horizontal: 10.00px (tolerance: ±5.00px)
 - Vertical:   10.00px (tolerance: ±5.00px)
 
@@ -141,7 +141,7 @@ Adjust the element position to bring it closer to the container's center.`);
 
       expect(result.message()).toEqual(`Element is not fully centered within the container (allowed tolerance: ±1%).
 
-Offsets:
+Details:
 - Horizontal: 10.00px (tolerance: ±2.00px)
 - Vertical:   10.00px (tolerance: ±2.00px)
 

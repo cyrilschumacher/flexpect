@@ -16,7 +16,7 @@ describe('toBeBelow', () => {
     const options = { tolerance: -5, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toBeBelow(element, reference, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 
@@ -26,7 +26,7 @@ describe('toBeBelow', () => {
     const options = { tolerance: -5, toleranceUnit: ToleranceUnit.Pixels };
 
     await expect(toBeBelow(element, reference, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 
@@ -75,7 +75,7 @@ describe('toBeBelow', () => {
 
 Details:
 - Allowed deviation: ≤ 0.00px (0%)
-- Actual deviation: -60.00px
+- Actual deviation:  -60.00px
 
 To fix this, move the element downward or increase the tolerance.`);
     expect(result.pass).toBe(false);
@@ -114,7 +114,7 @@ To fix this, move the element downward or increase the tolerance.`);
 
 Details:
 - Allowed deviation: ≤ 10.00px (10%)
-- Actual deviation: -30.00px
+- Actual deviation:  -30.00px
 
 To fix this, move the element downward or increase the tolerance.`);
       expect(result.pass).toBe(false);
@@ -154,7 +154,7 @@ To fix this, move the element downward or increase the tolerance.`);
 
 Details:
 - Allowed deviation: ≤ 20.00px (20px)
-- Actual deviation: -25.00px
+- Actual deviation:  -25.00px
 
 To fix this, move the element downward or increase the tolerance.`);
       expect(result.pass).toBe(false);

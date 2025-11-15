@@ -65,6 +65,26 @@ describe('toBeVerticallyAlignedWith', () => {
     ).rejects.toThrow('Unknown vertical alignment: invalid-alignment');
   });
 
+  it('should throw an error for invalid tolerance in percent', async () => {
+    const element = {} as Locator;
+    const container = {} as Locator;
+    const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
+
+    await expect(toBeVerticallyAlignedWith(element, container, VerticalAlignment.Top, options)).rejects.toThrow(
+      '"tolerance" must be greater than or equal to 0',
+    );
+  });
+
+  it('should throw an error for invalid tolerance in pixels', async () => {
+    const element = {} as Locator;
+    const container = {} as Locator;
+    const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Pixels };
+
+    await expect(toBeVerticallyAlignedWith(element, container, VerticalAlignment.Top, options)).rejects.toThrow(
+      '"tolerance" must be greater than or equal to 0',
+    );
+  });
+
   describe('with tolerance in percent', () => {
     it('should pass when element is bottom-aligned within tolerance', async () => {
       const element = {} as Locator;
@@ -104,16 +124,6 @@ Details:
 Please adjust the element's vertical position to reduce the alignment difference.`,
       );
       expect(result.pass).toBe(false);
-    });
-
-    it('should throw an error for invalid tolerance', async () => {
-      const element = {} as Locator;
-      const container = {} as Locator;
-      const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
-
-      await expect(toBeVerticallyAlignedWith(element, container, VerticalAlignment.Top, options)).rejects.toThrow(
-        'tolerance must be greater than or equal to 0',
-      );
     });
   });
 
@@ -156,16 +166,6 @@ Details:
 Please adjust the element's vertical position to reduce the alignment difference.`,
       );
       expect(result.pass).toBe(false);
-    });
-
-    it('should throw an error for invalid tolerance', async () => {
-      const element = {} as Locator;
-      const container = {} as Locator;
-      const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Pixels };
-
-      await expect(toBeVerticallyAlignedWith(element, container, VerticalAlignment.Top, options)).rejects.toThrow(
-        'tolerance must be greater than or equal to 0',
-      );
     });
   });
 });

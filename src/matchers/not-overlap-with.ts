@@ -48,16 +48,15 @@ export async function toNotOverlapWith(target: Locator, reference: Locator): Pro
       const yOverlap = Math.max(0, bottomOverlap - topOverlap);
 
       const intersectionArea = xOverlap * yOverlap;
+      const overlapWidth = xOverlap.toFixed(2);
+      const overlapHeight = yOverlap.toFixed(2);
 
       return `Elements overlap unexpectedly.
 
 Details:
 - Intersection area: ${intersectionArea.toFixed(2)}px²
-- Overlap width:     ${xOverlap.toFixed(2)}px
-- Overlap height:    ${yOverlap.toFixed(2)}px
-
-Element A: x=${targetBox.x}, y=${targetBox.y}, width=${targetBox.width}, height=${targetBox.height}
-Element B: x=${referenceBox.x}, y=${referenceBox.y}, width=${referenceBox.width}, height=${referenceBox.height}
+- Overlap width:     ${overlapWidth}px
+- Overlap height:    ${overlapHeight}px
 
 Adjust the layout or positioning to ensure the elements do not overlap.`;
     },

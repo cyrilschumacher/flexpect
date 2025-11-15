@@ -17,7 +17,7 @@ describe('toHaveSpacingBetween', () => {
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 
@@ -26,7 +26,7 @@ describe('toHaveSpacingBetween', () => {
     const reference = {} as Locator;
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Pixels };
     await expect(toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 
@@ -72,18 +72,18 @@ describe('toHaveSpacingBetween', () => {
 
       const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal);
 
+      expect(result.message()).toEqual(`Horizontal spacing between elements does not match expected value.
+
+Details:
+- Expected spacing:  10.00px ±0%
+- Measured spacing:  20.00px
+- Difference:        10.00px
+- Left element:      X=10.00, width=50.00px
+- Right element:     X=80.00, width=30.00px
+- Gap between:       20.00px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
-      expect(result.message()).toEqual(
-        `Horizontal spacing between elements does not match expected value.\n\n` +
-          `Expected:     10.00px ±0%\n` +
-          `Measured:     20.00px\n` +
-          `Difference:   10.00px\n\n` +
-          `Layout details (X axis):\n` +
-          `- Left element:   X=10.00, width=50.00px\n` +
-          `- Right element:  X=80.00, width=30.00px\n` +
-          `- Gap between:    20.00px\n\n` +
-          `Use margin, padding, or flex/grid gap to adjust spacing.`,
-      );
     });
 
     it('should fail when horizontal spacing is too large and reference is left-aligned', async () => {
@@ -97,10 +97,18 @@ describe('toHaveSpacingBetween', () => {
 
       const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal);
 
+      expect(result.message()).toEqual(`Horizontal spacing between elements does not match expected value.
+
+Details:
+- Expected spacing:  10.00px ±0%
+- Measured spacing:  20.00px
+- Difference:        10.00px
+- Left element:      X=10.00, width=50.00px
+- Right element:     X=80.00, width=30.00px
+- Gap between:       20.00px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
-      expect(result.message()).toContain('Measured:     20.00px');
-      expect(result.message()).toContain('Left element:   X=10.00');
-      expect(result.message()).toContain('Right element:  X=80.00');
     });
 
     it('should fail when horizontal spacing is too small and element is left-aligned', async () => {
@@ -114,17 +122,17 @@ describe('toHaveSpacingBetween', () => {
 
       const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal);
 
-      expect(result.message()).toEqual(
-        `Horizontal spacing between elements does not match expected value.\n\n` +
-          `Expected:     10.00px ±0%\n` +
-          `Measured:     5.00px\n` +
-          `Difference:   5.00px\n\n` +
-          `Layout details (X axis):\n` +
-          `- Left element:   X=10.00, width=50.00px\n` +
-          `- Right element:  X=65.00, width=30.00px\n` +
-          `- Gap between:    5.00px\n\n` +
-          `Use margin, padding, or flex/grid gap to adjust spacing.`,
-      );
+      expect(result.message()).toEqual(`Horizontal spacing between elements does not match expected value.
+
+Details:
+- Expected spacing:  10.00px ±0%
+- Measured spacing:  5.00px
+- Difference:        5.00px
+- Left element:      X=10.00, width=50.00px
+- Right element:     X=65.00, width=30.00px
+- Gap between:       5.00px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
     });
 
@@ -139,10 +147,18 @@ describe('toHaveSpacingBetween', () => {
 
       const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal);
 
+      expect(result.message()).toEqual(`Horizontal spacing between elements does not match expected value.
+
+Details:
+- Expected spacing:  10.00px ±0%
+- Measured spacing:  5.00px
+- Difference:        5.00px
+- Left element:      X=10.00, width=50.00px
+- Right element:     X=65.00, width=30.00px
+- Gap between:       5.00px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
-      expect(result.message()).toContain('Measured:     5.00px');
-      expect(result.message()).toContain('Left element:   X=10.00');
-      expect(result.message()).toContain('Right element:  X=65.00');
     });
 
     it('should fail when elements overlap horizontally with gap equal to 0 and element is left-aligned', async () => {
@@ -158,14 +174,13 @@ describe('toHaveSpacingBetween', () => {
 
       expect(result.message()).toEqual(`Horizontal spacing between elements does not match expected value.
 
-Expected:     10.00px ±0%
-Measured:     0.00px
-Difference:   10.00px
-
-Layout details (X axis):
-- Left element:   X=10.00, width=60.00px
-- Right element:  X=50.00, width=30.00px
-- Gap between:    0.00px
+Details:
+- Expected spacing:  10.00px ±0%
+- Measured spacing:  0.00px
+- Difference:        10.00px
+- Left element:      X=10.00, width=60.00px
+- Right element:     X=50.00, width=30.00px
+- Gap between:       0.00px
 
 Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
@@ -182,8 +197,18 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
 
       const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Horizontal);
 
+      expect(result.message()).toEqual(`Horizontal spacing between elements does not match expected value.
+
+Details:
+- Expected spacing:  10.00px ±0%
+- Measured spacing:  0.00px
+- Difference:        10.00px
+- Left element:      X=10.00, width=60.00px
+- Right element:     X=50.00, width=30.00px
+- Gap between:       0.00px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
-      expect(result.message()).toContain('Measured:     0.00px');
     });
 
     describe('with tolerance in percent', () => {
@@ -219,14 +244,13 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
 
         expect(result.message()).toEqual(`Horizontal spacing between elements does not match expected value.
 
-Expected:     10.00px ±5%
-Measured:     11.00px
-Difference:   1.00px
-
-Layout details (X axis):
-- Left element:   X=10.00, width=50.00px
-- Right element:  X=71.00, width=30.00px
-- Gap between:    11.00px
+Details:
+- Expected spacing:  10.00px ±5%
+- Measured spacing:  11.00px
+- Difference:        1.00px
+- Left element:      X=10.00, width=50.00px
+- Right element:     X=71.00, width=30.00px
+- Gap between:       11.00px
 
 Use margin, padding, or flex/grid gap to adjust spacing.`);
         expect(result.pass).toBe(false);
@@ -266,14 +290,13 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
 
         expect(result.message()).toEqual(`Horizontal spacing between elements does not match expected value.
 
-Expected:     5.00px ±1px
-Measured:     11.00px
-Difference:   6.00px
-
-Layout details (X axis):
-- Left element:   X=10.00, width=50.00px
-- Right element:  X=71.00, width=30.00px
-- Gap between:    11.00px
+Details:
+- Expected spacing:  5.00px ±1px
+- Measured spacing:  11.00px
+- Difference:        6.00px
+- Left element:      X=10.00, width=50.00px
+- Right element:     X=71.00, width=30.00px
+- Gap between:       11.00px
 
 Use margin, padding, or flex/grid gap to adjust spacing.`);
         expect(result.pass).toBe(false);
@@ -323,17 +346,17 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
 
       const result = await toHaveSpacingBetween(element, reference, 10, SpacingAxis.Vertical);
 
-      expect(result.message()).toEqual(
-        `Vertical spacing between elements does not match expected value.\n\n` +
-          `Expected:     10.00px ±0%\n` +
-          `Measured:     20.00px\n` +
-          `Difference:   10.00px\n\n` +
-          `Layout details (Y axis):\n` +
-          `- Top element:    Y=10.00, height=50.00px\n` +
-          `- Bottom element: Y=80.00, height=30.00px\n` +
-          `- Gap between:    20.00px\n\n` +
-          `Use margin, padding, or flex/grid gap to adjust spacing.`,
-      );
+      expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
+
+Details:
+- Expected spacing:  10.00px ±0%
+- Measured spacing:  20.00px
+- Difference:        10.00px
+- Top element:       Y=10.00, height=50.00px
+- Bottom element:    Y=80.00, height=30.00px
+- Gap between:       20.00px
+
+Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
     });
 
@@ -350,14 +373,13 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
 
       expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
 
-Expected:     10.00px ±0%
-Measured:     20.00px
-Difference:   10.00px
-
-Layout details (Y axis):
-- Top element:    Y=10.00, height=50.00px
-- Bottom element: Y=80.00, height=30.00px
-- Gap between:    20.00px
+Details:
+- Expected spacing:  10.00px ±0%
+- Measured spacing:  20.00px
+- Difference:        10.00px
+- Top element:       Y=10.00, height=50.00px
+- Bottom element:    Y=80.00, height=30.00px
+- Gap between:       20.00px
 
 Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
@@ -376,14 +398,13 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
 
       expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
 
-Expected:     10.00px ±0%
-Measured:     5.00px
-Difference:   5.00px
-
-Layout details (Y axis):
-- Top element:    Y=10.00, height=50.00px
-- Bottom element: Y=65.00, height=30.00px
-- Gap between:    5.00px
+Details:
+- Expected spacing:  10.00px ±0%
+- Measured spacing:  5.00px
+- Difference:        5.00px
+- Top element:       Y=10.00, height=50.00px
+- Bottom element:    Y=65.00, height=30.00px
+- Gap between:       5.00px
 
 Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
@@ -402,14 +423,13 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
 
       expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
 
-Expected:     10.00px ±0%
-Measured:     5.00px
-Difference:   5.00px
-
-Layout details (Y axis):
-- Top element:    Y=10.00, height=50.00px
-- Bottom element: Y=65.00, height=30.00px
-- Gap between:    5.00px
+Details:
+- Expected spacing:  10.00px ±0%
+- Measured spacing:  5.00px
+- Difference:        5.00px
+- Top element:       Y=10.00, height=50.00px
+- Bottom element:    Y=65.00, height=30.00px
+- Gap between:       5.00px
 
 Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
@@ -428,14 +448,13 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
 
       expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
 
-Expected:     10.00px ±0%
-Measured:     0.00px
-Difference:   10.00px
-
-Layout details (Y axis):
-- Top element:    Y=10.00, height=60.00px
-- Bottom element: Y=50.00, height=30.00px
-- Gap between:    0.00px
+Details:
+- Expected spacing:  10.00px ±0%
+- Measured spacing:  0.00px
+- Difference:        10.00px
+- Top element:       Y=10.00, height=60.00px
+- Bottom element:    Y=50.00, height=30.00px
+- Gap between:       0.00px
 
 Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
@@ -454,14 +473,13 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
 
       expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
 
-Expected:     10.00px ±0%
-Measured:     0.00px
-Difference:   10.00px
-
-Layout details (Y axis):
-- Top element:    Y=10.00, height=60.00px
-- Bottom element: Y=50.00, height=30.00px
-- Gap between:    0.00px
+Details:
+- Expected spacing:  10.00px ±0%
+- Measured spacing:  0.00px
+- Difference:        10.00px
+- Top element:       Y=10.00, height=60.00px
+- Bottom element:    Y=50.00, height=30.00px
+- Gap between:       0.00px
 
 Use margin, padding, or flex/grid gap to adjust spacing.`);
       expect(result.pass).toBe(false);
@@ -500,14 +518,13 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
 
         expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
 
-Expected:     7.00px ±20%
-Measured:     10.00px
-Difference:   3.00px
-
-Layout details (Y axis):
-- Top element:    Y=10.00, height=50.00px
-- Bottom element: Y=70.00, height=30.00px
-- Gap between:    10.00px
+Details:
+- Expected spacing:  7.00px ±20%
+- Measured spacing:  10.00px
+- Difference:        3.00px
+- Top element:       Y=10.00, height=50.00px
+- Bottom element:    Y=70.00, height=30.00px
+- Gap between:       10.00px
 
 Use margin, padding, or flex/grid gap to adjust spacing.`);
         expect(result.pass).toBe(false);
@@ -547,14 +564,13 @@ Use margin, padding, or flex/grid gap to adjust spacing.`);
 
         expect(result.message()).toEqual(`Vertical spacing between elements does not match expected value.
 
-Expected:     3.00px ±5px
-Measured:     10.00px
-Difference:   7.00px
-
-Layout details (Y axis):
-- Top element:    Y=10.00, height=50.00px
-- Bottom element: Y=70.00, height=30.00px
-- Gap between:    10.00px
+Details:
+- Expected spacing:  3.00px ±5px
+- Measured spacing:  10.00px
+- Difference:        7.00px
+- Top element:       Y=10.00, height=50.00px
+- Bottom element:    Y=70.00, height=30.00px
+- Gap between:       10.00px
 
 Use margin, padding, or flex/grid gap to adjust spacing.`);
         expect(result.pass).toBe(false);

@@ -125,7 +125,7 @@ To fix this, adjust the left position of the element (or the right of the refere
 
     const options = { tolerance: -5, toleranceUnit: ToleranceUnit.Pixels };
     await expect(toHaveDistanceFrom(element, reference, DistanceSide.Top, 100, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 

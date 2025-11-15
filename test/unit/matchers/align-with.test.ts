@@ -36,7 +36,7 @@ describe('toBeAlignedWith', () => {
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toBeAlignedWith(element, container, Axis.Horizontal, Alignment.Center, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 
@@ -46,7 +46,7 @@ describe('toBeAlignedWith', () => {
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Pixels };
 
     await expect(toBeAlignedWith(element, container, Axis.Horizontal, Alignment.Center, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 

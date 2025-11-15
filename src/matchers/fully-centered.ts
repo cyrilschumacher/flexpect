@@ -51,7 +51,7 @@ export async function toBeFullyCentered(
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
   if (tolerance < 0) {
-    throw new Error('tolerance must be greater than or equal to 0');
+    throw new Error('"tolerance" must be greater than or equal to 0');
   }
 
   const elementBox = await getBoundingBoxOrFail(element);
@@ -90,7 +90,7 @@ export async function toBeFullyCentered(
       const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
       return `Element is not fully centered within the container (allowed tolerance: ±${tolerance}${unit}).
 
-Offsets:
+Details:
 - Horizontal: ${horizontalOffset.toFixed(2)}px (tolerance: ±${horizontalTolerance.toFixed(2)}px)
 - Vertical:   ${verticalOffset.toFixed(2)}px (tolerance: ±${verticalTolerance.toFixed(2)}px)
 

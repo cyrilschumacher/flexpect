@@ -62,7 +62,7 @@ export async function toBeBelow(
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
   if (tolerance < 0) {
-    throw new Error('tolerance must be greater than or equal to 0');
+    throw new Error('"tolerance" must be greater than or equal to 0');
   }
 
   const elementBoundingBox = await getBoundingBoxOrFail(element);
@@ -97,7 +97,7 @@ export async function toBeBelow(
 
 Details:
 - Allowed deviation: ≤ ${allowedDeviation}px (${tolerance}${unit})
-- Actual deviation: ${actualDeviation}px
+- Actual deviation:  ${actualDeviation}px
 
 To fix this, move the element downward or increase the tolerance.`;
     },

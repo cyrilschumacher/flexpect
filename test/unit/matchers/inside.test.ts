@@ -55,7 +55,7 @@ Please adjust the element's position or size to fit entirely inside the containe
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
 
     await expect(toBeInside(element, container, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 
@@ -65,7 +65,7 @@ Please adjust the element's position or size to fit entirely inside the containe
     const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Pixels };
 
     await expect(toBeInside(element, container, options)).rejects.toThrow(
-      'tolerance must be greater than or equal to 0',
+      '"tolerance" must be greater than or equal to 0',
     );
   });
 

@@ -42,6 +42,24 @@ To fix this, adjust the element's width or height so that its ratio more closely
     expect(result.pass).toBe(false);
   });
 
+  it('should throw an error for invalid tolerance in percent', async () => {
+    const element = {} as Locator;
+    const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
+
+    await expect(toHaveAspectRatio(element, 16 / 9, options)).rejects.toThrow(
+      '"tolerance" must be greater than or equal to 0',
+    );
+  });
+
+  it('should throw an error for invalid tolerance in pixels', async () => {
+    const element = {} as Locator;
+    const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Pixels };
+
+    await expect(toHaveAspectRatio(element, 16 / 9, options)).rejects.toThrow(
+      '"tolerance" must be greater than or equal to 0',
+    );
+  });
+
   describe('with tolerance in pixels', () => {
     it('should pass when aspect ratio is within pixel tolerance', async () => {
       const element = {} as Locator;
@@ -74,15 +92,6 @@ Details:
 
 To fix this, adjust the element's width or height so that its ratio more closely matches the expected 1.3333.`);
       expect(result.pass).toBe(false);
-    });
-
-    it('should throw an error for invalid tolerance', async () => {
-      const element = {} as Locator;
-      const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Pixels };
-
-      await expect(toHaveAspectRatio(element, 16 / 9, options)).rejects.toThrow(
-        'tolerance must be greater than or equal to 0',
-      );
     });
   });
 
@@ -118,15 +127,6 @@ Details:
 
 To fix this, adjust the element's width or height so that its ratio more closely matches the expected 1.3333.`);
       expect(result.pass).toBe(false);
-    });
-
-    it('should throw an error for invalid tolerance', async () => {
-      const element = {} as Locator;
-      const options = { tolerance: -10, toleranceUnit: ToleranceUnit.Percent };
-
-      await expect(toHaveAspectRatio(element, 16 / 9, options)).rejects.toThrow(
-        'tolerance must be greater than or equal to 0',
-      );
     });
   });
 });
