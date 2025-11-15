@@ -1,10 +1,14 @@
 {
-  "entryPoints": ["src/**/*.ts"],
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/matchers/**/*.ts"],
   "out": "docs",
   "tsconfig": "tsconfig.json",
   "includeVersion": true,
   "excludePrivate": true,
   "excludeInternal": true,
+  "categorizeByGroup": true,
+  "excludeProtected": true,
+  "excludeNotDocumented": true,
   "theme": "default",
   "requiredToBeDocumented": [
     "Enum",
@@ -19,6 +23,7 @@
     "TypeAlias"
   ],
   "treatValidationWarningsAsErrors": true,
+  "treatWarningsAsErrors": true,
   "externalSymbolLinkMappings": {
     "typescript": {
       "Promise": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"
