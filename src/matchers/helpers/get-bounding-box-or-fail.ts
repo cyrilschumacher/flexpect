@@ -9,7 +9,6 @@ class BoundingBoxError extends Error {
   }
 }
 
-/** @internal */
 export interface BoundingBox {
   x: number;
   y: number;
@@ -17,7 +16,6 @@ export interface BoundingBox {
   height: number;
 }
 
-/** @internal */
 export async function getBoundingBoxOrFail(element: Locator): Promise<BoundingBox> {
   const boundingBox = await element.boundingBox();
   if (boundingBox) {
