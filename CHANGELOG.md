@@ -1,3 +1,10 @@
+# [0.18.0](https://github.com/cyrilschumacher/flexpect/compare/v0.17.0...v0.18.0) (2025-11-15)
+
+
+### Features
+
+* implement `toBeAbove` matcher ([#46](https://github.com/cyrilschumacher/flexpect/issues/46)) ([76ea1d0](https://github.com/cyrilschumacher/flexpect/commit/76ea1d057e0e56f1976fe45c0c2a13e7c9ed6375))
+
 # [0.17.0](https://github.com/cyrilschumacher/flexpect/compare/v0.16.0...v0.17.0) (2025-11-14)
 
 
