@@ -15,7 +15,7 @@ export interface ToBeAboveOptions extends Tolerance {}
  * within the specified tolerance.
  *
  * - **Strictly above** (tolerance = 0):
- * * ```text
+ * ```text
  * ┌───────────────┐
  * │    element    │
  * └───────────────┘
