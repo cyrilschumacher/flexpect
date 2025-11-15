@@ -14,7 +14,7 @@ export interface ToBeAboveOptions extends Tolerance {}
  * The element passes if its **bottom edge** is at or above the **top edge** of the reference,
  * within the specified tolerance.
  *
- * - **Strictly above** (tolerance = 0):
+ * - **Strictly above**:
  * ```text
  * ┌───────────────┐
  * │    element    │
@@ -25,7 +25,7 @@ export interface ToBeAboveOptions extends Tolerance {}
  * │   reference   │
  * └───────────────┘
  * ```
- * - **Touching** (allowed with tolerance = 0):
+ * - **Touching**:
  * ```text
  * ┌───────────────┐
  * │    element    │
