@@ -1,3 +1,10 @@
+# [0.20.0](https://github.com/cyrilschumacher/flexpect/compare/v0.19.0...v0.20.0) (2025-11-21)
+
+
+### Features
+
+* implement `toBeLeftOf` matcher ([#49](https://github.com/cyrilschumacher/flexpect/issues/49)) ([cbc7197](https://github.com/cyrilschumacher/flexpect/commit/cbc7197e647a3f951ae2fd3320a0330f603eb773))
+
 # [0.19.0](https://github.com/cyrilschumacher/flexpect/compare/v0.18.0...v0.19.0) (2025-11-15)
 
 
