@@ -4,7 +4,7 @@ import { ToBeAboveOptions } from './matchers/above';
 import { Alignment, Axis, ToBeAlignedWithOptions } from './matchers/aligned-with';
 import { ToHaveAspectRatioOptions } from './matchers/aspect-ratio';
 import { DistanceSide, ToHaveDistanceFromOptions } from './matchers/at-distance-from';
-import { toBeBelowOptions } from './matchers/below';
+import { ToBeBelowOptions } from './matchers/below';
 import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
 import { HorizontalAlignment, ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
 import { ToBeInsideOptions } from './matchers/inside';
@@ -38,7 +38,7 @@ declare global {
     interface Matchers<R> {
       toBeAbove(reference: Locator, options?: ToBeAboveOptions): Promise<R>;
       toBeAlignedWith(container: Locator, axis: Axis, mode: Alignment, options?: ToBeAlignedWithOptions): Promise<R>;
-      toBeBelow(reference: Locator, options?: toBeBelowOptions): Promise<R>;
+      toBeBelow(reference: Locator, options?: ToBeBelowOptions): Promise<R>;
       toBeFullyCentered(container: Locator, options?: ToBeFullyCenteredOptions): Promise<R>;
       toBeHorizontallyAlignedWith(
         container: Locator,

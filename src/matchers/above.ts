@@ -5,8 +5,7 @@ import { Tolerance, ToleranceUnit } from './tolerance';
 /**
  * Options for the {@link toBeAbove} matcher.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ToBeAboveOptions extends Tolerance {}
+export type ToBeAboveOptions = Tolerance;
 
 /**
  * Asserts that an element is positioned above another element.

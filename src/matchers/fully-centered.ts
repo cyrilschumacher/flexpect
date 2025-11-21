@@ -17,8 +17,7 @@ function isWithinTolerance(valueA: number, valueB: number, tolerance: number): b
 /**
  * Options for the {@link toBeFullyCentered} matcher.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ToBeFullyCenteredOptions extends Tolerance {}
+export type ToBeFullyCenteredOptions = Tolerance;
 
 /**
  * Asserts that the target element is fully centered both horizontally and vertically

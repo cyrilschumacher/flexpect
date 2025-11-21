@@ -5,8 +5,7 @@ import { Tolerance, ToleranceUnit } from './tolerance';
 /**
  * Options for the {@link toBeLeftOf} matcher.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ToBeLeftOfOptions extends Tolerance {}
+export type ToBeLeftOfOptions = Tolerance;
 
 /**
  * Asserts that an element is positioned to the left of another element.

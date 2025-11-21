@@ -5,8 +5,7 @@ import { Tolerance, ToleranceUnit } from './tolerance';
 /**
  * Options for the {@link toHaveSameSizeAs} matcher.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ToHaveSameSizeAsOptions extends Tolerance {}
+export type ToHaveSameSizeAsOptions = Tolerance;
 
 /**
  * Asserts that the target element has the same width and height as the specified container element.

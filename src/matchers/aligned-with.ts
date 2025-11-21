@@ -71,8 +71,7 @@ export enum Axis {
 /**
  * Options for the {@link toBeAlignedWith} matcher.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ToBeAlignedWithOptions extends Tolerance {}
+export type ToBeAlignedWithOptions = Tolerance;
 
 /**
  * Asserts that the target element is aligned with the specified container element

@@ -38,8 +38,7 @@ export enum SpacingAxis {
 /**
  * Options for the {@link toHaveSpacingBetween} matcher.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ToHaveSpacingBetweenOptions extends Tolerance {}
+export type ToHaveSpacingBetweenOptions = Tolerance;
 
 /**
  * Asserts that the spacing between two elements matches the expected value along the specified axis.

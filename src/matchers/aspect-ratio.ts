@@ -6,8 +6,7 @@ import { Tolerance, ToleranceUnit } from './tolerance';
 /**
  * Options for the {@link toHaveAspectRatio} matcher.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ToHaveAspectRatioOptions extends Tolerance {}
+export type ToHaveAspectRatioOptions = Tolerance;
 
 /**
  * Asserts that the target element has the specified aspect ratio (width divided by height),

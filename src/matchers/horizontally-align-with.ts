@@ -53,8 +53,7 @@ export enum HorizontalAlignment {
 /**
  * Options for the {@link toBeHorizontallyAlignedWith} matcher.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ToBeHorizontallyAlignedWithOptions extends Tolerance {}
+export type ToBeHorizontallyAlignedWithOptions = Tolerance;
 
 /**
  * Asserts that the target element is horizontally aligned with the specified container

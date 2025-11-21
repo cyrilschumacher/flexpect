@@ -23,8 +23,7 @@ function calculateDeltaY(elementBox: BoundingBox, containerBox: BoundingBox, tol
 /**
  * Options for the {@link toBeInside} matcher.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ToBeInsideOptions extends Tolerance {}
+export type ToBeInsideOptions = Tolerance;
 
 /**
  * Asserts that the target element is fully contained within the specified container element,

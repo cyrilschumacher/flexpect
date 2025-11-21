@@ -5,8 +5,7 @@ import { Tolerance, ToleranceUnit } from './tolerance';
 /**
  * Options for the {@link toBeBelow} matcher.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface toBeBelowOptions extends Tolerance {}
+export type ToBeBelowOptions = Tolerance;
 
 /**
  * Asserts that an element is positioned below another element.
@@ -58,7 +57,7 @@ export interface toBeBelowOptions extends Tolerance {}
 export async function toBeBelow(
   element: Locator,
   reference: Locator,
-  options: toBeBelowOptions = {},
+  options: ToBeBelowOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
   if (tolerance < 0) {

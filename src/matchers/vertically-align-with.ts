@@ -52,8 +52,7 @@ export enum VerticalAlignment {
 /**
  * Options for the {@link toBeVerticallyAlignedWith} matcher.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ToBeVerticallyAlignedWithOptions extends Tolerance {}
+export type ToBeVerticallyAlignedWithOptions = Tolerance;
 
 /**
  * Asserts that the target element is vertically aligned with the specified container
