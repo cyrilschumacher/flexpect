@@ -25,13 +25,16 @@ export interface ToBeFullyCenteredOptions extends Tolerance {}
  * within the specified container element.
  *
  * ```text
- * |-----------------|
- * |                 |
- * |    [element]    |
- * |                 |
- * |-----------------|
+ * ┌─────────────────┐
+ * │                 │
+ * │   ┌─────────┐   │
+ * │   │ element │   │
+ * │   └─────────┘   │
+ * │                 │
+ * └─────────────────┘
  * ```
  *
+ * @param element - The element as a {@link Locator} to check for centering.
  * @param container - The container element as a {@link Locator} relative to which centering is checked.
  * @param options - Optional centering options.
  * @returns A {@link Promise} that resolves with the matcher result.

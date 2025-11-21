@@ -62,6 +62,7 @@ function calculateContrastRatio(luminance1: number, luminance2: number) {
  * The matcher calculates the contrast ratio using the relative luminance of the text color and background color.
  * It fails if the contrast ratio is below the specified minimum, as per WCAG 2.1 guidelines (e.g., 4.5:1 for normal text, 3:1 for large text).
  *
+ * @param element - The element as a {@link Locator} to check for color contrast.
  * @param minimumContrastRatio - The minimum acceptable contrast ratio (e.g., 4.5 for AA normal text, 3 for AA large text).
  * @returns A {@link Promise} that resolves with the matcher result.
  *

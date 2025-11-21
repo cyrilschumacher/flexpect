@@ -22,6 +22,7 @@ export interface ToHaveAspectRatioOptions extends Tolerance {}
  * aspectRatio = width / height
  * ```
  *
+ * @param element - The element as a {@link Locator} to check for aspect ratio.
  * @param expectedRatio - The expected aspect ratio (width / height) to check against.
  * @param options - Optional comparison options.
  * @returns A {@link Promise} that resolves with the matcher result.

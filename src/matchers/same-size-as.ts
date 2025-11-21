@@ -11,6 +11,7 @@ export interface ToHaveSameSizeAsOptions extends Tolerance {}
 /**
  * Asserts that the target element has the same width and height as the specified container element.
  *
+ * @param element - The element as a {@link Locator} to check for size.
  * @param container - A `Locator` representing the element to compare size with.
  * @param options - Optional comparison options.
  * @returns A {@link Promise} that resolves with the matcher result.

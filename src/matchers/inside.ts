@@ -34,6 +34,7 @@ export interface ToBeInsideOptions extends Tolerance {}
  * are strictly within the bounds of the container, with an optional offset based on a
  * percentage of the container's dimensions.
  *
+ * @param element - The element as a {@link Locator} to check for containment.
  * @param container - The container element as a {@link Locator} within which the element is expected to be fully contained.
  * @param options - Optional containment options.
  * @returns A {@link Promise} that resolves with the matcher result.

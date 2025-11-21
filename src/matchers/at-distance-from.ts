@@ -103,7 +103,7 @@ export interface ToHaveDistanceFromOptions extends Tolerance {}
  * └───────────────────────┘             └───────────────────────┘
  * ```
  *
- * @param element - The target element (Locator).
+ * @param element - The element as a {@link Locator} to check for distance.
  * @param reference - The reference element to compare against.
  * @param side - Which side of the reference to measure distance from.
  * @param expectedDistanceInPixels - Expected distance in pixels between the elements.

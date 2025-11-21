@@ -9,8 +9,6 @@ import { getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
  * - **Perfect Fit** (Pass):
  * ```text
  * ┌─────────────────────┐
- * │      Container      │
- * ├─────────────────────┤
  * │┌───────────────────┐│
  * ││                   ││
  * ││      Element      ││
@@ -22,8 +20,6 @@ import { getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
  * - **Position Mismatch** (Fail):
  * ```text
  * ┌──────────────────────┐
- * │       Container      │
- * ├──────────────────────┤
  * │                      │
  * │ ┌──────────────────┐ │
  * │ │     Element      │ │
@@ -34,19 +30,15 @@ import { getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
  * - **Size Mismatch** (Fail):
  * ```text
  * ┌─────────────────────┐
- * │      Container      │
- * ├─────────────────────┤
- * │ ┌─────────────────┐ │
- * │ │     Element     │ │
- * │ │   (Too Small)   │ │
- * │ └─────────────────┘ │
+ * │   ┌─────────────┐   │
+ * │   │   Element   │   │
+ * │   │ (Too Small) │   │
+ * │   └─────────────┘   │
  * └─────────────────────┘
  * ```
  * - **Overflow** (Fail):
  * ```text
  * ┌─────────────────────┐
- * │      Container      │
- * ├─────────────────────┤
  * │┌────────────────────┼─┐
  * ││       Element      │ │
  * ││      (Overflow)    │ │
@@ -54,6 +46,7 @@ import { getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
  * └─────────────────────┘
  * ```
  *
+ * @param element - The element as a {@link Locator} to check for fitting within the container.
  * @param container - The container element as a {@link Locator} within which the element is expected to fit.
  * @returns A {@link Promise} that resolves with the matcher result.
  *

@@ -61,20 +61,33 @@ export interface ToBeHorizontallyAlignedWithOptions extends Tolerance {}
  * according to the given alignment type.
  *
  * - **Left alignment** (alignment = `HorizontalAlignment.Left`):
- *   ```text
- *   |[element]------------------|
- *   ```
+ * ```text
+ * ┌───────────────────────────────┐
+ * │┌─────────┐                    │
+ * ││ Element │                    │
+ * │└─────────┘                    │
+ * └───────────────────────────────┘
+ * ```
  *
  * - **Center alignment** (alignment = `HorizontalAlignment.Center`):
- *   ```text
- *   |---------[element]---------|
- *   ```
+ * ```text
+ * ┌───────────────────────────────┐
+ * │          ┌─────────┐          │
+ * │          │ Element │          │
+ * │          └─────────┘          │
+ * └───────────────────────────────┘
+ * ```
  *
  * - **Right alignment** (alignment = `HorizontalAlignment.Right`):
- *   ```text
- *   |------------------[element]|
- *   ```
+ * ```text
+ * ┌───────────────────────────────┐
+ * │                    ┌─────────┐│
+ * │                    │ Element ││
+ * │                    └─────────┘│
+ * └───────────────────────────────┘
+ * ```
  *
+ * @param element - The element as a {@link Locator} to check for horizontal alignment.
  * @param container - The container element as a {@link Locator} relative to which horizontal alignment is checked.
  * @param alignment - The type of horizontal alignment to check (left, center, or right).
  * @param options - Optional alignment options.
