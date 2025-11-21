@@ -1,6 +1,7 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
+
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
-import { Tolerance, ToleranceUnit } from './tolerance';
+import { getToleranceUnitSymbol, Tolerance, ToleranceUnit, validateTolerance } from './tolerance';
 
 function getBorders(boundingBox: BoundingBox) {
   return {
@@ -132,9 +133,7 @@ export async function toHaveDistanceFrom(
   options: ToHaveDistanceFromOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
-  if (tolerance < 0) {
-    throw new Error('"tolerance" must be greater than or equal to 0');
-  }
+  validateTolerance(tolerance);
 
   const elementBoundingBox = await getBoundingBoxOrFail(element);
   const referenceBoundingBox = await getBoundingBoxOrFail(reference);
@@ -151,8 +150,8 @@ export async function toHaveDistanceFrom(
           return `Element is exactly ${formattedSide}-aligned at ${expectedDistanceInPixels}px.`;
         }
 
-        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element is ${formattedSide}-aligned within the tolerance of ±${tolerance}${unit} from the expected ${expectedDistanceInPixels}px.`;
+        const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
+        return `Element is ${formattedSide}-aligned within the tolerance of ±${tolerance}${toleranceUnitSymbol} from the expected ${expectedDistanceInPixels}px.`;
       },
     };
   }
@@ -160,9 +159,9 @@ export async function toHaveDistanceFrom(
   return {
     pass: false,
     message: () => {
-      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-
+      const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
       const formattedSide = DistanceSide[side].toLowerCase();
+
       const actualDistance = delta.toFixed(2);
       const allowedDeviation = toleranceInPixels.toFixed(2);
       const difference = (delta - expectedDistanceInPixels).toFixed(2);
@@ -174,12 +173,12 @@ export async function toHaveDistanceFrom(
         [DistanceSide.Left]: 'right',
       }[side];
 
-      return `Element is not ${formattedSide}-aligned within the allowed tolerance of ±${tolerance}${unit} from the expected ${expectedDistanceInPixels}px.
+      return `Element is not ${formattedSide}-aligned within the allowed tolerance of ±${tolerance}${toleranceUnitSymbol} from the expected ${expectedDistanceInPixels}px.
 
 Details:
 - Expected distance: ${expectedDistanceInPixels}px
 - Actual distance:   ${actualDistance}px
-- Allowed deviation: ±${allowedDeviation}px (±${tolerance}${unit})
+- Allowed deviation: ±${allowedDeviation}px (±${tolerance}${toleranceUnitSymbol})
 - Difference:        ${difference}px
 
 To fix this, adjust the ${formattedSide} position of the element (or the ${oppositeSide} of the reference) using margin, padding, or layout properties so the gap is closer to ${expectedDistanceInPixels}px.`;

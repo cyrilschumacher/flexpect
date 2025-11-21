@@ -1,6 +1,7 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
+
 import { getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
-import { Tolerance, ToleranceUnit } from './tolerance';
+import { getToleranceUnitSymbol, Tolerance, ToleranceUnit, validateTolerance } from './tolerance';
 
 /**
  * Options for the {@link toHaveSameSizeAs} matcher.
@@ -32,9 +33,7 @@ export async function toHaveSameSizeAs(
   options: ToHaveSameSizeAsOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
-  if (tolerance < 0) {
-    throw new Error('"tolerance" must be greater than or equal to 0');
-  }
+  validateTolerance(tolerance);
 
   const elementBoundingBox = await getBoundingBoxOrFail(element);
   const containerBoundingBox = await getBoundingBoxOrFail(container);
@@ -53,8 +52,8 @@ export async function toHaveSameSizeAs(
           return 'Element size matches the container size exactly.';
         }
 
-        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element size fits the container perfectly with a tolerance of ${tolerance}${unit}.`;
+        const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
+        return `Element size fits the container perfectly with a tolerance of ${tolerance}${toleranceUnitSymbol}.`;
       },
     };
   }
@@ -62,8 +61,8 @@ export async function toHaveSameSizeAs(
   return {
     pass: false,
     message: () => {
-      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-      return `Element size differs from container size beyond the allowed tolerance of ${tolerance}${unit}.
+      const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
+      return `Element size differs from container size beyond the allowed tolerance of ${tolerance}${toleranceUnitSymbol}.
 
 Details:
 - Width:  expected ${containerBoundingBox.width.toFixed(2)}px ±${widthTolerance.toFixed(2)}px, got ${elementBoundingBox.width.toFixed(2)}px (delta: ${deltaWidth.toFixed(2)}px)

@@ -1,7 +1,7 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
 
 import { getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
-import { Tolerance, ToleranceUnit } from './tolerance';
+import { getToleranceUnitSymbol, Tolerance, ToleranceUnit, validateTolerance } from './tolerance';
 
 /**
  * Options for the {@link toHaveAspectRatio} matcher.
@@ -43,9 +43,7 @@ export async function toHaveAspectRatio(
   options: ToHaveAspectRatioOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
-  if (tolerance < 0) {
-    throw new Error('"tolerance" must be greater than or equal to 0');
-  }
+  validateTolerance(tolerance);
 
   const elementBox = await getBoundingBoxOrFail(element);
   const actualRatio = elementBox.width / elementBox.height;
@@ -59,6 +57,7 @@ export async function toHaveAspectRatio(
     return {
       pass: true,
       message: () => {
+        const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
         const formattedExpected = expectedRatio.toFixed(4);
         const formattedActual = actualRatio.toFixed(4);
         const formattedDelta = delta.toFixed(4);
@@ -66,27 +65,27 @@ export async function toHaveAspectRatio(
           return `Element aspect ratio matches the expected value exactly, with ${actualRatio.toFixed(4)} actual and ${expectedRatio.toFixed(4)} expected.`;
         }
 
-        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element aspect ratio is within ${tolerance}${unit} of the expected value, with ${formattedActual} actual, ${formattedExpected} expected, and an offset of ${formattedDelta}.`;
+        return `Element aspect ratio is within ${tolerance}${toleranceUnitSymbol} of the expected value, with ${formattedActual} actual, ${formattedExpected} expected, and an offset of ${formattedDelta}.`;
       },
     };
   }
 
-  const expectedRatioFormatted = expectedRatio.toFixed(4);
-  const actualRatioFormatted = actualRatio.toFixed(4);
-  const difference = delta.toFixed(4);
-  const allowed = toleranceInPixels.toFixed(4);
-
   return {
     pass: false,
     message: () => {
-      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-      return `Element's aspect ratio is outside the allowed ${tolerance}${unit} range.
+      const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
+
+      const expectedRatioFormatted = expectedRatio.toFixed(4);
+      const actualRatioFormatted = actualRatio.toFixed(4);
+      const difference = delta.toFixed(4);
+      const allowedDifference = toleranceInPixels.toFixed(4);
+
+      return `Element's aspect ratio is outside the allowed ${tolerance}${toleranceUnitSymbol} range.
 
 Details:
 - Expected ratio: ~${expectedRatioFormatted}
 - Actual ratio:   ${actualRatioFormatted}
-- Difference:     ${difference} (allowed: ±${allowed})
+- Difference:     ${difference} (allowed: ±${allowedDifference})
 
 To fix this, adjust the element's width or height so that its ratio more closely matches the expected ${expectedRatioFormatted}.`;
     },

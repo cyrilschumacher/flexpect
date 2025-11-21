@@ -1,6 +1,7 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
+
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
-import { Tolerance, ToleranceUnit } from './tolerance';
+import { getToleranceUnitSymbol, Tolerance, ToleranceUnit, validateTolerance } from './tolerance';
 
 function computeVerticalDelta(
   alignment: VerticalAlignment,
@@ -118,9 +119,7 @@ export async function toBeVerticallyAlignedWith(
   options: ToBeVerticallyAlignedWithOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
-  if (tolerance < 0) {
-    throw new Error('"tolerance" must be greater than or equal to 0');
-  }
+  validateTolerance(tolerance);
 
   const elementBoundingBox = await getBoundingBoxOrFail(element);
   const containerBoundingBox = await getBoundingBoxOrFail(container);
@@ -137,8 +136,8 @@ export async function toBeVerticallyAlignedWith(
           return `Element is properly ${formattedAlignment} aligned.`;
         }
 
-        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element is properly ${formattedAlignment} aligned with a tolerance of ${tolerance}${unit}.`;
+        const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
+        return `Element is properly ${formattedAlignment} aligned with a tolerance of ${tolerance}${toleranceUnitSymbol}.`;
       },
     };
   }
@@ -146,13 +145,13 @@ export async function toBeVerticallyAlignedWith(
   return {
     pass: false,
     message: () => {
-      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-
+      const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
       const formattedAlignment = VerticalAlignment[alignment].toLowerCase();
+
       const allowedDelta = toleranceInPixels.toFixed(2);
       const actualDelta = delta.toFixed(2);
 
-      return `Element is not ${formattedAlignment}-aligned within the allowed tolerance of ${tolerance}${unit}.
+      return `Element is not ${formattedAlignment}-aligned within the allowed tolerance of ${tolerance}${toleranceUnitSymbol}.
 
 Details:
 - Allowed delta: ±${allowedDelta}px

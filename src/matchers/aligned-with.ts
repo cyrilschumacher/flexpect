@@ -1,7 +1,7 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
 
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
-import { Tolerance, ToleranceUnit } from './tolerance';
+import { getToleranceUnitSymbol, Tolerance, ToleranceUnit, validateTolerance } from './tolerance';
 
 function getPosition(box: BoundingBox, axis: Axis, mode: Alignment): number {
   const origin = axis === Axis.Horizontal ? box.x : box.y;
@@ -157,9 +157,7 @@ export async function toBeAlignedWith(
   options: ToBeAlignedWithOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
-  if (tolerance < 0) {
-    throw new Error('"tolerance" must be greater than or equal to 0');
-  }
+  validateTolerance(tolerance);
 
   const elementBoundingBox = await getBoundingBoxOrFail(element);
   const containerBoundingBox = await getBoundingBoxOrFail(container);
@@ -180,8 +178,8 @@ export async function toBeAlignedWith(
           return `Element is aligned (${formattedMode}) along ${formattedAxis} axis.`;
         }
 
-        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element is aligned (${formattedMode}) along ${formattedAxis} axis within ${tolerance}${unit} tolerance.`;
+        const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
+        return `Element is aligned (${formattedMode}) along ${formattedAxis} axis within ${tolerance}${toleranceUnitSymbol} tolerance.`;
       },
     };
   }
@@ -189,17 +187,17 @@ export async function toBeAlignedWith(
   return {
     pass: false,
     message: () => {
-      const allowedDeviation = toleranceInPixels.toFixed(2);
-      const actualDeviation = delta.toFixed(2);
       const formattedMode = Alignment[mode].toLowerCase();
       const formattedAxis = Axis[axis].toLowerCase();
+      const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
 
-      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+      const allowedDeviation = toleranceInPixels.toFixed(2);
+      const actualDeviation = delta.toFixed(2);
 
       return `Element is misaligned with the container (${formattedMode}, ${formattedAxis}).
 
 Details:
-- Allowed deviation: ±${allowedDeviation}px (${tolerance}${unit})
+- Allowed deviation: ±${allowedDeviation}px (${tolerance}${toleranceUnitSymbol})
 - Actual deviation:  ${actualDeviation}px
 
 To fix this, ensure the element is aligned to the container's ${formattedMode} edge along the ${formattedAxis} axis.`;

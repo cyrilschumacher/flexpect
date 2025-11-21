@@ -1,7 +1,7 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
 
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
-import { Tolerance, ToleranceUnit } from './tolerance';
+import { getToleranceUnitSymbol, Tolerance, ToleranceUnit, validateTolerance } from './tolerance';
 
 function getCenter(boundingBox: BoundingBox) {
   return {
@@ -52,9 +52,7 @@ export async function toBeFullyCentered(
   options: ToBeFullyCenteredOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
-  if (tolerance < 0) {
-    throw new Error('"tolerance" must be greater than or equal to 0');
-  }
+  validateTolerance(tolerance);
 
   const elementBoundingBox = await getBoundingBoxOrFail(element);
   const containerBoundingBox = await getBoundingBoxOrFail(container);
@@ -77,24 +75,30 @@ export async function toBeFullyCentered(
           return 'Element is perfectly centered.';
         }
 
-        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element is perfectly centered with a tolerance of ${tolerance}${unit}.`;
+        const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
+        return `Element is perfectly centered with a tolerance of ${tolerance}${toleranceUnitSymbol}.`;
       },
     };
   }
 
-  const horizontalOffset = Math.abs(containerCenter.x - elementCenter.x);
-  const verticalOffset = Math.abs(containerCenter.y - elementCenter.y);
-
   return {
     pass: false,
     message: () => {
-      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-      return `Element is not fully centered within the container (allowed tolerance: ±${tolerance}${unit}).
+      const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
+
+      const horizontalOffset = Math.abs(containerCenter.x - elementCenter.x);
+      const verticalOffset = Math.abs(containerCenter.y - elementCenter.y);
+
+      const formattedHorizontalOffset = horizontalOffset.toFixed(2);
+      const formattedVerticalOffset = verticalOffset.toFixed(2);
+      const formattedHorizontalTolerance = horizontalTolerance.toFixed(2);
+      const formattedVerticalTolerance = verticalTolerance.toFixed(2);
+
+      return `Element is not fully centered within the container (allowed tolerance: ±${tolerance}${toleranceUnitSymbol}).
 
 Details:
-- Horizontal: ${horizontalOffset.toFixed(2)}px (tolerance: ±${horizontalTolerance.toFixed(2)}px)
-- Vertical:   ${verticalOffset.toFixed(2)}px (tolerance: ±${verticalTolerance.toFixed(2)}px)
+- Horizontal: ${formattedHorizontalOffset}px (tolerance: ±${formattedHorizontalTolerance}px)
+- Vertical:   ${formattedVerticalOffset}px (tolerance: ±${formattedVerticalTolerance}px)
 
 Adjust the element position to bring it closer to the container's center.`;
     },

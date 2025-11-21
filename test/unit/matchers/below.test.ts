@@ -74,7 +74,7 @@ describe('toBeBelow', () => {
     expect(result.message()).toEqual(`Element is not below the reference.
 
 Details:
-- Allowed deviation: ≤ 0.00px (0%)
+- Allowed deviation: ≤ 0.00px (±0%)
 - Actual deviation:  -60.00px
 
 To fix this, move the element downward or increase the tolerance.`);
@@ -113,7 +113,7 @@ To fix this, move the element downward or increase the tolerance.`);
       expect(result.message()).toEqual(`Element is not below the reference.
 
 Details:
-- Allowed deviation: ≤ 10.00px (10%)
+- Allowed deviation: ≤ 10.00px (±10%)
 - Actual deviation:  -30.00px
 
 To fix this, move the element downward or increase the tolerance.`);
@@ -153,7 +153,7 @@ To fix this, move the element downward or increase the tolerance.`);
       expect(result.message()).toEqual(`Element is not below the reference.
 
 Details:
-- Allowed deviation: ≤ 20.00px (20px)
+- Allowed deviation: ≤ 20.00px (±20px)
 - Actual deviation:  -25.00px
 
 To fix this, move the element downward or increase the tolerance.`);

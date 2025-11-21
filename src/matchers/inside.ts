@@ -1,6 +1,7 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
+
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
-import { Tolerance, ToleranceUnit } from './tolerance';
+import { getToleranceUnitSymbol, Tolerance, ToleranceUnit, validateTolerance } from './tolerance';
 
 function calculateDeltaX(elementBox: BoundingBox, containerBox: BoundingBox, tolerance: number): number {
   const overflowLeft = Math.max(0, containerBox.x - elementBox.x - tolerance);
@@ -55,9 +56,7 @@ export async function toBeInside(
   options: ToBeInsideOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
-  if (tolerance < 0) {
-    throw new Error('"tolerance" must be greater than or equal to 0');
-  }
+  validateTolerance(tolerance);
 
   const elementBoundingBox = await getBoundingBoxOrFail(element);
   const containerBoundingBox = await getBoundingBoxOrFail(container);
@@ -78,8 +77,8 @@ export async function toBeInside(
           return `Element is properly inside the container.`;
         }
 
-        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element is properly inside the container with a tolerance of ${tolerance}${unit}.`;
+        const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
+        return `Element is properly inside the container with a tolerance of ${tolerance}${toleranceUnitSymbol}.`;
       },
     };
   }
@@ -87,15 +86,17 @@ export async function toBeInside(
   return {
     pass: false,
     message: () => {
-      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+      const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
+      const formattedTolerance = tolerance.toFixed(2);
+      const toleranceValue =
+        toleranceUnit === ToleranceUnit.Percent
+          ? `${tolerance}${toleranceUnitSymbol}`
+          : `${formattedTolerance}${toleranceUnitSymbol}`;
 
       const horizontalOverflow = deltaX.toFixed(2);
       const verticalOverflow = deltaY.toFixed(2);
       const allowedToleranceX = toleranceInPixelsX.toFixed(2);
       const allowedToleranceY = toleranceInPixelsY.toFixed(2);
-
-      const toleranceValue =
-        toleranceUnit === ToleranceUnit.Percent ? `${tolerance}${unit}` : `${tolerance.toFixed(2)}${unit}`;
 
       return `Element is not fully inside the container within the allowed tolerance of ${toleranceValue}.
 

@@ -1,6 +1,7 @@
 import { Locator, MatcherReturnType } from '@playwright/test';
+
 import { BoundingBox, getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
-import { Tolerance, ToleranceUnit } from './tolerance';
+import { getToleranceUnitSymbol, Tolerance, ToleranceUnit, validateTolerance } from './tolerance';
 
 function computeSpacing(elementBox: BoundingBox, referenceBox: BoundingBox, axis: SpacingAxis) {
   const elementStart = axis === SpacingAxis.Horizontal ? elementBox.x : elementBox.y;
@@ -112,9 +113,7 @@ export async function toHaveSpacingBetween(
   options: ToHaveSpacingBetweenOptions = {},
 ): Promise<MatcherReturnType> {
   const { tolerance = 0, toleranceUnit = ToleranceUnit.Percent } = options;
-  if (tolerance < 0) {
-    throw new Error('"tolerance" must be greater than or equal to 0');
-  }
+  validateTolerance(tolerance);
 
   const elementBoundingBox = await getBoundingBoxOrFail(element);
   const referenceBoundingBox = await getBoundingBoxOrFail(reference);
@@ -134,8 +133,8 @@ export async function toHaveSpacingBetween(
           return `Element spacing on the ${formattedAxis} axis is exactly ${roundedSpacing}px as expected.`;
         }
 
-        const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element spacing on the ${formattedAxis} axis is ${roundedSpacing}px, within ±${tolerance}${unit} (±${roundedTolerance}px) of the expected ${expectedSpacing}px.`;
+        const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
+        return `Element spacing on the ${formattedAxis} axis is ${roundedSpacing}px, within ±${tolerance}${toleranceUnitSymbol} (±${roundedTolerance}px) of the expected ${expectedSpacing}px.`;
       },
     };
   }
@@ -143,7 +142,7 @@ export async function toHaveSpacingBetween(
   return {
     pass: false,
     message: () => {
-      const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+      const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
 
       const roundedExpectedSpacing = expectedSpacing.toFixed(2);
       const roundedActualSpacing = spacing.toFixed(2);
@@ -161,7 +160,7 @@ export async function toHaveSpacingBetween(
         return `Horizontal spacing between elements does not match expected value.
 
 Details:
-- Expected spacing:  ${roundedExpectedSpacing}px ±${tolerance}${unit}
+- Expected spacing:  ${roundedExpectedSpacing}px ±${tolerance}${toleranceUnitSymbol}
 - Measured spacing:  ${roundedActualSpacing}px
 - Difference:        ${roundedSpacingDifference}px
 - Left element:      X=${roundedLeftX}, width=${roundedLeftWidth}px
@@ -182,7 +181,7 @@ Use margin, padding, or flex/grid gap to adjust spacing.`;
       return `Vertical spacing between elements does not match expected value.
 
 Details:
-- Expected spacing:  ${roundedExpectedSpacing}px ±${tolerance}${unit}
+- Expected spacing:  ${roundedExpectedSpacing}px ±${tolerance}${toleranceUnitSymbol}
 - Measured spacing:  ${roundedActualSpacing}px
 - Difference:        ${roundedSpacingDifference}px
 - Top element:       Y=${roundedTopY}, height=${roundedTopHeight}px

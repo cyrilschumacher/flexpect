@@ -1,3 +1,15 @@
+/** @internal */
+export function getToleranceUnitSymbol(toleranceUnit: ToleranceUnit): string {
+  return toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
+}
+
+/** @internal */
+export function validateTolerance(tolerance: number): void {
+  if (tolerance < 0) {
+    throw new Error('"tolerance" must be greater than or equal to 0');
+  }
+}
+
 /**
  * Units available for expressing tolerance values.
  */
