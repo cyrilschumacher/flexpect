@@ -117,10 +117,10 @@ export async function toHaveSpacingBetween(
     throw new Error('"tolerance" must be greater than or equal to 0');
   }
 
-  const elementBox = await getBoundingBoxOrFail(element);
-  const referenceBox = await getBoundingBoxOrFail(reference);
+  const elementBoundingBox = await getBoundingBoxOrFail(element);
+  const referenceBoundingBox = await getBoundingBoxOrFail(reference);
 
-  const spacing = computeSpacing(elementBox, referenceBox, axis);
+  const spacing = computeSpacing(elementBoundingBox, referenceBoundingBox, axis);
 
   const toleranceInPixels = toleranceUnit === ToleranceUnit.Percent ? (expectedSpacing * tolerance) / 100 : tolerance;
   const delta = Math.abs(spacing - expectedSpacing);
@@ -150,8 +150,8 @@ export async function toHaveSpacingBetween(
       const roundedSpacingDifference = delta.toFixed(2);
 
       if (axis === SpacingAxis.Horizontal) {
-        const leftElement = elementBox.x < referenceBox.x ? elementBox : referenceBox;
-        const rightElement = elementBox.x < referenceBox.x ? referenceBox : elementBox;
+        const leftElement = elementBoundingBox.x < referenceBoundingBox.x ? elementBoundingBox : referenceBoundingBox;
+        const rightElement = elementBoundingBox.x < referenceBoundingBox.x ? referenceBoundingBox : elementBoundingBox;
 
         const roundedLeftX = leftElement.x.toFixed(2);
         const roundedLeftWidth = leftElement.width.toFixed(2);
@@ -171,8 +171,8 @@ Details:
 Use margin, padding, or flex/grid gap to adjust spacing.`;
       }
 
-      const topElement = elementBox.y < referenceBox.y ? elementBox : referenceBox;
-      const bottomElement = elementBox.y < referenceBox.y ? referenceBox : elementBox;
+      const topElement = elementBoundingBox.y < referenceBoundingBox.y ? elementBoundingBox : referenceBoundingBox;
+      const bottomElement = elementBoundingBox.y < referenceBoundingBox.y ? referenceBoundingBox : elementBoundingBox;
 
       const roundedTopY = topElement.y.toFixed(2);
       const roundedTopHeight = topElement.height.toFixed(2);

@@ -54,16 +54,16 @@ export async function toBeFullyCentered(
     throw new Error('"tolerance" must be greater than or equal to 0');
   }
 
-  const elementBox = await getBoundingBoxOrFail(element);
-  const containerBox = await getBoundingBoxOrFail(container);
+  const elementBoundingBox = await getBoundingBoxOrFail(element);
+  const containerBoundingBox = await getBoundingBoxOrFail(container);
 
   const horizontalTolerance =
-    toleranceUnit === ToleranceUnit.Percent ? (containerBox.width * tolerance) / 100 : tolerance;
+    toleranceUnit === ToleranceUnit.Percent ? (containerBoundingBox.width * tolerance) / 100 : tolerance;
   const verticalTolerance =
-    toleranceUnit === ToleranceUnit.Percent ? (containerBox.height * tolerance) / 100 : tolerance;
+    toleranceUnit === ToleranceUnit.Percent ? (containerBoundingBox.height * tolerance) / 100 : tolerance;
 
-  const elementCenter = getCenter(elementBox);
-  const containerCenter = getCenter(containerBox);
+  const elementCenter = getCenter(elementBoundingBox);
+  const containerCenter = getCenter(containerBoundingBox);
 
   const horizontallyCentered = isWithinTolerance(containerCenter.x, elementCenter.x, horizontalTolerance);
   const verticallyCentered = isWithinTolerance(containerCenter.y, elementCenter.y, verticalTolerance);

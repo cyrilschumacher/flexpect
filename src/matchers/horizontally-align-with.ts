@@ -101,12 +101,12 @@ export async function toBeHorizontallyAlignedWith(
     throw new Error('"tolerance" must be greater than or equal to 0');
   }
 
-  const elementBox = await getBoundingBoxOrFail(element);
-  const containerBox = await getBoundingBoxOrFail(container);
+  const elementBoundingBox = await getBoundingBoxOrFail(element);
+  const containerBoundingBox = await getBoundingBoxOrFail(container);
 
-  const delta = computeHorizontalDelta(alignment, elementBox, containerBox);
+  const delta = computeHorizontalDelta(alignment, elementBoundingBox, containerBoundingBox);
   const toleranceInPixels =
-    toleranceUnit === ToleranceUnit.Percent ? (containerBox.width * tolerance) / 100 : tolerance;
+    toleranceUnit === ToleranceUnit.Percent ? (containerBoundingBox.width * tolerance) / 100 : tolerance;
   if (delta <= toleranceInPixels) {
     return {
       pass: true,

@@ -136,10 +136,10 @@ export async function toHaveDistanceFrom(
     throw new Error('"tolerance" must be greater than or equal to 0');
   }
 
-  const elementBox = await getBoundingBoxOrFail(element);
-  const referenceBox = await getBoundingBoxOrFail(reference);
+  const elementBoundingBox = await getBoundingBoxOrFail(element);
+  const referenceBoundingBox = await getBoundingBoxOrFail(reference);
 
-  const delta = computeDistance(side, elementBox, referenceBox);
+  const delta = computeDistance(side, elementBoundingBox, referenceBoundingBox);
   const toleranceInPixels =
     toleranceUnit === ToleranceUnit.Percent ? (expectedDistanceInPixels * tolerance) / 100 : tolerance;
   if (delta <= expectedDistanceInPixels + toleranceInPixels && delta >= expectedDistanceInPixels - toleranceInPixels) {

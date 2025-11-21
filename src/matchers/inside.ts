@@ -59,16 +59,16 @@ export async function toBeInside(
     throw new Error('"tolerance" must be greater than or equal to 0');
   }
 
-  const elementBox = await getBoundingBoxOrFail(element);
-  const containerBox = await getBoundingBoxOrFail(container);
+  const elementBoundingBox = await getBoundingBoxOrFail(element);
+  const containerBoundingBox = await getBoundingBoxOrFail(container);
 
   const toleranceInPixelsX =
-    toleranceUnit === ToleranceUnit.Percent ? (containerBox.width * tolerance) / 100 : tolerance;
+    toleranceUnit === ToleranceUnit.Percent ? (containerBoundingBox.width * tolerance) / 100 : tolerance;
   const toleranceInPixelsY =
-    toleranceUnit === ToleranceUnit.Percent ? (containerBox.height * tolerance) / 100 : tolerance;
+    toleranceUnit === ToleranceUnit.Percent ? (containerBoundingBox.height * tolerance) / 100 : tolerance;
 
-  const deltaX = calculateDeltaX(elementBox, containerBox, toleranceInPixelsX);
-  const deltaY = calculateDeltaY(elementBox, containerBox, toleranceInPixelsY);
+  const deltaX = calculateDeltaX(elementBoundingBox, containerBoundingBox, toleranceInPixelsX);
+  const deltaY = calculateDeltaY(elementBoundingBox, containerBoundingBox, toleranceInPixelsY);
 
   if (deltaX === 0 && deltaY === 0) {
     return {

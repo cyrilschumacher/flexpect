@@ -36,13 +36,15 @@ export async function toHaveSameSizeAs(
     throw new Error('"tolerance" must be greater than or equal to 0');
   }
 
-  const elementBox = await getBoundingBoxOrFail(element);
-  const containerBox = await getBoundingBoxOrFail(container);
+  const elementBoundingBox = await getBoundingBoxOrFail(element);
+  const containerBoundingBox = await getBoundingBoxOrFail(container);
 
-  const widthTolerance = toleranceUnit === ToleranceUnit.Percent ? (containerBox.width * tolerance) / 100 : tolerance;
-  const heightTolerance = toleranceUnit === ToleranceUnit.Percent ? (containerBox.height * tolerance) / 100 : tolerance;
-  const deltaWidth = Math.abs(elementBox.width - containerBox.width);
-  const deltaHeight = Math.abs(elementBox.height - containerBox.height);
+  const widthTolerance =
+    toleranceUnit === ToleranceUnit.Percent ? (containerBoundingBox.width * tolerance) / 100 : tolerance;
+  const heightTolerance =
+    toleranceUnit === ToleranceUnit.Percent ? (containerBoundingBox.height * tolerance) / 100 : tolerance;
+  const deltaWidth = Math.abs(elementBoundingBox.width - containerBoundingBox.width);
+  const deltaHeight = Math.abs(elementBoundingBox.height - containerBoundingBox.height);
   if (deltaWidth <= widthTolerance && deltaHeight <= heightTolerance) {
     return {
       pass: true,
@@ -64,8 +66,8 @@ export async function toHaveSameSizeAs(
       return `Element size differs from container size beyond the allowed tolerance of ${tolerance}${unit}.
 
 Details:
-- Width:  expected ${containerBox.width.toFixed(2)}px ±${widthTolerance.toFixed(2)}px, got ${elementBox.width.toFixed(2)}px (delta: ${deltaWidth.toFixed(2)}px)
-- Height: expected ${containerBox.height.toFixed(2)}px ±${heightTolerance.toFixed(2)}px, got ${elementBox.height.toFixed(2)}px (delta: ${deltaHeight.toFixed(2)}px)
+- Width:  expected ${containerBoundingBox.width.toFixed(2)}px ±${widthTolerance.toFixed(2)}px, got ${elementBoundingBox.width.toFixed(2)}px (delta: ${deltaWidth.toFixed(2)}px)
+- Height: expected ${containerBoundingBox.height.toFixed(2)}px ±${heightTolerance.toFixed(2)}px, got ${elementBoundingBox.height.toFixed(2)}px (delta: ${deltaHeight.toFixed(2)}px)
 
 Please adjust the element's size to match the container.`;
     },

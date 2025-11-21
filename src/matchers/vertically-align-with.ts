@@ -122,12 +122,12 @@ export async function toBeVerticallyAlignedWith(
     throw new Error('"tolerance" must be greater than or equal to 0');
   }
 
-  const elementBox = await getBoundingBoxOrFail(element);
-  const containerBox = await getBoundingBoxOrFail(container);
+  const elementBoundingBox = await getBoundingBoxOrFail(element);
+  const containerBoundingBox = await getBoundingBoxOrFail(container);
 
-  const delta = computeVerticalDelta(alignment, elementBox, containerBox);
+  const delta = computeVerticalDelta(alignment, elementBoundingBox, containerBoundingBox);
   const toleranceInPixels =
-    toleranceUnit === ToleranceUnit.Percent ? (containerBox.height * tolerance) / 100 : tolerance;
+    toleranceUnit === ToleranceUnit.Percent ? (containerBoundingBox.height * tolerance) / 100 : tolerance;
   if (delta <= toleranceInPixels) {
     return {
       pass: true,

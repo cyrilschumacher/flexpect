@@ -174,12 +174,12 @@ export async function toBeAlignedWith(
     throw new Error('"tolerance" must be greater than or equal to 0');
   }
 
-  const elementBox = await getBoundingBoxOrFail(element);
-  const containerBox = await getBoundingBoxOrFail(container);
+  const elementBoundingBox = await getBoundingBoxOrFail(element);
+  const containerBoundingBox = await getBoundingBoxOrFail(container);
 
-  const elementPosition = getPosition(elementBox, axis, mode);
-  const containerPosition = getPosition(containerBox, axis, mode);
-  const size = axis === Axis.Horizontal ? containerBox.width : containerBox.height;
+  const elementPosition = getPosition(elementBoundingBox, axis, mode);
+  const containerPosition = getPosition(containerBoundingBox, axis, mode);
+  const size = axis === Axis.Horizontal ? containerBoundingBox.width : containerBoundingBox.height;
 
   const toleranceInPixels = toleranceUnit === ToleranceUnit.Percent ? (tolerance / 100) * size : tolerance;
   const delta = Math.abs(elementPosition - containerPosition);

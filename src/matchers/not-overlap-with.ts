@@ -11,7 +11,7 @@ import { getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
  * The function is useful for verifying layout constraints where elements should remain
  * visually separated, such as avoiding collisions between buttons, modals, or other UI components.
  *
- * @param target - The element as a {@link Locator} whose overlap is checked.
+ * @param element - The element as a {@link Locator} whose overlap is checked.
  * @param reference - The element as a {@link Locator} relative to which overlap is checked.
  * @returns A {@link Promise} that resolves with the matcher result.
  *
@@ -19,15 +19,15 @@ import { getBoundingBoxOrFail } from './helpers/get-bounding-box-or-fail';
  * // Checks that a tooltip does not overlap a button
  * await expect(tooltip).toNotOverlapWith(button);
  */
-export async function toNotOverlapWith(target: Locator, reference: Locator): Promise<MatcherReturnType> {
-  const targetBox = await getBoundingBoxOrFail(target);
-  const referenceBox = await getBoundingBoxOrFail(reference);
+export async function toNotOverlapWith(element: Locator, reference: Locator): Promise<MatcherReturnType> {
+  const elementBoundingBox = await getBoundingBoxOrFail(element);
+  const referenceBoundingBox = await getBoundingBoxOrFail(reference);
 
   const noOverlap =
-    targetBox.x + targetBox.width <= referenceBox.x ||
-    referenceBox.x + referenceBox.width <= targetBox.x ||
-    targetBox.y + targetBox.height <= referenceBox.y ||
-    referenceBox.y + referenceBox.height <= targetBox.y;
+    elementBoundingBox.x + elementBoundingBox.width <= referenceBoundingBox.x ||
+    referenceBoundingBox.x + referenceBoundingBox.width <= elementBoundingBox.x ||
+    elementBoundingBox.y + elementBoundingBox.height <= referenceBoundingBox.y ||
+    referenceBoundingBox.y + referenceBoundingBox.height <= elementBoundingBox.y;
 
   if (noOverlap) {
     return {
@@ -39,12 +39,18 @@ export async function toNotOverlapWith(target: Locator, reference: Locator): Pro
   return {
     pass: false,
     message: () => {
-      const leftOverlap = Math.max(targetBox.x, referenceBox.x);
-      const rightOverlap = Math.min(targetBox.x + targetBox.width, referenceBox.x + referenceBox.width);
+      const leftOverlap = Math.max(elementBoundingBox.x, referenceBoundingBox.x);
+      const rightOverlap = Math.min(
+        elementBoundingBox.x + elementBoundingBox.width,
+        referenceBoundingBox.x + referenceBoundingBox.width,
+      );
       const xOverlap = Math.max(0, rightOverlap - leftOverlap);
 
-      const topOverlap = Math.max(targetBox.y, referenceBox.y);
-      const bottomOverlap = Math.min(targetBox.y + targetBox.height, referenceBox.y + referenceBox.height);
+      const topOverlap = Math.max(elementBoundingBox.y, referenceBoundingBox.y);
+      const bottomOverlap = Math.min(
+        elementBoundingBox.y + elementBoundingBox.height,
+        referenceBoundingBox.y + referenceBoundingBox.height,
+      );
       const yOverlap = Math.max(0, bottomOverlap - topOverlap);
 
       const intersectionArea = xOverlap * yOverlap;
