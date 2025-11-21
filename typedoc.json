@@ -1,6 +1,7 @@
 {
   "$schema": "https://typedoc.org/schema.json",
-  "entryPoints": ["src/matchers/**/*.ts"],
+  "entryPoints": ["src/**/*.ts"],
+  "exclude": ["src/index.ts"],
   "out": "docs",
   "tsconfig": "tsconfig.json",
   "includeVersion": true,
