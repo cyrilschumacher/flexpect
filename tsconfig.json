@@ -6,8 +6,10 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@flexpect": ["src/index.ts"],
-      "@flexpect/*": ["src/*"]
+      "@flexpect": ["src/index"],
+      "@flexpect/*": ["src/*"],
+      "@helpers/*": ["src/helpers/*"],
+      "@matchers/*": ["src/matchers/*"]
     },
 
     // Environment Settings

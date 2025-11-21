@@ -1,19 +1,19 @@
 import { Locator } from '@playwright/test';
 
-import { ToBeAboveOptions } from './matchers/above';
-import { Alignment, Axis, ToBeAlignedWithOptions } from './matchers/aligned-with';
-import { ToHaveAspectRatioOptions } from './matchers/aspect-ratio';
-import { DistanceSide, ToHaveDistanceFromOptions } from './matchers/at-distance-from';
-import { ToBeBelowOptions } from './matchers/below';
-import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
-import { HorizontalAlignment, ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
-import { ToBeInsideOptions } from './matchers/inside';
-import { ToBeLeftOfOptions } from './matchers/left-of';
-import { ToBeRightOfOptions } from './matchers/right-of';
-import { ToHaveSameSizeAsOptions } from './matchers/same-size-as';
-import { SpacingAxis, ToHaveSpacingBetweenOptions } from './matchers/spacing-between';
-import { ToBeVerticallyAlignedWithOptions, VerticalAlignment } from './matchers/vertically-align-with';
-import { ToBeWithinViewportOptions } from './matchers/within-viewport';
+import { DistanceSide, ToHaveDistanceFromOptions } from '@flexpect/matchers/alignment/at-distance-from';
+import { ToBeInsideOptions } from '@flexpect/matchers/visibility/inside';
+import { ToBeWithinViewportOptions } from '@flexpect/matchers/visibility/within-viewport';
+import { ToBeAboveOptions } from '@matchers/alignment/above';
+import { Alignment, Axis, ToBeAlignedWithOptions } from '@matchers/alignment/aligned-with';
+import { ToBeBelowOptions } from '@matchers/alignment/below';
+import { ToBeFullyCenteredOptions } from '@matchers/alignment/fully-centered';
+import { HorizontalAlignment, ToBeHorizontallyAlignedWithOptions } from '@matchers/alignment/horizontally-align-with';
+import { ToBeLeftOfOptions } from '@matchers/alignment/left-of';
+import { ToBeRightOfOptions } from '@matchers/alignment/right-of';
+import { ToBeVerticallyAlignedWithOptions, VerticalAlignment } from '@matchers/alignment/vertically-align-with';
+import { SpacingAxis, ToHaveSpacingBetweenOptions } from '@matchers/layout/spacing-between';
+import { ToHaveAspectRatioOptions } from '@matchers/size/aspect-ratio';
+import { ToHaveSameSizeAsOptions } from '@matchers/size/same-size-as';
 
 declare global {
   // Disabling the no-namespace rule to allow global type augmentation for Playwright custom matchers,
@@ -75,21 +75,21 @@ declare global {
   }
 }
 
-export { toBeAbove } from './matchers/above';
-export { Alignment, Axis, toBeAlignedWith } from './matchers/aligned-with';
-export { toHaveAspectRatio } from './matchers/aspect-ratio';
-export { DistanceSide, toHaveDistanceFrom } from './matchers/at-distance-from';
-export { toBeBelow } from './matchers/below';
-export { toHaveColorContrast } from './matchers/color-contrast';
-export { toFitContainer } from './matchers/fit-container';
-export { toBeFullyCentered } from './matchers/fully-centered';
-export { HorizontalAlignment, toBeHorizontallyAlignedWith } from './matchers/horizontally-align-with';
-export { toBeInside } from './matchers/inside';
-export { toBeLeftOf } from './matchers/left-of';
-export { toNotOverlapWith } from './matchers/not-overlap-with';
-export { toBeRightOf } from './matchers/right-of';
-export { toHaveSameSizeAs } from './matchers/same-size-as';
-export { SpacingAxis, toHaveSpacingBetween } from './matchers/spacing-between';
-export { ToleranceUnit } from './matchers/tolerance';
-export { toBeVerticallyAlignedWith, VerticalAlignment } from './matchers/vertically-align-with';
-export { toBeWithinViewport } from './matchers/within-viewport';
+export { DistanceSide, toHaveDistanceFrom } from '@flexpect/matchers/alignment/at-distance-from';
+export { toNotOverlapWith } from '@flexpect/matchers/layout/not-overlap-with';
+export { toHaveColorContrast } from '@flexpect/matchers/visibility/color-contrast';
+export { toBeInside } from '@flexpect/matchers/visibility/inside';
+export { toBeWithinViewport } from '@flexpect/matchers/visibility/within-viewport';
+export { ToleranceUnit } from '@helpers/tolerance';
+export { toBeAbove } from '@matchers/alignment/above';
+export { Alignment, Axis, toBeAlignedWith } from '@matchers/alignment/aligned-with';
+export { toBeBelow } from '@matchers/alignment/below';
+export { toBeFullyCentered } from '@matchers/alignment/fully-centered';
+export { HorizontalAlignment, toBeHorizontallyAlignedWith } from '@matchers/alignment/horizontally-align-with';
+export { toBeLeftOf } from '@matchers/alignment/left-of';
+export { toBeRightOf } from '@matchers/alignment/right-of';
+export { toBeVerticallyAlignedWith, VerticalAlignment } from '@matchers/alignment/vertically-align-with';
+export { toFitContainer } from '@matchers/layout/fit-container';
+export { SpacingAxis, toHaveSpacingBetween } from '@matchers/layout/spacing-between';
+export { toHaveAspectRatio } from '@matchers/size/aspect-ratio';
+export { toHaveSameSizeAs } from '@matchers/size/same-size-as';
