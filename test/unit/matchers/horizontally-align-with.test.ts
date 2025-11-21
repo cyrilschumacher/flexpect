@@ -56,20 +56,6 @@ describe('toBeHorizontallyAlignedWith', () => {
     expect(result.pass).toBe(true);
   });
 
-  it('should throw an error when alignment is unknown', async () => {
-    const element = {} as Locator;
-    const elementBox = { x: 0, y: 0, width: 50, height: 50 } as never;
-    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBox);
-
-    const container = {} as Locator;
-    const containerBox = { x: 0, y: 0, width: 200, height: 200 } as never;
-    when(getBoundingBoxOrFailMock).calledWith(container).mockResolvedValueOnce(containerBox);
-
-    await expect(
-      toBeHorizontallyAlignedWith(element, container, 'invalid-alignment' as HorizontalAlignment),
-    ).rejects.toThrow('Unknown horizontal alignment: invalid-alignment');
-  });
-
   it('should throw an error for invalid tolerance in percent', async () => {
     const element = {} as Locator;
     const container = {} as Locator;

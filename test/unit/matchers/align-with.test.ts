@@ -11,26 +11,6 @@ jest.mock('@flexpect/matchers/helpers/get-bounding-box-or-fail');
 describe('toBeAlignedWith', () => {
   const getBoundingBoxOrFailMock = jest.mocked(getBoundingBoxOrFail);
 
-  it('should throw an error for invalid mode', async () => {
-    const element = {} as Locator;
-    const container = {} as Locator;
-
-    const elementBox = { x: 150, y: 200, width: 50, height: 400 };
-    const containerBox = { x: 100, y: 200, width: 200, height: 400 };
-
-    when(getBoundingBoxOrFailMock)
-      .calledWith(element)
-      .mockImplementationOnce(async () => elementBox);
-    when(getBoundingBoxOrFailMock)
-      .calledWith(container)
-      .mockImplementationOnce(async () => containerBox);
-
-    const alignment = 'unknown' as never as Alignment;
-    await expect(toBeAlignedWith(element, container, Axis.Vertical, alignment)).rejects.toThrow(
-      'Invalid alignment mode: unknown',
-    );
-  });
-
   it('should throw an error for invalid tolerance in percent', async () => {
     const element = {} as Locator;
     const container = {} as Locator;

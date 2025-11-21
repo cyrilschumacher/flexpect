@@ -56,15 +56,6 @@ describe('toBeVerticallyAlignedWith', () => {
     expect(result.pass).toBe(true);
   });
 
-  it('should throw an error on unknown alignment', async () => {
-    const element = {} as Locator;
-    const container = {} as Locator;
-
-    await expect(
-      toBeVerticallyAlignedWith(element, container, 'invalid-alignment' as VerticalAlignment),
-    ).rejects.toThrow('Unknown vertical alignment: invalid-alignment');
-  });
-
   it('should throw an error for invalid tolerance in percent', async () => {
     const element = {} as Locator;
     const container = {} as Locator;

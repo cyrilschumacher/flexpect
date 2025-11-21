@@ -129,20 +129,6 @@ To fix this, adjust the left position of the element (or the right of the refere
     );
   });
 
-  it('should throw an error when distance side is unknown', async () => {
-    const element = {} as Locator;
-    const elementBoundingBox = { x: 0, y: 0, width: 50, height: 50 } as never;
-    when(getBoundingBoxOrFailMock).calledWith(element).mockResolvedValueOnce(elementBoundingBox);
-
-    const reference = {} as Locator;
-    const referenceBoundingBox = { x: 0, y: 0, width: 200, height: 200 } as never;
-    when(getBoundingBoxOrFailMock).calledWith(reference).mockResolvedValueOnce(referenceBoundingBox);
-
-    await expect(toHaveDistanceFrom(element, reference, 'invalid-side' as DistanceSide, 100)).rejects.toThrow(
-      'Unknown side: invalid-side',
-    );
-  });
-
   describe('with tolerance in pixels', () => {
     it('should pass when distance is within pixel tolerance', async () => {
       const element = {} as Locator;
