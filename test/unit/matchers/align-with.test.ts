@@ -25,7 +25,8 @@ describe('toBeAlignedWith', () => {
       .calledWith(container)
       .mockImplementationOnce(async () => containerBox);
 
-    await expect(toBeAlignedWith(element, container, Axis.Vertical, 'unknown' as Alignment)).rejects.toThrow(
+    const alignment = 'unknown' as never as Alignment;
+    await expect(toBeAlignedWith(element, container, Axis.Vertical, alignment)).rejects.toThrow(
       'Invalid alignment mode: unknown',
     );
   });

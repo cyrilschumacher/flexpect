@@ -16,13 +16,13 @@ function computeDistance(side: DistanceSide, elementBox: BoundingBox, referenceB
   const referenceBorders = getBorders(referenceBox);
 
   switch (side) {
-    case 'top':
+    case DistanceSide.Top:
       return Math.abs(elementBorders.top - referenceBorders.bottom);
-    case 'right':
+    case DistanceSide.Right:
       return Math.abs(elementBorders.left - referenceBorders.right);
-    case 'bottom':
+    case DistanceSide.Bottom:
       return Math.abs(elementBorders.bottom - referenceBorders.top);
-    case 'left':
+    case DistanceSide.Left:
       return Math.abs(elementBorders.right - referenceBorders.left);
     default:
       throw new Error(`Unknown side: ${side}`);
@@ -41,22 +41,22 @@ export enum DistanceSide {
   /**
    * The top edge of the element.
    */
-  Top = 'top',
+  Top,
 
   /**
    * The right edge of the element.
    */
-  Right = 'right',
+  Right,
 
   /**
    * The bottom edge of the element.
    */
-  Bottom = 'bottom',
+  Bottom,
 
   /**
    * The left edge of the element.
    */
-  Left = 'left',
+  Left,
 }
 
 /**
@@ -146,12 +146,13 @@ export async function toHaveDistanceFrom(
     return {
       pass: true,
       message: () => {
+        const formattedSide = DistanceSide[side].toLowerCase();
         if (tolerance === 0) {
-          return `Element is exactly ${side}-aligned at ${expectedDistanceInPixels}px.`;
+          return `Element is exactly ${formattedSide}-aligned at ${expectedDistanceInPixels}px.`;
         }
 
         const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element is ${side}-aligned within the tolerance of ±${tolerance}${unit} from the expected ${expectedDistanceInPixels}px.`;
+        return `Element is ${formattedSide}-aligned within the tolerance of ±${tolerance}${unit} from the expected ${expectedDistanceInPixels}px.`;
       },
     };
   }
@@ -161,6 +162,7 @@ export async function toHaveDistanceFrom(
     message: () => {
       const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
 
+      const formattedSide = DistanceSide[side].toLowerCase();
       const actualDistance = delta.toFixed(2);
       const allowedDeviation = toleranceInPixels.toFixed(2);
       const difference = (delta - expectedDistanceInPixels).toFixed(2);
@@ -172,7 +174,7 @@ export async function toHaveDistanceFrom(
         [DistanceSide.Left]: 'right',
       }[side];
 
-      return `Element is not ${side}-aligned within the allowed tolerance of ±${tolerance}${unit} from the expected ${expectedDistanceInPixels}px.
+      return `Element is not ${formattedSide}-aligned within the allowed tolerance of ±${tolerance}${unit} from the expected ${expectedDistanceInPixels}px.
 
 Details:
 - Expected distance: ${expectedDistanceInPixels}px
@@ -180,7 +182,7 @@ Details:
 - Allowed deviation: ±${allowedDeviation}px (±${tolerance}${unit})
 - Difference:        ${difference}px
 
-To fix this, adjust the ${side} position of the element (or the ${oppositeSide} of the reference) using margin, padding, or layout properties so the gap is closer to ${expectedDistanceInPixels}px.`;
+To fix this, adjust the ${formattedSide} position of the element (or the ${oppositeSide} of the reference) using margin, padding, or layout properties so the gap is closer to ${expectedDistanceInPixels}px.`;
     },
   };
 }

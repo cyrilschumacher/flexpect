@@ -6,12 +6,12 @@ export enum ToleranceUnit {
    * Tolerance is expressed as a percentage of a reference dimension
    * (e.g., width, height, or distance).
    */
-  Percent = 'percent',
+  Percent,
 
   /**
    * Tolerance is expressed as an absolute value in pixels.
    */
-  Pixels = 'pixels',
+  Pixels,
 }
 
 /**

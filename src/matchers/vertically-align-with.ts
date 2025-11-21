@@ -36,17 +36,17 @@ export enum VerticalAlignment {
   /**
    * The bottom edges of the target and container are equal within the tolerance.
    */
-  Bottom = 'bottom',
+  Bottom,
 
   /**
    * The vertical centers of the target and container are equal within the tolerance.
    */
-  Center = 'center',
+  Center,
 
   /**
    * The top edges of the target and container are equal within the tolerance.
    */
-  Top = 'top',
+  Top,
 }
 
 /**
@@ -132,12 +132,13 @@ export async function toBeVerticallyAlignedWith(
     return {
       pass: true,
       message: () => {
+        const formattedAlignment = VerticalAlignment[alignment].toLowerCase();
         if (tolerance === 0) {
-          return `Element is properly ${alignment} aligned.`;
+          return `Element is properly ${formattedAlignment} aligned.`;
         }
 
         const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element is properly ${alignment} aligned with a tolerance of ${tolerance}${unit}.`;
+        return `Element is properly ${formattedAlignment} aligned with a tolerance of ${tolerance}${unit}.`;
       },
     };
   }
@@ -147,10 +148,11 @@ export async function toBeVerticallyAlignedWith(
     message: () => {
       const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
 
+      const formattedAlignment = VerticalAlignment[alignment].toLowerCase();
       const allowedDelta = toleranceInPixels.toFixed(2);
       const actualDelta = delta.toFixed(2);
 
-      return `Element is not ${alignment}-aligned within the allowed tolerance of ${tolerance}${unit}.
+      return `Element is not ${formattedAlignment}-aligned within the allowed tolerance of ${tolerance}${unit}.
 
 Details:
 - Allowed delta: ±${allowedDelta}px

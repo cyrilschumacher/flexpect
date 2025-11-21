@@ -33,12 +33,12 @@ export enum Alignment {
    * - Horizontal: left edge
    * - Vertical: top edge
    */
-  Start = 'start',
+  Start,
 
   /**
    * Aligns the center of the target with the center of the container.
    */
-  Center = 'center',
+  Center,
 
   /**
    * Aligns the end edge of the target with the end edge of the container.
@@ -46,7 +46,7 @@ export enum Alignment {
    * - Horizontal: right edge
    * - Vertical: bottom edge
    */
-  End = 'end',
+  End,
 }
 
 /**
@@ -60,12 +60,12 @@ export enum Axis {
   /**
    * Alignment along the horizontal axis (left/right).
    */
-  Horizontal = 'horizontal',
+  Horizontal,
 
   /**
    * Alignment along the vertical axis (top/bottom).
    */
-  Vertical = 'vertical',
+  Vertical,
 }
 
 /**
@@ -174,12 +174,14 @@ export async function toBeAlignedWith(
     return {
       pass: true,
       message: () => {
+        const formattedMode = Alignment[mode].toLowerCase();
+        const formattedAxis = Axis[axis].toLowerCase();
         if (tolerance === 0) {
-          return `Element is aligned (${mode}) along ${axis} axis.`;
+          return `Element is aligned (${formattedMode}) along ${formattedAxis} axis.`;
         }
 
         const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element is aligned (${mode}) along ${axis} axis within ${tolerance}${unit} tolerance.`;
+        return `Element is aligned (${formattedMode}) along ${formattedAxis} axis within ${tolerance}${unit} tolerance.`;
       },
     };
   }
@@ -189,18 +191,18 @@ export async function toBeAlignedWith(
     message: () => {
       const allowedDeviation = toleranceInPixels.toFixed(2);
       const actualDeviation = delta.toFixed(2);
-      const lowerCaseMode = mode.toLowerCase();
-      const lowerCaseAxis = axis.toLowerCase();
+      const formattedMode = Alignment[mode].toLowerCase();
+      const formattedAxis = Axis[axis].toLowerCase();
 
       const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
 
-      return `Element is misaligned with the container (${mode}, ${axis}).
+      return `Element is misaligned with the container (${formattedMode}, ${formattedAxis}).
 
 Details:
 - Allowed deviation: ±${allowedDeviation}px (${tolerance}${unit})
 - Actual deviation:  ${actualDeviation}px
 
-To fix this, ensure the element is aligned to the container's ${lowerCaseMode} edge along the ${lowerCaseAxis} axis.`;
+To fix this, ensure the element is aligned to the container's ${formattedMode} edge along the ${formattedAxis} axis.`;
     },
   };
 }

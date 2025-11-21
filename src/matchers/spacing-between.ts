@@ -23,7 +23,7 @@ export enum SpacingAxis {
    * - The **right edge** of the left element
    * - The **left edge** of the right element
    */
-  Horizontal = 'horizontal',
+  Horizontal,
 
   /**
    * Measures vertical spacing (top → bottom).
@@ -32,7 +32,7 @@ export enum SpacingAxis {
    * - The **bottom edge** of the upper element
    * - The **top edge** of the lower element
    */
-  Vertical = 'vertical',
+  Vertical,
 }
 
 /**
@@ -127,14 +127,15 @@ export async function toHaveSpacingBetween(
     return {
       pass: true,
       message: () => {
+        const formattedAxis = SpacingAxis[axis].toLowerCase();
         const roundedSpacing = spacing.toFixed(2);
         const roundedTolerance = toleranceInPixels.toFixed(2);
         if (tolerance === 0) {
-          return `Element spacing on the ${axis} axis is exactly ${roundedSpacing}px as expected.`;
+          return `Element spacing on the ${formattedAxis} axis is exactly ${roundedSpacing}px as expected.`;
         }
 
         const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element spacing on the ${axis} axis is ${roundedSpacing}px, within ±${tolerance}${unit} (±${roundedTolerance}px) of the expected ${expectedSpacing}px.`;
+        return `Element spacing on the ${formattedAxis} axis is ${roundedSpacing}px, within ±${tolerance}${unit} (±${roundedTolerance}px) of the expected ${expectedSpacing}px.`;
       },
     };
   }

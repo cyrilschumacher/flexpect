@@ -37,17 +37,17 @@ export enum HorizontalAlignment {
   /**
    * The horizontal centers of the target and container are equal within the tolerance.
    */
-  Center = 'center',
+  Center,
 
   /**
    * The left edges of the target and container are equal within the tolerance.
    */
-  Left = 'left',
+  Left,
 
   /**
    * The right edges of the target and container are equal within the tolerance.
    */
-  Right = 'right',
+  Right,
 }
 
 /**
@@ -123,12 +123,13 @@ export async function toBeHorizontallyAlignedWith(
     return {
       pass: true,
       message: () => {
+        const formattedAlignment = HorizontalAlignment[alignment].toLowerCase();
         if (tolerance === 0) {
-          return `Element is perfectly ${alignment}-aligned.`;
+          return `Element is perfectly ${formattedAlignment}-aligned.`;
         }
 
         const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
-        return `Element is properly ${alignment}-aligned within the allowed tolerance (${tolerance}${unit}).`;
+        return `Element is properly ${formattedAlignment}-aligned within the allowed tolerance (${tolerance}${unit}).`;
       },
     };
   }
@@ -138,10 +139,11 @@ export async function toBeHorizontallyAlignedWith(
     message: () => {
       const unit = toleranceUnit === ToleranceUnit.Percent ? '%' : 'px';
 
+      const formattedAlignment = HorizontalAlignment[alignment].toLowerCase();
       const allowedDelta = toleranceInPixels.toFixed(2);
       const actualDelta = delta.toFixed(2);
 
-      return `Element is not ${alignment}-aligned within the allowed tolerance of ${tolerance}${unit}.
+      return `Element is not ${formattedAlignment}-aligned within the allowed tolerance of ${tolerance}${unit}.
 
 Details:
 - Allowed delta: ±${allowedDelta}px
