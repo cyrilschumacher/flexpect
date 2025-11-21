@@ -59,7 +59,7 @@ declare global {
       toHaveColorContrast(minimumContrastRatio: number): Promise<R>;
       toHaveDistanceFrom(
         reference: Locator,
-        side: DistanceSide,
+        referenceSide: DistanceSide,
         expectedDistanceInPixels: number,
         options?: ToHaveDistanceFromOptions,
       ): Promise<R>;
