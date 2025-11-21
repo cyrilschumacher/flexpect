@@ -9,6 +9,7 @@ import { ToBeFullyCenteredOptions } from './matchers/fully-centered';
 import { HorizontalAlignment, ToBeHorizontallyAlignedWithOptions } from './matchers/horizontally-align-with';
 import { ToBeInsideOptions } from './matchers/inside';
 import { ToBeLeftOfOptions } from './matchers/left-of';
+import { ToBeRightOfOptions } from './matchers/right-of';
 import { ToHaveSameSizeAsOptions } from './matchers/same-size-as';
 import { SpacingAxis, ToHaveSpacingBetweenOptions } from './matchers/spacing-between';
 import { ToBeVerticallyAlignedWithOptions, VerticalAlignment } from './matchers/vertically-align-with';
@@ -46,6 +47,7 @@ declare global {
       ): Promise<R>;
       toBeInside(container: Locator, options?: ToBeInsideOptions): Promise<R>;
       toBeLeftOf(reference: Locator, options?: ToBeLeftOfOptions): Promise<R>;
+      toBeRightOf(reference: Locator, options?: ToBeRightOfOptions): Promise<R>;
       toBeVerticallyAlignedWith(
         container: Locator,
         alignment: VerticalAlignment,
@@ -85,6 +87,7 @@ export { HorizontalAlignment, toBeHorizontallyAlignedWith } from './matchers/hor
 export { toBeInside } from './matchers/inside';
 export { toBeLeftOf } from './matchers/left-of';
 export { toNotOverlapWith } from './matchers/not-overlap-with';
+export { toBeRightOf } from './matchers/right-of';
 export { toHaveSameSizeAs } from './matchers/same-size-as';
 export { SpacingAxis, toHaveSpacingBetween } from './matchers/spacing-between';
 export { ToleranceUnit } from './matchers/tolerance';
