@@ -106,7 +106,7 @@ export interface ToHaveDistanceFromOptions extends Tolerance {}
  *
  * @param element - The element as a {@link Locator} to check for distance.
  * @param reference - The reference element to compare against.
- * @param side - Which side of the reference to measure distance from.
+ * @param referenceSide - Which side of the reference to measure the distance from.
  * @param expectedDistanceInPixels - Expected distance in pixels between the elements.
  * @param options - Optional distance options.
  * @returns A {@link Promise} that resolves with the matcher result.
@@ -128,7 +128,7 @@ export interface ToHaveDistanceFromOptions extends Tolerance {}
 export async function toHaveDistanceFrom(
   element: Locator,
   reference: Locator,
-  side: DistanceSide,
+  referenceSide: DistanceSide,
   expectedDistanceInPixels: number,
   options: ToHaveDistanceFromOptions = {},
 ): Promise<MatcherReturnType> {
@@ -138,14 +138,14 @@ export async function toHaveDistanceFrom(
   const elementBoundingBox = await getBoundingBoxOrFail(element);
   const referenceBoundingBox = await getBoundingBoxOrFail(reference);
 
-  const delta = computeDistance(side, elementBoundingBox, referenceBoundingBox);
+  const delta = computeDistance(referenceSide, elementBoundingBox, referenceBoundingBox);
   const toleranceInPixels =
     toleranceUnit === ToleranceUnit.Percent ? (expectedDistanceInPixels * tolerance) / 100 : tolerance;
   if (delta <= expectedDistanceInPixels + toleranceInPixels && delta >= expectedDistanceInPixels - toleranceInPixels) {
     return {
       pass: true,
       message: () => {
-        const formattedSide = DistanceSide[side].toLowerCase();
+        const formattedSide = DistanceSide[referenceSide].toLowerCase();
         if (tolerance === 0) {
           return `Element is exactly ${formattedSide}-aligned at ${expectedDistanceInPixels}px.`;
         }
@@ -160,7 +160,7 @@ export async function toHaveDistanceFrom(
     pass: false,
     message: () => {
       const toleranceUnitSymbol = getToleranceUnitSymbol(toleranceUnit);
-      const formattedSide = DistanceSide[side].toLowerCase();
+      const formattedSide = DistanceSide[referenceSide].toLowerCase();
 
       const actualDistance = delta.toFixed(2);
       const allowedDeviation = toleranceInPixels.toFixed(2);
@@ -171,7 +171,7 @@ export async function toHaveDistanceFrom(
         [DistanceSide.Right]: 'left',
         [DistanceSide.Bottom]: 'top',
         [DistanceSide.Left]: 'right',
-      }[side];
+      }[referenceSide];
 
       return `Element is not ${formattedSide}-aligned within the allowed tolerance of ±${tolerance}${toleranceUnitSymbol} from the expected ${expectedDistanceInPixels}px.
 
