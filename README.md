@@ -1,4 +1,4 @@
-# flexpect
+<img alt="Flexpect logo" src="logo.png" />
 
 [![NPM Package][npm-package-image]][npm-package-url]
 [![MIT License][license-image]][license-url]
